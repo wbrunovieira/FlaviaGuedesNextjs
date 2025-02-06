@@ -2,18 +2,32 @@ import { getRequestConfig } from 'next-intl/server';
 import { routing } from './routing';
 import { headers } from 'next/headers';
 
+function parseAcceptLanguage(
+  acceptLanguage: string
+): string {
+  const languages = acceptLanguage
+    .split(',')
+    .map(lang => {
+      const [code, qValue] = lang.split(';q=');
+      return {
+        code: code.trim(),
+        q: qValue ? parseFloat(qValue) : 1.0,
+      };
+    })
+    .sort((a, b) => b.q - a.q);
+  return languages[0]?.code || '';
+}
+
 export default getRequestConfig(
   async ({ requestLocale }) => {
-    // Tenta extrair o locale diretamente da requisição
     let locale = await requestLocale;
     console.log(
       'locale do request antes do tratamento:',
       locale
     );
 
-    // Se requestLocale estiver indefinido, usa o cabeçalho 'accept-language' como fallback
     if (!locale) {
-      const reqHeaders = await headers(); // <-- Adiciona await aqui
+      const reqHeaders = await headers();
       const acceptLanguage =
         reqHeaders.get('accept-language') || '';
       console.log(
@@ -21,14 +35,21 @@ export default getRequestConfig(
         acceptLanguage
       );
 
-      if (acceptLanguage.toLowerCase().includes('pt')) {
+      const preferred = parseAcceptLanguage(acceptLanguage);
+      console.log(
+        'preferred language from header:',
+        preferred
+      );
+
+      if (preferred.toLowerCase().includes('pt')) {
         locale = 'pt';
+      } else if (preferred.toLowerCase().includes('en')) {
+        locale = 'en';
       } else {
-        locale = routing.defaultLocale; // geralmente 'en'
+        locale = routing.defaultLocale;
       }
     }
 
-    // Garante que locale seja 'en' ou 'pt'
     if (locale !== 'en' && locale !== 'pt') {
       locale = routing.defaultLocale;
     }
@@ -37,7 +58,6 @@ export default getRequestConfig(
       locale
     );
 
-    // Importa as mensagens conforme o locale definido
     const messages = (
       await (locale === 'pt'
         ? import('../../messages/pt.json')
