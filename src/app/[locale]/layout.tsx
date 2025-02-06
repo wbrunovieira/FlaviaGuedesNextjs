@@ -14,28 +14,22 @@ export async function generateStaticParams() {
 
 export default async function RootLocaleLayout(props: {
   children: React.ReactNode;
-  params: { locale: string } | Promise<{ locale: string }>;
+  params: Promise<{ locale: string }>;
 }) {
-  const params = await props.params;
-  console.log('params no layout locale', params);
-  const locale = params.locale;
-  console.log(' no layout locale', locale);
+  const resolvedParams = await props.params;
+  const locale = resolvedParams.locale;
   const messages = (
     await (locale === 'pt'
       ? import('../../../messages/pt.json')
       : import('../../../messages/en.json'))
   ).default;
 
-  console.log('messages do layout locale', messages);
-  console.log('params do layout locale', params);
-
   return (
     <html lang={locale}>
-      <head>
-        <title>Flavia Guedes</title>
-      </head>
       <body>
+        {/* Adicionamos key={locale} para forçar a remount quando o locale mudar */}
         <NextIntlClientProvider
+          key={locale}
           locale={locale}
           messages={messages}
         >

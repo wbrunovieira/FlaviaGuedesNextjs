@@ -1,11 +1,12 @@
 {
-  "Index": {
-    "title": "Home",
-    "greeting": "isso aqui mano",
-    "navigateToAbout": "Navigate to about"
+  "Nav": {
+    "logo": "MinhaApp",
+    "home": "Início",
+    "about": "Sobre",
+    "contact": "Contato",
+    "switchLanguage": "Mudar para EN"
   },
-  "About": {
-    "title": "About",
-    "description": "This is the about page."
+  "Index": {
+    "greeting": "Bem-vindo ao nosso site!"
   }
 }

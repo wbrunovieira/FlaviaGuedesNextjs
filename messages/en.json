@@ -1,11 +1,12 @@
 {
-  "Index": {
-    "title": "Home",
-    "greeting": "This is the home page."
-    
+  "Nav": {
+    "logo": "MyApp",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "switchLanguage": "Switch to PT"
   },
-  "About": {
-    "title": "About",
-    "description": "This is the about page."
+  "Index": {
+    "greeting": "Hello, welcome to our website!"
   }
 }

@@ -13,7 +13,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    // Aqui não definimos "lang", pois o layout dinâmico ([locale]) irá definir o atributo correto.
     <html>
       <head>
         <title>Flavia Guedes</title>
