@@ -1,9 +1,11 @@
 'use client';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import ButtonAnimatedGradient from './ButtonAnimatedGradient';
+import ToggleButton from './ToggleButton';
 
 gsap.registerPlugin(useGSAP);
 
@@ -13,8 +15,9 @@ export default function Nav() {
   const alternateLocale = locale === 'pt' ? 'en' : 'pt';
 
   const navContainer = useRef<HTMLElement>(null);
-
   const menuItemsRef = useRef<HTMLLIElement[]>([]);
+  const [mobileMenuOpen, setMobileMenuOpen] =
+    useState(false);
 
   useGSAP(
     () => {
@@ -26,9 +29,10 @@ export default function Nav() {
           ease: 'power3.out',
         });
       }
+
       if (menuItemsRef.current.length > 0) {
         gsap.timeline().fromTo(
-          menuItemsRef.current,
+          menuItemsRef.current.slice(0, 3),
           { opacity: 0, x: -20 },
           {
             opacity: 1,
@@ -37,9 +41,11 @@ export default function Nav() {
             ease: 'power3.out',
             stagger: 0.15,
             onComplete: () => {
-              menuItemsRef.current.forEach(el => {
-                gsap.set(el, { clearProps: 'all' });
-              });
+              menuItemsRef.current
+                .slice(0, 3)
+                .forEach(el => {
+                  gsap.set(el, { clearProps: 'all' });
+                });
             },
           }
         );
@@ -47,6 +53,23 @@ export default function Nav() {
     },
     { scope: navContainer }
   );
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      const mobileItems = menuItemsRef.current.slice(3, 6);
+      gsap.fromTo(
+        mobileItems,
+        { opacity: 0, x: -20 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.5,
+          ease: 'power3.out',
+          stagger: 0.15,
+        }
+      );
+    }
+  }, [mobileMenuOpen]);
 
   const registerMenuItem = (
     el: HTMLLIElement | null,
@@ -69,8 +92,8 @@ export default function Nav() {
         defaultValue: 'Main navigation',
       })}
     >
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
-        <div className="flex items-center space-x-6">
+      <div className="container mx-auto flex flex-col md:flex-row items-end justify-between">
+        <div className="flex items-end space-x-6">
           <Link href={`/${locale}`}>
             <span
               className="text-2xl font-bold cursor-pointer"
@@ -133,67 +156,76 @@ export default function Nav() {
           </ul>
         </div>
 
-        <div className="mt-4 md:mt-0">
-          <button
-            onClick={switchLanguage}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-200"
-            aria-label={t('switchLanguageAria', {
-              defaultValue: `Switch language to ${alternateLocale.toUpperCase()}`,
-            })}
-          >
-            {t('switchLanguage', {
+        <div className="mt-4 md:mt-0 flex items-end space-x-4">
+          <ButtonAnimatedGradient
+            text={t('switchLanguage', {
               defaultValue: `Switch to ${alternateLocale.toUpperCase()}`,
             })}
-          </button>
+            onClick={switchLanguage}
+          />
+
+          <ToggleButton
+            checked={mobileMenuOpen}
+            onChange={() =>
+              setMobileMenuOpen(prev => !prev)
+            }
+          />
         </div>
       </div>
 
-      <div className="md:hidden mt-4">
-        <ul className="flex flex-col space-y-2" role="menu">
-          <li
-            role="none"
-            ref={el => registerMenuItem(el, 3)}
-            className="hover:text-gray-300 transition duration-200"
+      {mobileMenuOpen && (
+        <div className="md:hidden mt-4">
+          <ul
+            className="flex flex-col space-y-2"
+            role="menu"
           >
-            <Link href={`/${locale}`}>
-              <span
-                role="menuitem"
-                className="cursor-pointer"
-              >
-                {t('home', { defaultValue: 'Home' })}
-              </span>
-            </Link>
-          </li>
-          <li
-            role="none"
-            ref={el => registerMenuItem(el, 4)}
-            className="hover:text-gray-300 transition duration-200"
-          >
-            <Link href={`/${locale}/about`}>
-              <span
-                role="menuitem"
-                className="cursor-pointer"
-              >
-                {t('about', { defaultValue: 'About' })}
-              </span>
-            </Link>
-          </li>
-          <li
-            role="none"
-            ref={el => registerMenuItem(el, 5)}
-            className="hover:text-gray-300 transition duration-200"
-          >
-            <Link href={`/${locale}/contact`}>
-              <span
-                role="menuitem"
-                className="cursor-pointer"
-              >
-                {t('contact', { defaultValue: 'Contact' })}
-              </span>
-            </Link>
-          </li>
-        </ul>
-      </div>
+            <li
+              role="none"
+              ref={el => registerMenuItem(el, 3)}
+              className="hover:text-gray-300 transition duration-200"
+            >
+              <Link href={`/${locale}`}>
+                <span
+                  role="menuitem"
+                  className="cursor-pointer"
+                >
+                  {t('home', { defaultValue: 'Home' })}
+                </span>
+              </Link>
+            </li>
+            <li
+              role="none"
+              ref={el => registerMenuItem(el, 4)}
+              className="hover:text-gray-300 transition duration-200"
+            >
+              <Link href={`/${locale}/about`}>
+                <span
+                  role="menuitem"
+                  className="cursor-pointer"
+                >
+                  {t('about', { defaultValue: 'About' })}
+                </span>
+              </Link>
+            </li>
+            <li
+              role="none"
+              ref={el => registerMenuItem(el, 5)}
+              className="hover:text-gray-300 transition duration-200"
+            >
+              <Link href={`/${locale}/contact`}>
+                <span
+                  role="menuitem"
+                  className="cursor-pointer"
+                >
+                  {t('contact', {
+                    defaultValue: 'Contact',
+                  })}
+                </span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
     </nav>
   );
 }
