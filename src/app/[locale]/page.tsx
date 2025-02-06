@@ -10,8 +10,6 @@ export default function Index() {
 
   return (
     <div>
-      <p>Locale atual: {locale}</p>
-      <p>{t('greeting')}</p>
       <Nav />
     </div>
   );
