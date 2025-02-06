@@ -4,9 +4,11 @@
     "home": "Home",
     "about": "About",
     "contact": "Contact",
-    "switchLanguage": "Switch to portuguese"
+    "switchLanguage": "Switch to Portuguese",
+    "navigationLabel": "Main navigation",
+    "logoAria": "Home page"
   },
   "Index": {
-    "greeting": "Hello, welcome to our website!"
+    "greeting": "Welcome to our website!"
   }
 }

@@ -4,7 +4,11 @@
     "home": "Início",
     "about": "Sobre",
     "contact": "Contato",
-    "switchLanguage": "Alterar para inglês"
+    "switchLanguage": "Alterar para inglês",
+    "navigationLabel": "Navegação principal",
+  "logoAria": "Página inicial"
+
+
   },
   "Index": {
     "greeting": "Bem-vindo ao nosso site!"
