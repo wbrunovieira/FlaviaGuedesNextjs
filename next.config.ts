@@ -1,7 +1,3 @@
-import type { NextConfig } from 'next';
+const withNextIntl = require('next-intl/plugin')();
 
-const nextConfig: NextConfig = {
-  reactStrictMode: false,
-};
-
-export default nextConfig;
+module.exports = withNextIntl();
