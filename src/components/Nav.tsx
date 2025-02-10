@@ -93,10 +93,13 @@ export default function Nav() {
       })}
     >
       <div className="container mx-auto flex flex-col md:flex-row items-end justify-between">
-        <div className="flex items-end space-x-6">
-          <Link href={`/${locale}`}>
+        <div className="flex items-end space-x-6 ">
+          <Link
+            href={`/${locale}`}
+            className="hover:scale-105 transition duration-200"
+          >
             <span
-              className="text-2xl font-bold cursor-pointer"
+              className="text-2xl font-bold cursor-pointer "
               aria-label={t('logoAria', {
                 defaultValue: 'Home',
               })}
@@ -112,7 +115,7 @@ export default function Nav() {
             <li
               role="none"
               ref={el => registerMenuItem(el, 0)}
-              className="hover:text-gray-300 transition duration-200"
+              className="hover:text-gray-300 hover:scale-105 transition duration-200"
             >
               <Link href={`/${locale}`}>
                 <span
@@ -126,7 +129,7 @@ export default function Nav() {
             <li
               role="none"
               ref={el => registerMenuItem(el, 1)}
-              className="hover:text-gray-300 transition duration-200"
+              className="hover:text-gray-300 hover:scale-105 transition duration-200"
             >
               <Link href={`/${locale}/about`}>
                 <span
@@ -140,7 +143,7 @@ export default function Nav() {
             <li
               role="none"
               ref={el => registerMenuItem(el, 2)}
-              className="hover:text-gray-300 transition duration-200"
+              className="hover:text-gray-300  hover:scale-105 transition duration-200"
             >
               <Link href={`/${locale}/contact`}>
                 <span
