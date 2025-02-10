@@ -27,7 +27,6 @@ export default async function RootLocaleLayout(props: {
   return (
     <html lang={locale}>
       <body>
-        {/* Adicionamos key={locale} para forçar a remount quando o locale mudar */}
         <NextIntlClientProvider
           key={locale}
           locale={locale}

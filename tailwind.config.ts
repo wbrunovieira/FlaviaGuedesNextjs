@@ -9,8 +9,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+        background: '#0A0A0A',
+        foreground: '#EDEDED',
+        gold: '#C8A04B',
+        graphite: '#1E1E1E',
+        grayMedium: '#B0B0B0',
+        deepBlue: '#005F73',
       },
       fontFamily: {
         sans: 'var(--font-work-sans), sans-serif',
