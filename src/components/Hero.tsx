@@ -21,10 +21,10 @@ export default function Hero() {
 
   useEffect(() => {
     const handleResize = () => {
-      setButtonSize(window.innerWidth < 768 ? 'sm' : 'lg'); // 'sm' para mobile (menos de 768px)
+      setButtonSize(window.innerWidth < 768 ? 'sm' : 'lg');
     };
 
-    handleResize(); // Chamar ao montar
+    handleResize();
     window.addEventListener('resize', handleResize);
 
     return () =>
@@ -84,7 +84,7 @@ export default function Hero() {
 
         <div className="mt-6 flex flex-wrap md:flex-nowrap items-center gap-4 w-full md:w-auto justify-center md:justify-start">
           <ButtonAnimatedGradient
-            size={buttonSize} // Controlado pelo estado
+            size={buttonSize}
             className="w-auto min-w-[150px] md:w-auto border border-white bg-transparent hover:bg-white hover:text-black "
             onClick={() => alert(t('bookNow'))}
           >

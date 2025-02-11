@@ -18,5 +18,15 @@
     "bookNow": "Book Now",
     "exploreServices": "Explore Services",
     "imageAlt": "Luxury hairdresser"
+  },
+  "Products": {
+    "premiumHaircareProducts": "Premium Haircare Products",
+    "premiumHaircareSubtitle": "We use the best haircare products selected by experts to enhance your beauty and keep your hair healthy.",
+    "rcoTitle": "Award-Winning R+Co Haircare",
+    "rcoDescription": "Luxury haircare designed by top hairstylists. Color-safe, heat & UV protective, and vegan.",
+    "k18Title": "K18 - The Future of Hair Repair",
+    "k18Description": "Biotech-powered formula that restores hair strength and elasticity in just 4 minutes.",
+    "colorWowTitle": "Color Wow - The Science of Stunning Hair",
+    "colorWowDescription": "Advanced, science-backed formulas for high-performance color care without harmful ingredients."
   }
 }

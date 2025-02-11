@@ -18,5 +18,15 @@
     "bookNow": "Agendar Agora",
     "exploreServices": "Explorar Serviços",
     "imageAlt": "Cabeleireira de luxo"
+  },
+  "Products": {
+    "premiumHaircareProducts": "Produtos Premium para Cabelos",
+    "premiumHaircareSubtitle": "Usamos os melhores produtos capilares escolhidos por especialistas para realçar sua beleza e manter seus cabelos saudáveis.",
+    "rcoTitle": "Cuidados Capilares Premiadas R+Co",
+    "rcoDescription": "Cuidados luxuosos para cabelos criados por cabeleireiros de topo. Seguro para cores, proteção UV e vegano.",
+    "k18Title": "K18 - O Futuro da Reparação Capilar",
+    "k18Description": "Fórmula de biotecnologia que restaura a força e a elasticidade do cabelo em apenas 4 minutos.",
+    "colorWowTitle": "Color Wow - A Ciência do Cabelo Deslumbrante",
+    "colorWowDescription": "Fórmulas avançadas e cientificamente comprovadas para cuidados de cores de alto desempenho sem ingredientes prejudiciais."
   }
 }
