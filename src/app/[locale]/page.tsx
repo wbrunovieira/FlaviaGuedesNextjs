@@ -1,19 +1,13 @@
 // src/app/[locale]/page.tsx
-import ButtonAnimatedGradient from '@/components/ButtonAnimatedGradient';
+
+import Hero from '@/components/Hero';
 import Nav from '@/components/Nav';
-import ToggleButton from '@/components/ToggleButton';
-import { useLocale, useTranslations } from 'next-intl';
 
 export default function Index() {
-  const t = useTranslations('Index');
-  const locale = useLocale();
-
-  console.log('locavle no page', locale);
-
   return (
-    <div>
+    <div className="w-full min-h-screen">
       <Nav />
-      <ButtonAnimatedGradient text="Clique Aqui" />
+      <Hero />
     </div>
   );
 }

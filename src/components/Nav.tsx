@@ -5,10 +5,10 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useRef, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi';
 import Flag from 'react-world-flags';
 import ButtonAnimatedGradient from './ButtonAnimatedGradient';
 import { FiRefreshCcw } from 'react-icons/fi';
+import ToggleButton from './ToggleButton';
 
 gsap.registerPlugin(useGSAP);
 
@@ -21,6 +21,15 @@ export default function Nav() {
   const menuItemsRef = useRef<HTMLLIElement[]>([]);
   const [mobileMenuOpen, setMobileMenuOpen] =
     useState(false);
+
+  const menuItems = [
+    'home',
+    'products',
+    'services',
+    'location',
+    'about',
+    'gallery',
+  ];
 
   useGSAP(
     () => {
@@ -68,9 +77,9 @@ export default function Nav() {
   return (
     <nav
       ref={navContainer}
-      className="bg-background text-foreground p-4 shadow-md relative"
+      className="bg-background text-foreground p-4 shadow-md relative w-full"
     >
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto flex justify-between items-center w-full">
         <Link
           href={`/${locale}`}
           className="hover:scale-105 transition duration-200"
@@ -81,26 +90,24 @@ export default function Nav() {
         </Link>
 
         <ul className="hidden md:flex space-x-6">
-          {['home', 'about', 'contact'].map(
-            (item, index) => (
-              <li
-                key={item}
-                ref={el => {
-                  if (el) menuItemsRef.current[index] = el;
-                }}
-                className="hover:text-gold transition duration-200"
+          {menuItems.map((item, index) => (
+            <li
+              key={item}
+              ref={el => {
+                if (el) menuItemsRef.current[index] = el;
+              }}
+              className="hover:text-gold transition duration-200"
+            >
+              <Link
+                href={`/${locale}/${
+                  item !== 'home' ? item : ''
+                }`}
+                className="cursor-pointer"
               >
-                <Link
-                  href={`/${locale}/${
-                    item !== 'home' ? item : ''
-                  }`}
-                  className="cursor-pointer"
-                >
-                  {t(item, { defaultValue: item })}
-                </Link>
-              </li>
-            )
-          )}
+                {t(item, { defaultValue: item })}
+              </Link>
+            </li>
+          ))}
         </ul>
 
         <div className="flex items-center space-x-4">
@@ -118,51 +125,38 @@ export default function Nav() {
               />
               <FiRefreshCcw className="w-4 h-4 text-white opacity-80" />
             </span>
-
-            <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 hidden px-2 py-1 text-xs text-white bg-black rounded-md opacity-0 group-hover:block group-hover:opacity-100 transition-opacity">
-              {locale === 'pt'
-                ? 'Alterar idioma'
-                : 'Switch language'}
-            </span>
           </ButtonAnimatedGradient>
 
-          <button
-            onClick={() => setMobileMenuOpen(prev => !prev)}
-            className="md:hidden p-2"
-          >
-            {mobileMenuOpen ? (
-              <HiOutlineX size={28} />
-            ) : (
-              <HiOutlineMenu size={28} />
-            )}
-          </button>
+          <ToggleButton
+            checked={mobileMenuOpen}
+            onChange={() =>
+              setMobileMenuOpen(prev => !prev)
+            }
+          />
         </div>
       </div>
 
       {mobileMenuOpen && (
-        <div className="mobile-menu md:hidden mt-4 bg-background p-4 rounded-lg shadow-lg">
-          <ul className="flex flex-col space-y-3">
-            {['home', 'about', 'contact'].map(
-              (item, index) => (
-                <li
-                  key={item}
-                  ref={el => {
-                    if (el)
-                      menuItemsRef.current[index] = el;
-                  }}
-                  className="hover:text-gold transition duration-200"
+        <div className="mobile-menu md:hidden mt-4 bg-background p-4 rounded-lg shadow-lg w-full">
+          <ul className="flex  flex-col space-y-3 w-full">
+            {menuItems.map((item, index) => (
+              <li
+                key={item}
+                ref={el => {
+                  if (el) menuItemsRef.current[index] = el;
+                }}
+                className="hover:text-gold transition duration-200"
+              >
+                <Link
+                  href={`/${locale}/${
+                    item !== 'home' ? item : ''
+                  }`}
+                  className="cursor-pointer block text-lg"
                 >
-                  <Link
-                    href={`/${locale}/${
-                      item !== 'home' ? item : ''
-                    }`}
-                    className="cursor-pointer block text-lg"
-                  >
-                    {t(item, { defaultValue: item })}
-                  </Link>
-                </li>
-              )
-            )}
+                  {t(item, { defaultValue: item })}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       )}

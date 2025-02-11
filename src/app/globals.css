@@ -18,6 +18,8 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-work-sans), sans-serif;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 h1,

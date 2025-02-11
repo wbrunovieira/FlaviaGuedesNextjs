@@ -1,16 +1,22 @@
 {
   "Nav": {
-    "logo": "MinhaApp",
+    "logo": "Logo",
     "home": "Início",
+    "products": "Produtos",
+    "services": "Serviços",
+    "location": "Localização",
     "about": "Sobre",
+    "gallery": "Galeria",
     "contact": "Contato",
-    
     "navigationLabel": "Navegação principal",
-  "logoAria": "Página inicial"
-
-
+    "logoAria": "Página inicial"
   },
-  "Index": {
-    "greeting": "Bem-vindo ao nosso site!"
+  "Hero": {
+    "title1": "Cabelos Perfeitos,",
+    "title2": "Experiência Única",
+    "description": "Experiência exclusiva para realçar sua beleza com técnicas modernas e atendimento personalizado.",
+    "bookNow": "Agendar Agora",
+    "exploreServices": "Explorar Serviços",
+    "imageAlt": "Cabeleireira de luxo"
   }
 }

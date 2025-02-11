@@ -23,18 +23,24 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
       className="relative w-10 h-10 cursor-pointer flex flex-col items-center justify-center gap-[10px] transition duration-300"
     >
       <div
-        className={`w-full h-1 bg-[rgb(76,189,151)] rounded transition duration-300 ${
-          checked ? 'ml-[13px] rotate-45 origin-left' : ''
+        className={`w-full h-1 bg-white rounded transition duration-300 ${
+          checked
+            ? 'ml-[13px] rotate-45 origin-left bg-gold'
+            : 'bg-gray-700'
         }`}
       />
       <div
-        className={`w-full h-1 bg-[rgb(76,189,151)] rounded transition duration-300 ${
-          checked ? 'rotate-[135deg] origin-center' : ''
+        className={`w-full h-1 bg-white rounded transition duration-300 ${
+          checked
+            ? 'rotate-[135deg] origin-center bg-gold'
+            : 'bg-gray-700'
         }`}
       />
       <div
-        className={`w-full h-1 bg-[rgb(76,189,151)] rounded transition duration-300 ${
-          checked ? 'ml-[13px] -rotate-45 origin-left' : ''
+        className={`w-full h-1 bg-white rounded transition duration-300 ${
+          checked
+            ? 'ml-[13px] -rotate-45 origin-left bg-gold'
+            : 'bg-gray-700'
         }`}
       />
     </label>

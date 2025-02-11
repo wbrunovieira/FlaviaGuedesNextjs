@@ -66,7 +66,7 @@ const ButtonAnimatedGradient = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      className={`relative inline-flex w-fit mx-auto items-center justify-center overflow-hidden rounded-md border-2 transition-all focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50 
+      className={`relative w-fit items-left justify-left overflow-hidden rounded-md border-2 transition-all focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50 
         ${sizeClasses[size]} 
         border-[#FFD700] dark:border-[#A67C00] 
         bg-gradient-to-r from-[#FFD700] to-[#C8A04B] dark:from-[#5A4100] dark:to-[#A67C00] 
@@ -80,7 +80,7 @@ const ButtonAnimatedGradient = ({
         }}
       />
 
-      <span className="relative z-20 flex items-center space-x-2">
+      <span className="relative z-20 flex items-center space-x-2 text-center">
         {children} {text && <span>{text}</span>}
       </span>
     </button>

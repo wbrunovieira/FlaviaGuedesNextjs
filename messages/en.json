@@ -1,14 +1,22 @@
 {
   "Nav": {
-    "logo": "MyApp",
+    "logo": "Logo",
     "home": "Home",
+    "products": "Products",
+    "services": "Services",
+    "location": "Location",
     "about": "About",
+    "gallery": "Gallery",
     "contact": "Contact",
-    
     "navigationLabel": "Main navigation",
     "logoAria": "Home page"
   },
-  "Index": {
-    "greeting": "Welcome to our website!"
+  "Hero": {
+    "title1": "Perfect Hair,",
+    "title2": "Unique Experience",
+    "description": "Exclusive experience to enhance your beauty with modern techniques and personalized care.",
+    "bookNow": "Book Now",
+    "exploreServices": "Explore Services",
+    "imageAlt": "Luxury hairdresser"
   }
 }
