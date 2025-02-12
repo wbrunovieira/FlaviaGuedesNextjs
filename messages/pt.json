@@ -28,5 +28,11 @@
     "k18Description": "Fórmula de biotecnologia que restaura a força e a elasticidade do cabelo em apenas 4 minutos.",
     "colorWowTitle": "Color Wow - A Ciência do Cabelo Deslumbrante",
     "colorWowDescription": "Fórmulas avançadas e cientificamente comprovadas para cuidados de cores de alto desempenho sem ingredientes prejudiciais."
+  },
+  "Location": {
+    "title": "iFierce Beauty Lounge",
+    "subtitle": "Venha nos visitar e descubra como o cuidado certo faz toda a diferença para você se sentir ainda mais segura e radiante.",
+    "address": "2685 E. Oakland Park Blvd\nFort Lauderdale, FL 33306",
+    "buttonLabel": "Ver no Google Maps"
   }
 }

@@ -3,13 +3,15 @@
 import Hero from '@/components/Hero';
 import Nav from '@/components/Nav';
 import ProductsShowcase from '@/components/Products';
+import Location from '@/components/Location';
 
 export default function Index() {
   return (
-    <div className="w-full min-h-screen">
+    <div className="bg-black w-full min-h-screen">
       <Nav />
       <Hero />
       <ProductsShowcase />
+      <Location />
     </div>
   );
 }

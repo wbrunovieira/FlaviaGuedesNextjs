@@ -43,7 +43,7 @@ export default function ProductsShowcase() {
   return (
     <section
       ref={productsRef}
-      className="py-16 px-6 md:px-12 lg:px-20 text-white"
+      className="py-16 px-6 md:px-12 lg:px-20 text-white mt-32"
       style={{
         background:
           'linear-gradient(to right, black 40%, #C8A04B 48%, #C8A04B 52%, black 60%)',

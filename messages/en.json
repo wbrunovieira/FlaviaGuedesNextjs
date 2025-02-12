@@ -28,5 +28,11 @@
     "k18Description": "Biotech-powered formula that restores hair strength and elasticity in just 4 minutes.",
     "colorWowTitle": "Color Wow - The Science of Stunning Hair",
     "colorWowDescription": "Advanced, science-backed formulas for high-performance color care without harmful ingredients."
+  },
+   "Location": {
+    "title": "iFierce Beauty Lounge",
+    "subtitle": "Come visit us and discover how the right care can help you feel even more confident and radiant.",
+    "address": "2685 E. Oakland Park Blvd\nFort Lauderdale, FL 33306",
+    "buttonLabel": "View on Google Maps"
   }
 }
