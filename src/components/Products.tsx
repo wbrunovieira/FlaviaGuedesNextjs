@@ -49,7 +49,7 @@ export default function ProductsShowcase() {
           'linear-gradient(to right, black 40%, #C8A04B 48%, #C8A04B 52%, black 60%)',
       }}
     >
-      <div className="bg-black bg-opacity-80 p-4 rounded-lg">
+      <div className="bg-black bg-opacity-80 p-16 rounded-lg">
         <h2 className="text-4xl font-bold text-center mb-6">
           {t('premiumHaircareProducts')}
         </h2>
