@@ -19,39 +19,32 @@ export function Carousel({ slides }: CarouselProps) {
   const slideCount = slides.length;
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Detecta o card principal no mobile (usando scroll)
   useEffect(() => {
-    if (containerRef.current) {
-      const handleScroll = () => {
-        const children = Array.from(
-          containerRef.current?.children || []
-        );
-        children.forEach((child, index) => {
-          const rect = (
-            child as HTMLElement
-          ).getBoundingClientRect();
-          // Verifica se o slide está totalmente visível no viewport
-          const inView =
-            rect.left >= 0 &&
-            rect.right <=
-              (window.innerWidth ||
-                document.documentElement.clientWidth);
-          // Se estiver visível e for mobile (<768px), define como currentIndex
-          if (inView && window.innerWidth < 768) {
-            setCurrentIndex(index);
-          }
-        });
-      };
-      containerRef.current.addEventListener(
-        'scroll',
-        handleScroll
-      );
-      return () =>
-        containerRef.current?.removeEventListener(
-          'scroll',
-          handleScroll
-        );
-    }
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const children = Array.from(container.children);
+      children.forEach((child, index) => {
+        const rect = (
+          child as HTMLElement
+        ).getBoundingClientRect();
+        const inView =
+          rect.left >= 0 &&
+          rect.right <=
+            (window.innerWidth ||
+              document.documentElement.clientWidth);
+        if (inView && window.innerWidth < 768) {
+          setCurrentIndex(index);
+        }
+      });
+    };
+
+    container.addEventListener('scroll', handleScroll);
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const handleNext = () => {
@@ -132,7 +125,6 @@ export function Carousel({ slides }: CarouselProps) {
         ))}
       </div>
 
-      {/* Controles de navegação no mobile */}
       <div className="flex justify-center space-x-4 mt-4 md:hidden">
         <button
           onClick={handlePrev}

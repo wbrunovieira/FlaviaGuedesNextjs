@@ -4,6 +4,9 @@ import Hero from '@/components/Hero';
 import Nav from '@/components/Nav';
 import ProductsShowcase from '@/components/Products';
 import Location from '@/components/Location';
+import About from '@/components/About';
+
+import Services from '@/components/Service';
 
 export default function Index() {
   return (
@@ -12,6 +15,9 @@ export default function Index() {
       <Hero />
       <ProductsShowcase />
       <Location />
+      <About />
+
+      <Services />
     </div>
   );
 }

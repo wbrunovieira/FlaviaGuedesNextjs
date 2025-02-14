@@ -77,7 +77,7 @@ export default function Nav() {
   return (
     <nav
       ref={navContainer}
-      className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-md text-foreground p-4 shadow-md z-50"
+      className="fixed  top-0 left-0 w-full bg-background/80 backdrop-blur-md text-foreground p-4 shadow-md z-50"
     >
       <div className="container mx-auto flex justify-between items-center w-full">
         <Link

@@ -32,7 +32,6 @@ export default function Location() {
       }}
     >
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
-        {/* Logo e texto */}
         <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left">
           <div className="mb-6">
             <Image
