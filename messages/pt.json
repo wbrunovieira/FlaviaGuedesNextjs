@@ -44,64 +44,95 @@
     "paragraph4": "Diariamente, aprendo com minha equipe e com cada desafio que entra pela porta. Se você quer clarear seus fios ou inovar completamente o visual, estou aqui para ajudar.",
     "motto": "Lema: “Muito ego matará o seu talento.”"
   },
-"Services": {
+    "Services": {
     "title": "Nossos Serviços",
     "subtitle": "Eleve sua experiência de beleza com nossos serviços premium para cabelos. Desde tratamentos profundos até alisamentos luxuosos, oferecemos o que há de melhor para você.",
+    "final_price": "*o preço final é informado sob consulta",
     "categories": {
       "hair_color_services": {
         "name": "Serviços de Coloração",
-        "items": {
-          "item_1": { "name": "Single Process", "price": "$75" },
-          "item_2": { "name": "Single Process Natural Color", "price": "$80" },
-          "item_3": { "name": "Goldwell Single Process", "price": "$85" },
-          "item_4": { "name": "All Over Color", "price": "$95" },
-          "item_5": { "name": "Base Brake", "price": "$70" },
-          "item_6": { "name": "Balayage/Ombre", "price": "$175" },
-          "item_7": { "name": "Color/Clear Gloss-Glaze Stand Alone", "price": "$65" },
-          "item_8": { "name": "Colorance Toner Stand Alone", "price": "$65" },
-          "item_9": { "name": "Double Process Color", "price": "$185" },
-          "item_10": { "name": "Face-Frame Highlights/LowLights", "price": "$75" },
-          "item_11": { "name": "Few Highlights/LowLights", "price": "$45" },
-          "item_12": { "name": "Full-Head Highlights", "price": "$155" },
-          "item_13": { "name": "Partial Highlights/LowLights", "price": "$115" },
-          "item_14": { "name": "Single & Faceframe Highlights", "price": "$150" },
-          "item_15": { "name": "Single & Full-highlights", "price": "$215" },
-          "item_16": { "name": "Single & Partial Highlights", "price": "$175" },
-          "item_17": { "name": "Sunkiss Highlights", "price": "$75" },
-          "item_18": { "name": "Coloração Corretiva", "price": "Consulta" }
+        "groups": {
+          "coloracao_basica": {
+            "name": "Coloração Básica",
+            "items": {
+              "item_1": { "name": "Single Process", "price": "$75" },
+              "item_2": { "name": "Single Process Natural Color", "price": "$80" },
+              "item_3": { "name": "Goldwell Single Process", "price": "$85" },
+              "item_4": { "name": "All Over Color", "price": "$95" },
+              "item_5": { "name": "Base Brake", "price": "$70" }
+            }
+          },
+          "destaques_tecnicas": {
+            "name": "Destaques e Técnicas",
+            "items": {
+              "item_6": { "name": "Balayage/Ombre", "price": "$175" },
+              "item_7": { "name": "Color/Clear Gloss-Glaze Stand Alone", "price": "$65" },
+              "item_8": { "name": "Colorance Toner Stand Alone", "price": "$65" },
+              "item_9": { "name": "Double Process Color", "price": "$185" },
+              "item_10": { "name": "Face-Frame Highlights/LowLights", "price": "$75" },
+              "item_11": { "name": "Few Highlights/LowLights", "price": "$45" },
+              "item_12": { "name": "Full-Head Highlights", "price": "$155" },
+              "item_13": { "name": "Partial Highlights/LowLights", "price": "$115" },
+              "item_14": { "name": "Single & Faceframe Highlights", "price": "$150" },
+              "item_15": { "name": "Single & Full-highlights", "price": "$215" },
+              "item_16": { "name": "Single & Partial Highlights", "price": "$175" },
+              "item_17": { "name": "Sunkiss Highlights", "price": "$75" },
+              "item_18": { "name": "Coloração Corretiva", "price": "Consulta" }
+            }
+          }
         }
       },
       "haircuts": {
         "name": "Cortes de Cabelo",
-        "items": {
-          "item_1": { "name": "Corte e Escova", "price": "$75" },
-          "item_2": { "name": "Corte e Escova (11 anos ou menos)", "price": "$50" },
-          "item_3": { "name": "Apenas Corte", "price": "$55" },
-          "item_4": { "name": "Corte Infantil", "price": "$35" },
-          "item_5": { "name": "Franja", "price": "$12" }
+        "groups": {
+          "adultos": {
+            "name": "Adultos",
+            "items": {
+              "item_1": { "name": "Corte e Escova", "price": "$75" },
+              "item_3": { "name": "Apenas Corte", "price": "$55" },
+              "item_5": { "name": "Franja", "price": "$12" }
+            }
+          },
+          "infantis": {
+            "name": "Infantis",
+            "items": {
+              "item_2": { "name": "Corte e Escova (11 anos ou menos)", "price": "$50" },
+              "item_4": { "name": "Corte Infantil", "price": "$35" }
+            }
+          }
         }
       },
       "add_on_treatment": {
         "name": "Serviços Adicionais / Tratamentos",
-        "items": {
-          "item_1": { "name": "ANTIDOTPRO - Protege e Alivia Couro Cabeludo", "price": "$5" },
-          "item_2": { "name": "Reconstrução Capilar Brasileira b3", "price": "$35" },
-          "item_3": { "name": "Tratamento Olaplex Adicional", "price": "$35" },
-          "item_4": { "name": "Mini Tratamento Olaplex", "price": "$25" },
-          "item_5": { "name": "Tratamento Olaplex Completo", "price": "$75" },
-          "item_6": { "name": "Gloss-Glaze Adicional", "price": "$45" },
-          "item_7": { "name": "Color Melt", "price": "$60" },
-          "item_8": { "name": "Tratamento Moroccanoil Chromatech", "price": "$20" },
-          "item_9": { "name": "Toner Adicional", "price": "$35" }
+        "groups": {
+          "tratamentos": {
+            "name": "Tratamentos",
+            "items": {
+              "item_1": { "name": "ANTIDOTPRO - Protege e Alivia Couro Cabeludo", "price": "$5" },
+              "item_2": { "name": "Reconstrução Capilar Brasileira b3", "price": "$35" },
+              "item_3": { "name": "Tratamento Olaplex Adicional", "price": "$35" },
+              "item_4": { "name": "Mini Tratamento Olaplex", "price": "$25" },
+              "item_5": { "name": "Tratamento Olaplex Completo", "price": "$75" },
+              "item_6": { "name": "Gloss-Glaze Adicional", "price": "$45" },
+              "item_7": { "name": "Color Melt", "price": "$60" },
+              "item_8": { "name": "Tratamento Moroccanoil Chromatech", "price": "$20" },
+              "item_9": { "name": "Toner Adicional", "price": "$35" }
+            }
+          }
         }
       },
       "design_styling": {
         "name": "Design / Estilização",
-        "items": {
-          "item_1": { "name": "Shampoo & Escova", "price": "$45" },
-          "item_2": { "name": "Shampoo & Escova Cabelos Longos", "price": "$50" },
-          "item_3": { "name": "Shampoo & Escova Cabelos Extra Longos", "price": "$55" },
-          "item_4": { "name": "Trança", "price": "$15" }
+        "groups": {
+          "estilizacao_basica": {
+            "name": "Estilização Básica",
+            "items": {
+              "item_1": { "name": "Shampoo & Escova", "price": "$45" },
+              "item_2": { "name": "Shampoo & Escova Cabelos Longos", "price": "$50" },
+              "item_3": { "name": "Shampoo & Escova Cabelos Extra Longos", "price": "$55" },
+              "item_4": { "name": "Trança", "price": "$15" }
+            }
+          }
         }
       }
     }

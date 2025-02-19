@@ -44,47 +44,87 @@
     "paragraph4": "Every day, I learn from my team and the unique challenges that come through the salon doors. If you're looking to lighten your hair or completely transform your look, I'm here to help.",
     "motto": "Motto: “Too much ego will kill your talent.”"
   },
-  "Services": {
-    "title": "Our Services",
-    "subtitle": "Elevate your beauty experience with our premium hair care services. From deep conditioning treatments to luxurious blowouts, we provide the best for you.",
+ "Services": {
+   "title": "Our Services",
+   "subtitle": "Elevate your beauty experience with our premium hair care services. From deep conditioning treatments to luxurious blowouts, we provide the best for you.",
+   "final_price": "*final price is given under consultation",
     "categories": {
       "hair_color_services": {
         "name": "Hair Color Services",
-        "items": {
-          "item_1": { "name": "Single Process", "price": "$75" },
-          "item_2": { "name": "Single Process Natural Color", "price": "$80" },
-          "item_3": { "name": "Goldwell Single Process", "price": "$85" },
-          "item_4": { "name": "All Over Color", "price": "$95" },
-          "item_5": { "name": "Base Brake", "price": "$70" },
-          "item_6": { "name": "Balayage/Ombre", "price": "$175" },
-          "item_7": { "name": "Color/Clear Gloss-Glaze Stand Alone", "price": "$65" },
-          "item_8": { "name": "Colorance Toner Stand Alone", "price": "$65" },
-          "item_9": { "name": "Double Process Color", "price": "$185" },
-          "item_10": { "name": "Face-Frame Highlights/LowLights", "price": "$75" }
+        "groups": {
+          "basic_coloring": {
+            "name": "Basic Coloring",
+            "items": {
+              "item_1": { "name": "Single Process", "price": "$75" },
+              "item_2": { "name": "Single Process Natural Color", "price": "$80" },
+              "item_3": { "name": "Goldwell Single Process", "price": "$85" },
+              "item_4": { "name": "All Over Color", "price": "$95" },
+              "item_5": { "name": "Base Brake", "price": "$70" }
+            }
+          },
+          "advanced_techniques": {
+            "name": "Advanced Techniques",
+            "items": {
+              "item_6": { "name": "Balayage/Ombre", "price": "$175" },
+              "item_7": { "name": "Color/Clear Gloss-Glaze Stand Alone", "price": "$65" },
+              "item_8": { "name": "Colorance Toner Stand Alone", "price": "$65" },
+              "item_9": { "name": "Double Process Color", "price": "$185" },
+              "item_10": { "name": "Face-Frame Highlights/LowLights", "price": "$75" }
+            }
+          }
         }
       },
       "haircuts": {
         "name": "Haircuts",
-        "items": {
-          "item_1": { "name": "Haircut & Blowout", "price": "$75" },
-          "item_2": { "name": "Haircut And Blowout (11under)", "price": "$50" },
-          "item_3": { "name": "Haircut Only", "price": "$55" },
-          "item_4": { "name": "Haircut (11under)", "price": "$35" },
-          "item_5": { "name": "Bangs/Fringe Trim", "price": "$12" }
+        "groups": {
+          "adult_haircuts": {
+            "name": "Adults",
+            "items": {
+              "item_1": { "name": "Haircut & Blowout", "price": "$75" },
+              "item_3": { "name": "Haircut Only", "price": "$55" },
+              "item_5": { "name": "Bangs/Fringe Trim", "price": "$12" }
+            }
+          },
+          "children_haircuts": {
+            "name": "Children",
+            "items": {
+              "item_2": { "name": "Haircut And Blowout (11under)", "price": "$50" },
+              "item_4": { "name": "Haircut (11under)", "price": "$35" }
+            }
+          }
         }
       },
       "add_on_treatment": {
         "name": "Add-On / Treatment Services",
-        "items": {
-          "item_1": { "name": "ANTIDOTPRO - Relieves And Protect Hair And Scalp", "price": "$5" },
-          "item_2": { "name": "b3 Brazilian Bond Builder", "price": "$35" },
-          "item_3": { "name": "Olaplex Treatment Add-On", "price": "$35" },
-          "item_4": { "name": "Mini Olaplex Treatment", "price": "$25" },
-          "item_5": { "name": "Olaplex Treatment Stand Alone", "price": "$75" },
-          "item_6": { "name": "Gloss-Glaze Add On", "price": "$45" },
-          "item_7": { "name": "Color Melt", "price": "$60" },
-          "item_8": { "name": "Moroccanoil Chromatech Treatment", "price": "$20" },
-          "item_9": { "name": "Toner Add On", "price": "$35" }
+        "groups": {
+          "treatments": {
+            "name": "Treatments",
+            "items": {
+              "item_1": { "name": "ANTIDOTPRO - Relieves And Protects Hair And Scalp", "price": "$5" },
+              "item_2": { "name": "b3 Brazilian Bond Builder", "price": "$35" },
+              "item_3": { "name": "Olaplex Treatment Add-On", "price": "$35" },
+              "item_4": { "name": "Mini Olaplex Treatment", "price": "$25" },
+              "item_5": { "name": "Olaplex Treatment Stand Alone", "price": "$75" },
+              "item_6": { "name": "Gloss-Glaze Add On", "price": "$45" },
+              "item_7": { "name": "Color Melt", "price": "$60" },
+              "item_8": { "name": "Moroccanoil Chromatech Treatment", "price": "$20" },
+              "item_9": { "name": "Toner Add On", "price": "$35" }
+            }
+          }
+        }
+      },
+      "design_styling": {
+        "name": "Design / Styling",
+        "groups": {
+          "basic_styling": {
+            "name": "Basic Styling",
+            "items": {
+              "item_1": { "name": "Shampoo & Blowout", "price": "$45" },
+              "item_2": { "name": "Shampoo & Blowout for Long Hair", "price": "$50" },
+              "item_3": { "name": "Shampoo & Blowout for Extra Long Hair", "price": "$55" },
+              "item_4": { "name": "Braid", "price": "$15" }
+            }
+          }
         }
       }
     }
