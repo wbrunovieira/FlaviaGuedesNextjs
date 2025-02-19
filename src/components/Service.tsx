@@ -131,7 +131,6 @@ const ServiceSection: React.FC<ServiceSectionProps> = ({
       <div className="flex flex-col gap-6">
         {services.map((category, index) => (
           <div key={index}>
-            {/* Cabeçalho centralizado (vertical e horizontalmente) */}
             <div className="flex flex-col items-center justify-center gap-2 mt-4 p-6">
               {serviceIcons[category.key] || (
                 <FaSpa className="text-white text-3xl" />
