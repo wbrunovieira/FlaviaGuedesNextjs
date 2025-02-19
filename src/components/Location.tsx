@@ -6,7 +6,13 @@ import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
 
-export default function Location() {
+type LocationProps = {
+  id?: string;
+};
+
+export default function Location({
+  id = 'location',
+}: LocationProps) {
   const t = useTranslations('Location');
   const locationRef = useRef<HTMLDivElement>(null);
 
@@ -22,6 +28,7 @@ export default function Location() {
   return (
     <section
       ref={locationRef}
+      id={id}
       className="relative container w-full py-16 px-6 md:px-12 lg:px-20 text-white overflow-hidden mx-auto mt-32"
       style={{
         background: `

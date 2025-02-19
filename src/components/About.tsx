@@ -5,6 +5,10 @@ import gsap from 'gsap';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
+type AboutProps = {
+  id?: string;
+};
+
 function splitParagraphIntoSpans(text: string) {
   return text.split(' ').map((word, idx) => (
     <span
@@ -30,7 +34,9 @@ function getTitleSpans(title1: string, title2: string) {
   );
 }
 
-export default function About() {
+export default function About({
+  id = 'about',
+}: AboutProps) {
   const t = useTranslations('About');
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -105,6 +111,7 @@ export default function About() {
 
   return (
     <section
+      id={id}
       ref={containerRef}
       className="relative container w-full py-16 px-6 md:px-12 lg:px-20 text-white overflow-hidden mx-auto mt-32"
       style={{

@@ -10,8 +10,6 @@ import ButtonAnimatedGradient from './ButtonAnimatedGradient';
 import { FiRefreshCcw } from 'react-icons/fi';
 import ToggleButton from './ToggleButton';
 
-gsap.registerPlugin(useGSAP);
-
 export default function Nav() {
   const t = useTranslations('Nav');
   const locale = useLocale();
@@ -22,13 +20,14 @@ export default function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] =
     useState(false);
 
+  // Refatoração: array de objetos com nome e href para cada seção
   const menuItems = [
-    'home',
-    'products',
-    'services',
-    'location',
-    'about',
-    'gallery',
+    { name: 'home', href: '#top' },
+    { name: 'products', href: '#products' },
+    { name: 'services', href: '#services' },
+    { name: 'location', href: '#location' },
+    { name: 'about', href: '#about' },
+    { name: 'gallery', href: '#gallery' },
   ];
 
   useGSAP(
@@ -77,11 +76,13 @@ export default function Nav() {
   return (
     <nav
       ref={navContainer}
-      className="fixed  top-0 left-0 w-full bg-background/80 backdrop-blur-md text-foreground p-4 shadow-md z-50"
+      id="top" // âncora para o topo da página
+      className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-md text-foreground p-4 shadow-md z-50"
     >
       <div className="container mx-auto flex justify-between items-center w-full">
+        {/* Logo redireciona para o topo */}
         <Link
-          href={`/${locale}`}
+          href="#top"
           className="hover:scale-105 transition duration-200"
         >
           <span className="text-2xl font-bold cursor-pointer">
@@ -89,27 +90,27 @@ export default function Nav() {
           </span>
         </Link>
 
+        {/* Menu para desktop */}
         <ul className="hidden md:flex space-x-6">
           {menuItems.map((item, index) => (
             <li
-              key={item}
+              key={item.name}
               ref={el => {
                 if (el) menuItemsRef.current[index] = el;
               }}
               className="hover:text-gold transition duration-200"
             >
               <Link
-                href={`/${locale}/${
-                  item !== 'home' ? item : ''
-                }`}
+                href={item.href}
                 className="cursor-pointer"
               >
-                {t(item, { defaultValue: item })}
+                {t(item.name, { defaultValue: item.name })}
               </Link>
             </li>
           ))}
         </ul>
 
+        {/* Botões de alternância de idioma e menu mobile */}
         <div className="flex items-center space-x-4">
           <ButtonAnimatedGradient
             size="sm"
@@ -136,24 +137,25 @@ export default function Nav() {
         </div>
       </div>
 
+      {/* Menu mobile */}
       {mobileMenuOpen && (
         <div className="mobile-menu md:hidden mt-4 bg-background p-4 rounded-lg shadow-lg w-full">
-          <ul className="flex  flex-col space-y-3 w-full">
+          <ul className="flex flex-col space-y-3 w-full">
             {menuItems.map((item, index) => (
               <li
-                key={item}
+                key={item.name}
                 ref={el => {
                   if (el) menuItemsRef.current[index] = el;
                 }}
                 className="hover:text-gold transition duration-200"
               >
                 <Link
-                  href={`/${locale}/${
-                    item !== 'home' ? item : ''
-                  }`}
+                  href={item.href}
                   className="cursor-pointer block text-lg"
                 >
-                  {t(item, { defaultValue: item })}
+                  {t(item.name, {
+                    defaultValue: item.name,
+                  })}
                 </Link>
               </li>
             ))}

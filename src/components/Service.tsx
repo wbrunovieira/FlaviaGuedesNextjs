@@ -12,7 +12,10 @@ import {
 import AnimatedCard from './AnimatedCard';
 import { SparklesHero } from './SparklesHero';
 
-// Tipos para os serviços
+type ServiceSectionProps = {
+  id?: string;
+};
+
 type ServiceItem = {
   name: string;
   price: string;
@@ -24,7 +27,9 @@ type ServiceCategory = {
   items: ServiceItem[];
 };
 
-const ServiceSection: React.FC = () => {
+const ServiceSection: React.FC = ({
+  id = 'services',
+}: ServiceSectionProps) => {
   const t = useTranslations('Services');
 
   const serviceIcons: Record<string, ReactNode> = {
@@ -66,7 +71,10 @@ const ServiceSection: React.FC = () => {
   }));
 
   return (
-    <div className="p-6 max-w-4xl mx-auto mt-32">
+    <section
+      className="p-6 max-w-4xl mx-auto mt-32"
+      id={id}
+    >
       <h2 className="text-5xl font-bold text-center text-white mb-2">
         {t('title')}
       </h2>
@@ -102,7 +110,7 @@ const ServiceSection: React.FC = () => {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

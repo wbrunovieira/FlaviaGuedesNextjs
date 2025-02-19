@@ -6,6 +6,10 @@ import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { Carousel } from '@/components/ui/carousel';
 
+type ProductsShowcaseProps = {
+  id?: string;
+};
+
 const products = [
   {
     brand: 'R+Co',
@@ -27,7 +31,9 @@ const products = [
   },
 ];
 
-export default function ProductsShowcase() {
+export default function ProductsShowcase({
+  id = 'products',
+}: ProductsShowcaseProps) {
   const t = useTranslations('Products');
   const productsRef = useRef(null);
 
@@ -42,6 +48,7 @@ export default function ProductsShowcase() {
 
   return (
     <section
+      id={id}
       ref={productsRef}
       className="py-16 px-6 md:px-12 lg:px-20 text-white mt-32"
       style={{
