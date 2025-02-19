@@ -148,5 +148,11 @@
     "instagram": "@flaviaguedesstylist",
     "tiktok": "@guedesflavia6",
     "copyright": "WB Digital Solutions. Todos os direitos reservados."
+  },
+   "GiftCard": {
+    "title": "Compra de Gift Card",
+    "description": "Adquira um gift card para presentear alguém especial ou até mesmo você.",
+    "buttonText": "Comprar Agora",
+    "purchaseSuccess": "Compra de gift card efetuada com sucesso!"
   }
 }
