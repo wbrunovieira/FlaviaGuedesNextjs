@@ -136,5 +136,17 @@
         }
       }
     }
+  },
+  "Footer": {
+    "contactTitle": "Contato",
+    "socialTitle": "Siga-nos",
+    "description1": "Especialista em coloração (loiros, balayage e ombré) e transformação capilar.",
+    "description2": "Atuo desde 2006 e, no Fierce Beauty Lounge desde 2017, crio visuais modernos e saudáveis que realçam a autenticidade de cada cliente.",
+    "address": "2685 E. Oakland Park Blvd, Fort Lauderdale, FL 33306",
+    "phone": "+1 (954) 464-7349",
+    "email": "guedesflavia@yahoo.com",
+    "instagram": "@flaviaguedesstylist",
+    "tiktok": "@guedesflavia6",
+    "copyright": "WB Digital Solutions. Todos os direitos reservados."
   }
 }

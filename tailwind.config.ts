@@ -14,7 +14,6 @@ export default {
         gold: '#C8A04B',
         graphite: '#1E1E1E',
         grayMedium: '#B0B0B0',
-        deepBlue: '#005F73',
       },
       fontFamily: {
         sans: 'var(--font-work-sans), sans-serif',

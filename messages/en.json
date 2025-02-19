@@ -128,5 +128,17 @@
         }
       }
     }
+  },
+   "Footer": {
+    "contactTitle": "Contact",
+    "socialTitle": "Follow Us",
+    "description1": "Specialist in coloring (blondes, balayage, and ombré) and hair transformation.",
+    "description2": "Serving since 2006 and at Fierce Beauty Lounge since 2017, I create modern, healthy looks that enhance each client's authenticity.",
+    "address": "2685 E. Oakland Park Blvd, Fort Lauderdale, FL 33306",
+    "phone": "+1 (954) 464-7349",
+    "email": "guedesflavia@yahoo.com",
+    "instagram": "@flaviaguedesstylist",
+    "tiktok": "@guedesflavia6",
+    "copyright": "WB Digital Solutions. All rights reserved."
   }
 }

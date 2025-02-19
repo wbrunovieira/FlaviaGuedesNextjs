@@ -7,6 +7,7 @@ import Location from '@/components/Location';
 import About from '@/components/About';
 
 import Services from '@/components/Service';
+import Footer from '@/components/Footer';
 
 export default function Index() {
   return (
@@ -18,6 +19,7 @@ export default function Index() {
       <About />
 
       <Services />
+      <Footer />
     </div>
   );
 }
