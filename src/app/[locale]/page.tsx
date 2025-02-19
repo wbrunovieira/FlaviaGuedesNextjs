@@ -8,6 +8,7 @@ import About from '@/components/About';
 
 import Services from '@/components/Service';
 import Footer from '@/components/Footer';
+import Gallery from '@/components/Gallery';
 
 export default function Index() {
   return (
@@ -20,6 +21,7 @@ export default function Index() {
 
       <Services />
       <Footer />
+      <Gallery />
     </div>
   );
 }

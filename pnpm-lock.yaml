@@ -56,6 +56,9 @@ importers:
       react-icons:
         specifier: ^5.4.0
         version: 5.4.0(react@19.0.0)
+      react-photo-album:
+        specifier: ^3.0.2
+        version: 3.0.2(@types/react@19.0.8)(react@19.0.0)
       react-world-flags:
         specifier: ^1.6.0
         version: 1.6.0(react@19.0.0)
@@ -1672,6 +1675,16 @@ packages:
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
+  react-photo-album@3.0.2:
+    resolution: {integrity: sha512-w3+8i6aj9l1jRfcubgVbAlBGSdtiXcqWdcwZcH4/Bavc+v7X7h+S3TkQ723pvDABjhaaxS168g9ECEBP6xnKrQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@types/react': '>=18'
+      react: '>=18'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   react-world-flags@1.6.0:
     resolution: {integrity: sha512-eutSeAy5YKoVh14js/JUCSlA6EBk1n4k+bDaV+NkNB50VhnG+f4QDTpYycnTUTsZ5cqw/saPmk0Z4Fa0VVZ1Iw==}
@@ -3803,6 +3816,12 @@ snapshots:
       react: 19.0.0
 
   react-is@16.13.1: {}
+
+  react-photo-album@3.0.2(@types/react@19.0.8)(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+    optionalDependencies:
+      '@types/react': 19.0.8
 
   react-world-flags@1.6.0(react@19.0.0):
     dependencies:
