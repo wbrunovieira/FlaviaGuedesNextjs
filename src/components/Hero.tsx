@@ -9,6 +9,7 @@ import { GiHairStrands } from 'react-icons/gi';
 
 import { SparklesHero } from './SparklesHero';
 import ImageSliderHero from './ImageSliderHero';
+import Link from 'next/link';
 
 export default function Hero() {
   const t = useTranslations('Hero');
@@ -83,19 +84,26 @@ export default function Hero() {
         </div>
 
         <div className="mt-6 flex flex-wrap md:flex-nowrap items-center gap-4 w-full md:w-auto justify-center md:justify-start">
-          <ButtonAnimatedGradient
-            size={buttonSize}
-            className="w-auto min-w-[150px] md:w-auto border border-white bg-transparent hover:bg-white hover:text-black "
-            onClick={() => alert(t('bookNow'))}
+          <Link
+            href="https://app.salonrunner.com/customer/home/ifiercebeautylounge/index.htm"
+            target="_blank"
+            passHref
           >
-            {t('bookNow')}
-          </ButtonAnimatedGradient>
-          <ButtonAnimatedGradient
-            size={buttonSize}
-            className="w-auto min-w-[150px] md:w-auto border border-white bg-transparent hover:bg-white hover:text-black"
-          >
-            {t('exploreServices')}
-          </ButtonAnimatedGradient>
+            <ButtonAnimatedGradient
+              size={buttonSize}
+              className="w-auto min-w-[150px] md:w-auto border border-white bg-transparent hover:bg-white hover:text-black "
+            >
+              {t('bookNow')}
+            </ButtonAnimatedGradient>
+          </Link>
+          <Link href="#services" passHref>
+            <ButtonAnimatedGradient
+              size={buttonSize}
+              className="w-auto min-w-[150px] md:w-auto border border-white bg-transparent hover:bg-white hover:text-black"
+            >
+              {t('exploreServices')}
+            </ButtonAnimatedGradient>
+          </Link>
         </div>
       </div>
 

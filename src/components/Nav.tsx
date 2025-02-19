@@ -20,7 +20,6 @@ export default function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] =
     useState(false);
 
-  // Refatoração: array de objetos com nome e href para cada seção
   const menuItems = [
     { name: 'home', href: '#top' },
     { name: 'products', href: '#products' },
@@ -80,7 +79,6 @@ export default function Nav() {
       className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-md text-foreground p-4 shadow-md z-50"
     >
       <div className="container mx-auto flex justify-between items-center w-full">
-        {/* Logo redireciona para o topo */}
         <Link
           href="#top"
           className="hover:scale-105 transition duration-200"
@@ -90,7 +88,6 @@ export default function Nav() {
           </span>
         </Link>
 
-        {/* Menu para desktop */}
         <ul className="hidden md:flex space-x-6">
           {menuItems.map((item, index) => (
             <li
@@ -110,7 +107,6 @@ export default function Nav() {
           ))}
         </ul>
 
-        {/* Botões de alternância de idioma e menu mobile */}
         <div className="flex items-center space-x-4">
           <ButtonAnimatedGradient
             size="sm"
@@ -137,7 +133,6 @@ export default function Nav() {
         </div>
       </div>
 
-      {/* Menu mobile */}
       {mobileMenuOpen && (
         <div className="mobile-menu md:hidden mt-4 bg-background p-4 rounded-lg shadow-lg w-full">
           <ul className="flex flex-col space-y-3 w-full">
