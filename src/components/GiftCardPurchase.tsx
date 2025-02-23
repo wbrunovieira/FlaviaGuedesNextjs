@@ -13,14 +13,36 @@ const GiftCardPurchase: React.FC = () => {
   const t = useTranslations('GiftCard');
   const locale = useLocale();
   const [amount, setAmount] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
   const [showInput, setShowInput] =
     useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   const handleConfirmPurchase = async () => {
-    const amountInCents = amount
-      ? Math.round(Number(amount) * 100)
-      : 1000;
+    // Validação: valor numérico e maior que zero
+    const numericAmount = Number(amount);
+    if (isNaN(numericAmount) || numericAmount <= 0) {
+      setError(
+        t('invalidAmount') ||
+          'Por favor, insira um valor válido maior que zero.'
+      );
+      return;
+    }
+    // Validação: nome é obrigatório para personalização
+    if (!name.trim()) {
+      setError(
+        t('invalidName') || 'Por favor, insira seu nome.'
+      );
+      return;
+    }
+    setError('');
 
+    // Converte o valor para centavos
+    const amountInCents = Math.round(numericAmount * 100);
+
+    // Envia os dados para a API de criação da sessão
     const response = await fetch(
       '/api/create-checkout-session',
       {
@@ -29,6 +51,9 @@ const GiftCardPurchase: React.FC = () => {
         body: JSON.stringify({
           amount: amountInCents,
           locale,
+          name,
+          phone,
+          message,
         }),
       }
     );
@@ -52,6 +77,7 @@ const GiftCardPurchase: React.FC = () => {
     e: ChangeEvent<HTMLInputElement>
   ) => {
     setAmount(e.target.value);
+    if (error) setError('');
   };
 
   return (
@@ -67,13 +93,53 @@ const GiftCardPurchase: React.FC = () => {
       </div>
       <div className="flex flex-col gap-4">
         {showInput && (
-          <input
-            type="number"
-            placeholder="Digite o valor (USD)"
-            value={amount}
-            onChange={handleInputChange}
-            className="p-2 border rounded"
-          />
+          <>
+            <input
+              type="number"
+              placeholder={
+                t('inputPlaceholder') ||
+                'Digite o valor em USD'
+              }
+              value={amount}
+              onChange={handleInputChange}
+              className="p-2 border rounded text-background"
+              min="0"
+            />
+            <input
+              type="text"
+              placeholder={
+                t('namePlaceholder') || 'Seu nome'
+              }
+              value={name}
+              onChange={e => setName(e.target.value)}
+              className="p-2 border rounded text-background"
+            />
+            <input
+              type="text"
+              placeholder={
+                t('phonePlaceholder') ||
+                'Seu telefone (opcional)'
+              }
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
+              className="p-2 border rounded text-background"
+            />
+            <input
+              type="text"
+              placeholder={
+                t('messagePlaceholder') ||
+                'Mensagem personalizada (opcional)'
+              }
+              value={message}
+              onChange={e => setMessage(e.target.value)}
+              className="p-2 border rounded text-background"
+            />
+          </>
+        )}
+        {error && (
+          <p className="text-red-500 text-sm text-center">
+            {error}
+          </p>
         )}
         <button
           onClick={() => {
