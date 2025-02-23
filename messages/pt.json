@@ -149,10 +149,17 @@
     "tiktok": "@guedesflavia6",
     "copyright": "WB Digital Solutions. Todos os direitos reservados."
   },
-"GiftCard": {
+  "GiftCard": {
     "title": "Compra de Gift Card",
     "description": "Adquira um gift card para presentear alguém especial ou até mesmo você.",
     "buttonText": "Comprar Agora",
+    "confirmPurchase": "Confirmar Compra",
+    "inputPlaceholder": "Digite o valor em USD",
+    "invalidAmount": "Por favor, insira um valor válido maior que zero.",
+    "namePlaceholder": "Seu nome",
+    "invalidName": "Por favor, insira seu nome.",
+    "phonePlaceholder": "Seu telefone (opcional)",
+    "messagePlaceholder": "Mensagem personalizada (opcional)",
     "purchaseSuccess": "Compra de gift card efetuada com sucesso!",
     "purchaseFailure": "Falha ao criar a sessão de pagamento. Por favor, tente novamente."
   }
