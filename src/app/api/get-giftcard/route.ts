@@ -35,8 +35,15 @@ export async function GET(req: Request) {
       amount: giftCard.amount, // cents
       stripePaymentId: giftCard.stripePaymentId,
     });
-  } catch (error: any) {
-    console.error('Error retrieving gift card:', error);
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : 'Unknown error';
+    console.error(
+      'Error retrieving gift card:',
+      errorMessage
+    );
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

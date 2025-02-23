@@ -6,7 +6,10 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 const stripe = new Stripe(
   process.env.STRIPE_SECRET_KEY as string,
-  { apiVersion: '2022-11-15' as any }
+  {
+    apiVersion:
+      '2022-11-15' as unknown as '2025-01-27.acacia',
+  }
 );
 
 export async function POST(req: Request) {
@@ -55,17 +58,19 @@ export async function POST(req: Request) {
 
     await prisma.giftCard.update({
       where: { stripeSessionId: session.id },
-      data: {
-        stripePaymentId: paymentIntentId,
-      },
+      data: { stripePaymentId: paymentIntentId },
     });
 
     return NextResponse.json(
       { success: true },
       { status: 200 }
     );
-  } catch (error: any) {
-    console.error('Error saving payment:', error);
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : 'Unknown error';
+    console.error('Error saving payment:', errorMessage);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
