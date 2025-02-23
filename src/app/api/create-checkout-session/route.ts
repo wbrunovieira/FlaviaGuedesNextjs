@@ -1,7 +1,9 @@
 // src/app/api/create-checkout-session/route.ts
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { PrismaClient } from '@prisma/client';
 
+const prisma = new PrismaClient();
 const stripe = new Stripe(
   process.env.STRIPE_SECRET_KEY as string,
   {
@@ -12,14 +14,19 @@ const stripe = new Stripe(
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { amount, locale } = body as {
-      amount: number;
-      locale: string;
-    };
+    const { amount, locale, name, phone, message } =
+      body as {
+        amount: number;
+        locale: string;
+        name: string;
+        phone?: string;
+        message?: string;
+      };
 
     const origin =
       req.headers.get('origin') || 'http://localhost:3000';
 
+    // Cria a sessão do Stripe e inclui os metadados
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -35,6 +42,23 @@ export async function POST(req: Request) {
       mode: 'payment',
       success_url: `${origin}/${locale}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/${locale}/cancel`,
+      metadata: {
+        name,
+        phone: phone || '',
+        message: message || '',
+      },
+    });
+
+    // Registra no banco um registro preliminar do gift card
+    await prisma.giftCard.create({
+      data: {
+        amount,
+        name,
+        phone: phone || null,
+        message: message || null,
+        stripeSessionId: session.id,
+        stripePaymentId: '', // ficará vazio até o pagamento ser confirmado
+      },
     });
 
     return NextResponse.json(

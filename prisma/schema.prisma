@@ -1,0 +1,23 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model GiftCard {
+  id              String   @id @default(uuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  amount          Int
+  name            String
+  phone           String?
+  message         String?
+  stripeSessionId String   @unique
+  stripePaymentId String?
+  cancelled       Boolean  @default(false)
+}

@@ -162,5 +162,23 @@
     "messagePlaceholder": "Mensagem personalizada (opcional)",
     "purchaseSuccess": "Compra de gift card efetuada com sucesso!",
     "purchaseFailure": "Falha ao criar a sessão de pagamento. Por favor, tente novamente."
+  },
+    "GiftCardSuccess": {
+    "successTitle": "Pagamento Realizado com Sucesso!",
+    "sessionLabel": "ID da Sessão",
+    "giftCardHeading": "Gift Card",
+    "nameLabel": "Nome",
+    "phoneLabel": "Telefone",
+    "messageLabel": "Mensagem",
+    "amountLabel": "Valor",
+    "useInstruction": "Use este gift card para aproveitar nossos serviços!",
+    "registeringPaymentData": "Registrando os dados do pagamento...",
+    "thankYouMessage": "Obrigado pela sua compra. "
+  },
+   "GiftCardCancel": {
+    "cancelTitle": "Pagamento Cancelado",
+    "sessionLabel": "ID da Sessão",
+    "registeringCancel": "Registrando o cancelamento...",
+    "cancelRegistered": "O cancelamento foi registrado com sucesso."
   }
 }
