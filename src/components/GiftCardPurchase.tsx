@@ -21,7 +21,6 @@ const GiftCardPurchase: React.FC = () => {
   const [error, setError] = useState<string>('');
 
   const handleConfirmPurchase = async () => {
-    // Validação: valor numérico e maior que zero
     const numericAmount = Number(amount);
     if (isNaN(numericAmount) || numericAmount <= 0) {
       setError(
@@ -30,7 +29,7 @@ const GiftCardPurchase: React.FC = () => {
       );
       return;
     }
-    // Validação: nome é obrigatório para personalização
+
     if (!name.trim()) {
       setError(
         t('invalidName') || 'Por favor, insira seu nome.'
@@ -39,10 +38,8 @@ const GiftCardPurchase: React.FC = () => {
     }
     setError('');
 
-    // Converte o valor para centavos
     const amountInCents = Math.round(numericAmount * 100);
 
-    // Envia os dados para a API de criação da sessão
     const response = await fetch(
       '/api/create-checkout-session',
       {

@@ -11,9 +11,15 @@ const stripe = new Stripe(
       '2022-11-15' as unknown as '2025-01-27.acacia',
   }
 );
+
 export async function POST(req: Request) {
+  console.log(
+    '[DEBUG] POST request received for create-checkout-session.'
+  );
   try {
     const body = await req.json();
+    console.log('[DEBUG] Request body:', body);
+
     const { amount, locale, name, phone, message } =
       body as {
         amount: number;
@@ -27,8 +33,17 @@ export async function POST(req: Request) {
       req.headers.get('origin') ||
       process.env.BASE_URL ||
       'http://localhost:3000';
+    console.log('[DEBUG] Resolved origin:', origin);
 
-    // Cria a sessão do Stripe e inclui os metadados
+    console.log(
+      '[DEBUG] Creating Stripe checkout session with:'
+    );
+    console.log('        - Amount (in cents):', amount);
+    console.log('        - Locale:', locale);
+    console.log('        - Name:', name);
+    console.log('        - Phone:', phone);
+    console.log('        - Message:', message);
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -51,17 +66,26 @@ export async function POST(req: Request) {
       },
     });
 
-    // Registra no banco um registro preliminar do gift card
-    await prisma.giftCard.create({
+    console.log(
+      '[DEBUG] Stripe session created with ID:',
+      session.id
+    );
+
+    const giftCardRecord = await prisma.giftCard.create({
       data: {
         amount,
         name,
         phone: phone || null,
         message: message || null,
         stripeSessionId: session.id,
-        stripePaymentId: '', // ficará vazio até o pagamento ser confirmado
+        stripePaymentId: '',
       },
     });
+
+    console.log(
+      '[DEBUG] GiftCard record created in database:',
+      giftCardRecord
+    );
 
     return NextResponse.json(
       { sessionId: session.id },
@@ -73,7 +97,7 @@ export async function POST(req: Request) {
         ? error.message
         : 'Unknown error';
     console.error(
-      'Erro ao criar a sessão do Stripe:',
+      '[ERROR] Erro ao criar a sessão do Stripe:',
       errorMessage
     );
     return NextResponse.json(
