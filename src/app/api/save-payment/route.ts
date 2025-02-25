@@ -1,9 +1,11 @@
-// src/app/api/save-payment/route.ts
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { PrismaClient } from '@prisma/client';
+import {
+  db,
+  doc,
+  updateDoc,
+} from './../../../../firebase-config'; // Importando Firestore
 
-const prisma = new PrismaClient();
 const stripe = new Stripe(
   process.env.STRIPE_SECRET_KEY as string,
   {
@@ -19,24 +21,23 @@ export async function POST(req: Request) {
       cancelled?: boolean;
     };
 
+    // Verificando se a compra foi cancelada
     if (cancelled) {
-      await prisma.giftCard.update({
-        where: { stripeSessionId: sessionId },
-        data: { cancelled: true },
-      });
+      const giftCardRef = doc(db, 'giftCards', sessionId); // Referência para o documento
+      await updateDoc(giftCardRef, { cancelled: true }); // Atualizando o status
       return NextResponse.json(
         { success: true },
         { status: 200 }
       );
     }
 
+    // Recuperando a sessão de pagamento do Stripe
     const session = await stripe.checkout.sessions.retrieve(
       sessionId,
-      {
-        expand: ['payment_intent'],
-      }
+      { expand: ['payment_intent'] }
     );
 
+    // Verificando se o pagamento foi concluído
     if (session.payment_status !== 'paid') {
       return NextResponse.json(
         { error: 'Payment not completed' },
@@ -51,14 +52,16 @@ export async function POST(req: Request) {
       );
     }
 
+    // Pegando o ID do Payment Intent
     const paymentIntentId =
       typeof session.payment_intent === 'string'
         ? session.payment_intent
         : session.payment_intent.id;
 
-    await prisma.giftCard.update({
-      where: { stripeSessionId: session.id },
-      data: { stripePaymentId: paymentIntentId },
+    // Atualizando o Firestore com o ID do pagamento
+    const giftCardRef = doc(db, 'giftCards', session.id); // Referência para o documento
+    await updateDoc(giftCardRef, {
+      stripePaymentId: paymentIntentId,
     });
 
     return NextResponse.json(

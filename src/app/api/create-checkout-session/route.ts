@@ -1,43 +1,12 @@
-// src/app/api/create-checkout-session/route.ts
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { PrismaClient } from '@prisma/client';
+import {
+  db,
+  collection,
+  addDoc,
+} from './../../../../firebase-config'; // Importando Firebase
 
-// Global type declaration for PrismaClient
-declare global {
-  // eslint-disable-next-line no-var
-  var prisma: PrismaClient | undefined;
-}
-
-// Função que modifica a URL de conexão para desabilitar prepared statements
-function getConnectionUrl() {
-  const url = process.env.POSTGRES_URL || '';
-  // Se a URL já contém pg_disable_prepared_statements, retorne a URL original
-  if (url.includes('pg_disable_prepared_statements=true')) {
-    return url;
-  }
-  // Adicione o parâmetro para desabilitar prepared statements
-  const separator = url.includes('?') ? '&' : '?';
-  return `${url}${separator}pg_disable_prepared_statements=true&sslmode=no-verify&connection_limit=1&pool_timeout=0`;
-}
-
-// Create a Prisma client with the correct configuration for serverless environments
-const prismaClientSingleton = () => {
-  return new PrismaClient({
-    datasources: {
-      db: {
-        url: getConnectionUrl(),
-      },
-    },
-    log: ['query', 'info', 'warn', 'error'],
-  });
-};
-
-// Use global object for development to prevent multiple instances
-const prisma = global.prisma || prismaClientSingleton();
-if (process.env.NODE_ENV !== 'production')
-  global.prisma = prisma;
-
+// Inicializando Stripe
 const stripe = new Stripe(
   process.env.STRIPE_SECRET_KEY as string,
   {
@@ -78,6 +47,7 @@ export async function POST(req: Request) {
     console.log('        - Phone:', phone);
     console.log('        - Message:', message);
 
+    // Criar a sessão de checkout no Stripe
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -105,21 +75,27 @@ export async function POST(req: Request) {
       session.id
     );
 
-    // Create a gift card record in the database
-    const giftCardRecord = await prisma.giftCard.create({
-      data: {
-        amount,
-        name,
-        phone: phone || null,
-        message: message || null,
-        stripeSessionId: session.id,
-        stripePaymentId: '',
-      },
-    });
+    // Salvar o gift card no Firestore
+    const giftCardData = {
+      amount,
+      name,
+      phone: phone || null,
+      message: message || null,
+      stripeSessionId: session.id,
+      stripePaymentId: '',
+      cancelled: false, // Se desejar, você pode adicionar o campo "cancelled" como padrão
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
 
+    // Criar a coleção "giftCards" e adicionar o documento
+    const docRef = await addDoc(
+      collection(db, 'giftCards'),
+      giftCardData
+    );
     console.log(
-      '[DEBUG] GiftCard record created in database:',
-      giftCardRecord
+      '[DEBUG] GiftCard record created in Firestore with ID:',
+      docRef.id
     );
 
     return NextResponse.json(
