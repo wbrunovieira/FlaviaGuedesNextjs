@@ -3,7 +3,41 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+// Global type declaration for PrismaClient
+declare global {
+  // eslint-disable-next-line no-var
+  var prisma: PrismaClient | undefined;
+}
+
+// Função que modifica a URL de conexão para desabilitar prepared statements
+function getConnectionUrl() {
+  const url = process.env.POSTGRES_URL || '';
+  // Se a URL já contém pg_disable_prepared_statements, retorne a URL original
+  if (url.includes('pg_disable_prepared_statements=true')) {
+    return url;
+  }
+  // Adicione o parâmetro para desabilitar prepared statements
+  const separator = url.includes('?') ? '&' : '?';
+  return `${url}${separator}pg_disable_prepared_statements=true&sslmode=no-verify&connection_limit=1&pool_timeout=0`;
+}
+
+// Create a Prisma client with the correct configuration for serverless environments
+const prismaClientSingleton = () => {
+  return new PrismaClient({
+    datasources: {
+      db: {
+        url: getConnectionUrl(),
+      },
+    },
+    log: ['query', 'info', 'warn', 'error'],
+  });
+};
+
+// Use global object for development to prevent multiple instances
+const prisma = global.prisma || prismaClientSingleton();
+if (process.env.NODE_ENV !== 'production')
+  global.prisma = prisma;
+
 const stripe = new Stripe(
   process.env.STRIPE_SECRET_KEY as string,
   {
@@ -71,6 +105,7 @@ export async function POST(req: Request) {
       session.id
     );
 
+    // Create a gift card record in the database
     const giftCardRecord = await prisma.giftCard.create({
       data: {
         amount,

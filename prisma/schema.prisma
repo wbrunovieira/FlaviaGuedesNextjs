@@ -1,8 +1,12 @@
 // prisma/schema.prisma
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider     = "postgresql"
+  url          = env("POSTGRES_URL")
+  // Important: these settings help with serverless connections
+  relationMode = "foreignKeys"
+
+  directUrl = env("POSTGRES_DIRECT_URL")
 }
 
 generator client {
