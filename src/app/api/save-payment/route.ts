@@ -1,10 +1,14 @@
+// src/app/api/save-payment/route.ts
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import {
   db,
-  doc,
   updateDoc,
-} from './../../../../firebase-config'; // Importando Firestore
+  collection,
+  query,
+  where,
+  getDocs,
+} from './../../../../firebase-config';
 
 const stripe = new Stripe(
   process.env.STRIPE_SECRET_KEY as string,
@@ -21,23 +25,40 @@ export async function POST(req: Request) {
       cancelled?: boolean;
     };
 
-    // Verificando se a compra foi cancelada
+    const findGiftCardDoc = async (
+      stripeSessionId: string
+    ) => {
+      const giftCardsRef = collection(db, 'giftCards');
+      const q = query(
+        giftCardsRef,
+        where('stripeSessionId', '==', stripeSessionId)
+      );
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) return null;
+
+      return querySnapshot.docs[0].ref;
+    };
+
     if (cancelled) {
-      const giftCardRef = doc(db, 'giftCards', sessionId); // Referência para o documento
-      await updateDoc(giftCardRef, { cancelled: true }); // Atualizando o status
+      const giftCardRef = await findGiftCardDoc(sessionId);
+      if (!giftCardRef) {
+        return NextResponse.json(
+          { error: 'Gift card not found for cancellation' },
+          { status: 404 }
+        );
+      }
+      await updateDoc(giftCardRef, { cancelled: true });
       return NextResponse.json(
         { success: true },
         { status: 200 }
       );
     }
 
-    // Recuperando a sessão de pagamento do Stripe
     const session = await stripe.checkout.sessions.retrieve(
       sessionId,
       { expand: ['payment_intent'] }
     );
 
-    // Verificando se o pagamento foi concluído
     if (session.payment_status !== 'paid') {
       return NextResponse.json(
         { error: 'Payment not completed' },
@@ -52,14 +73,19 @@ export async function POST(req: Request) {
       );
     }
 
-    // Pegando o ID do Payment Intent
     const paymentIntentId =
       typeof session.payment_intent === 'string'
         ? session.payment_intent
         : session.payment_intent.id;
 
-    // Atualizando o Firestore com o ID do pagamento
-    const giftCardRef = doc(db, 'giftCards', session.id); // Referência para o documento
+    const giftCardRef = await findGiftCardDoc(session.id);
+    if (!giftCardRef) {
+      return NextResponse.json(
+        { error: 'Gift card not found for payment update' },
+        { status: 404 }
+      );
+    }
+
     await updateDoc(giftCardRef, {
       stripePaymentId: paymentIntentId,
     });

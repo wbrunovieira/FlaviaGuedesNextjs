@@ -6,13 +6,13 @@ import {
   collection,
   addDoc,
   setDoc,
+  getDoc,
   getDocs,
   query,
   where,
   orderBy,
 } from 'firebase/firestore';
 
-// Configuração do Firebase usando variáveis de ambiente
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -24,11 +24,9 @@ const firebaseConfig = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
-// Inicialize o Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Exportando as funções necessárias para o Firestore
 export {
   db,
   doc,
@@ -36,6 +34,7 @@ export {
   collection,
   addDoc,
   setDoc,
+  getDoc,
   getDocs,
   query,
   where,

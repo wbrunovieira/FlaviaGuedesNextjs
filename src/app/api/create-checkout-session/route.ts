@@ -1,12 +1,12 @@
+// src/app/api/create-checkout-session/route.ts
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import {
   db,
-  collection,
-  addDoc,
-} from './../../../../firebase-config'; // Importando Firebase
+  setDoc,
+  doc,
+} from './../../../../firebase-config';
 
-// Inicializando Stripe
 const stripe = new Stripe(
   process.env.STRIPE_SECRET_KEY as string,
   {
@@ -47,7 +47,6 @@ export async function POST(req: Request) {
     console.log('        - Phone:', phone);
     console.log('        - Message:', message);
 
-    // Criar a sessão de checkout no Stripe
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -75,7 +74,6 @@ export async function POST(req: Request) {
       session.id
     );
 
-    // Salvar o gift card no Firestore
     const giftCardData = {
       amount,
       name,
@@ -83,19 +81,18 @@ export async function POST(req: Request) {
       message: message || null,
       stripeSessionId: session.id,
       stripePaymentId: '',
-      cancelled: false, // Se desejar, você pode adicionar o campo "cancelled" como padrão
+      cancelled: false,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
 
-    // Criar a coleção "giftCards" e adicionar o documento
-    const docRef = await addDoc(
-      collection(db, 'giftCards'),
+    await setDoc(
+      doc(db, 'giftCards', session.id),
       giftCardData
     );
     console.log(
       '[DEBUG] GiftCard record created in Firestore with ID:',
-      docRef.id
+      session.id
     );
 
     return NextResponse.json(

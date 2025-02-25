@@ -1,8 +1,10 @@
 // src/app/api/get-giftcard/route.ts
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import {
+  db,
+  doc,
+  getDoc,
+} from './../../../../firebase-config';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -16,23 +18,24 @@ export async function GET(req: Request) {
   }
 
   try {
-    const giftCard = await prisma.giftCard.findUnique({
-      where: { stripeSessionId: sessionId },
-    });
+    const giftCardRef = doc(db, 'giftCards', sessionId);
+    const giftCardSnap = await getDoc(giftCardRef);
 
-    if (!giftCard) {
+    if (!giftCardSnap.exists()) {
       return NextResponse.json(
         { error: 'Gift card not found' },
         { status: 404 }
       );
     }
 
+    const giftCard = giftCardSnap.data();
+
     return NextResponse.json({
       sessionId: giftCard.stripeSessionId,
       name: giftCard.name,
       phone: giftCard.phone,
       message: giftCard.message,
-      amount: giftCard.amount, // cents
+      amount: giftCard.amount, // valor em cents
       stripePaymentId: giftCard.stripePaymentId,
     });
   } catch (error: unknown) {

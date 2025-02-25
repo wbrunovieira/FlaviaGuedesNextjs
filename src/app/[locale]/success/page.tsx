@@ -31,7 +31,6 @@ export default function SuccessPage() {
     const updatePaymentAndFetchData = async () => {
       if (!sessionId) return;
 
-      // Atualiza o registro com o Payment Intent (POST)
       const resPost = await fetch('/api/save-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -46,7 +45,6 @@ export default function SuccessPage() {
       }
       setSaved(true);
 
-      // Recupera os dados completos do gift card (GET)
       const resGet = await fetch(
         `/api/get-giftcard?sessionId=${sessionId}`
       );
@@ -93,10 +91,7 @@ export default function SuccessPage() {
         </p>
       )}
       {saved && !giftCard && !error && (
-        <p className="mt-4">
-          {t('paymentSaved')}{' '}
-          {/* Texto adicional para indicar que o pagamento foi registrado */}
-        </p>
+        <p className="mt-4">{t('paymentSaved')} </p>
       )}
       {giftCard && (
         <div
