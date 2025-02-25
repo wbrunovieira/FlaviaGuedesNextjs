@@ -29,6 +29,13 @@ const GiftCardPurchase: React.FC = () => {
       );
       return;
     }
+    // Validação do valor mínimo: $25
+    if (numericAmount < 25) {
+      setError(
+        t('minAmount') || 'O valor mínimo é de $25.'
+      );
+      return;
+    }
 
     if (!name.trim()) {
       setError(

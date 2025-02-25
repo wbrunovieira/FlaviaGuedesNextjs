@@ -153,7 +153,8 @@
     "phonePlaceholder": "Your phone (optional)",
     "messagePlaceholder": "Personalized message (optional)",
     "purchaseSuccess": "Gift card purchase completed successfully!",
-    "purchaseFailure": "Failed to create checkout session. Please try again."
+    "purchaseFailure": "Failed to create checkout session. Please try again.",
+     "minAmount": "The minimum amount is $25."
   },
     "GiftCardSuccess": {
     "successTitle": "Payment Successful!",
