@@ -166,7 +166,8 @@
   },
     "GiftCardSuccess": {
     "successTitle": "Pagamento Realizado com Sucesso!",
-    "sessionLabel": "ID da Sessão",
+    "paymentId": "ID do Pagamento",
+
     "giftCardHeading": "Gift Card",
     "nameLabel": "Nome",
     "phoneLabel": "Telefone",
@@ -174,6 +175,11 @@
     "amountLabel": "Valor",
     "useInstruction": "Use este gift card para aproveitar nossos serviços!",
     "registeringPaymentData": "Registrando os dados do pagamento...",
+    "flaviaguedesUse": "Este gift card é para usufruir com a Flavia Guedes!",
+    "backHome": "Voltar para a Página Inicial",
+
+     "downloadCard": "Baixar Gift Card",
+      "paymentSaved": "Os dados do pagamento foram salvos com sucesso.",
     "thankYouMessage": "Obrigado pela sua compra. "
   },
    "GiftCardCancel": {
