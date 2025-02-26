@@ -4,12 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
-
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-
-const ADMIN_EMAIL = 'admin@example.com';
-const ADMIN_PASSWORD = 'securepassword';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -19,10 +15,15 @@ export default function AdminLogin() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+    const ADMIN_PASSWORD =
+      process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+
     if (
       email === ADMIN_EMAIL &&
       password === ADMIN_PASSWORD
     ) {
+      localStorage.setItem('admin-auth', 'true');
       router.push('/adm/dashboard');
     } else {
       setError('Invalid email or password');
@@ -44,12 +45,14 @@ export default function AdminLogin() {
               type="email"
               placeholder="Email"
               value={email}
+              className="text-black placeholder:text-black/30"
               onChange={e => setEmail(e.target.value)}
               required
             />
             <Input
               type="password"
               placeholder="Password"
+              className="text-black placeholder:text-black/30"
               value={password}
               onChange={e => setPassword(e.target.value)}
               required

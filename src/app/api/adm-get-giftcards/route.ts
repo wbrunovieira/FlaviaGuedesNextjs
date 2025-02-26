@@ -11,10 +11,15 @@ export async function GET() {
     const giftCardsRef = collection(db, 'giftCards');
     const querySnapshot = await getDocs(giftCardsRef);
 
-    const giftCards = querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const giftCards = querySnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        createdAt:
+          data.createdAt?.toDate().toISOString() || null,
+      };
+    });
 
     return NextResponse.json(giftCards, { status: 200 });
   } catch (error: unknown) {
