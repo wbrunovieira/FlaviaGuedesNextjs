@@ -9,7 +9,13 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
 
-const GiftCardPurchase: React.FC = () => {
+type GiftCardPurchaseShowcaseProps = {
+  id?: string;
+};
+
+export default function GiftCardPurchase({
+  id = 'giftcard',
+}: GiftCardPurchaseShowcaseProps) {
   const t = useTranslations('GiftCard');
   const locale = useLocale();
   const [amount, setAmount] = useState<string>('');
@@ -29,7 +35,7 @@ const GiftCardPurchase: React.FC = () => {
       );
       return;
     }
-    // Validação do valor mínimo: $25
+
     if (numericAmount < 25) {
       setError(
         t('minAmount') || 'O valor mínimo é de $25.'
@@ -85,7 +91,10 @@ const GiftCardPurchase: React.FC = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-8 bg-background shadow-xl rounded-lg border border-gold">
+    <div
+      id={id}
+      className="max-w-xl mx-auto p-8 bg-background shadow-xl rounded-lg border border-gold"
+    >
       <div className="flex flex-col items-center">
         <FaGift className="text-6xl text-gold mb-4" />
         <h2 className="text-3xl font-bold mb-2 text-foreground">
@@ -163,6 +172,4 @@ const GiftCardPurchase: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default GiftCardPurchase;
+}

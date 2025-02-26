@@ -27,6 +27,7 @@ export default function Nav() {
     { name: 'location', href: '#location' },
     { name: 'about', href: '#about' },
     { name: 'gallery', href: '#gallery' },
+    { name: 'giftcard', href: '#giftcard' },
   ];
 
   useGSAP(
