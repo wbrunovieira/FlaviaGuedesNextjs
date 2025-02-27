@@ -59,9 +59,10 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gold p-6">
-      <h2 className="text-3xl font-semibold text-center mb-6">
+      <h2 className="text-3xl font-semibold text-center mb-2">
         Admin Dashboard
       </h2>
+      <p className="text-center mb-6">Últimas transações</p>
       {loading && (
         <p className="text-center">Loading gift cards...</p>
       )}
@@ -73,62 +74,105 @@ export default function AdminDashboard() {
           {giftCards.map(giftCard => (
             <Card
               key={giftCard.id}
-              className="shadow-md p-4"
+              className="shadow-md p-4 text-background"
             >
               <CardContent>
-                <p>
-                  <strong>ID:</strong>{' '}
-                  <span className="truncate max-w-[200px] inline-block overflow-hidden text-ellipsis">
-                    {expandedId === giftCard.id
-                      ? giftCard.id
-                      : giftCard.id.slice(0, 10) + '...'}
-                  </span>
-                  {giftCard.id.length > 10 && (
-                    <button
-                      className="text-black text-xs ml-2"
-                      onClick={() =>
-                        setExpandedId(
-                          expandedId === giftCard.id
-                            ? null
-                            : giftCard.id
-                        )
-                      }
-                    >
+                <div className="space-y-2">
+                  {/* Row: ID */}
+                  <div className="grid grid-cols-[150px,1fr] items-center">
+                    <span className="font-bold text-right">
+                      ID:
+                    </span>
+                    <span className="text-white ml-2">
                       {expandedId === giftCard.id
-                        ? 'Ver menos'
-                        : 'Ver mais'}
-                    </button>
-                  )}
-                </p>
-                <p>
-                  <strong>Nome:</strong> {giftCard.name}
-                </p>
-                <p>
-                  <strong>Telefone:</strong>{' '}
-                  {giftCard.phone || 'N/A'}
-                </p>
-                <p>
-                  <strong>Mensagem:</strong>{' '}
-                  {giftCard.message || 'Sem mensagem'}
-                </p>
-                <p>
-                  <strong>Valor:</strong> $
-                  {(giftCard.amount / 100).toFixed(2)}
-                </p>
-                <p>
-                  <strong>Pago:</strong>{' '}
-                  {giftCard.stripePaymentId ? 'Sim' : 'Não'}
-                </p>
-                <p>
-                  <strong>Cancelado:</strong>{' '}
-                  {giftCard.cancelled ? 'Sim' : 'Não'}
-                </p>
-                <p>
-                  <strong>Data da Transação:</strong>{' '}
-                  {new Date(
-                    giftCard.createdAt
-                  ).toLocaleString()}
-                </p>
+                        ? giftCard.id
+                        : giftCard.id.slice(0, 10) + '...'}
+                      {giftCard.id.length > 10 && (
+                        <button
+                          className="ml-2 text-xs text-black"
+                          onClick={() =>
+                            setExpandedId(
+                              expandedId === giftCard.id
+                                ? null
+                                : giftCard.id
+                            )
+                          }
+                        >
+                          {expandedId === giftCard.id
+                            ? 'Ver menos'
+                            : 'Ver mais'}
+                        </button>
+                      )}
+                    </span>
+                  </div>
+                  {/* Row: Nome */}
+                  <div className="grid grid-cols-[150px,1fr] items-center">
+                    <span className="font-bold text-right">
+                      Nome:
+                    </span>
+                    <span className="text-white ml-2">
+                      {giftCard.name}
+                    </span>
+                  </div>
+                  {/* Row: Telefone */}
+                  <div className="grid grid-cols-[150px,1fr] items-center">
+                    <span className="font-bold text-right">
+                      Telefone:
+                    </span>
+                    <span className="text-white ml-2">
+                      {giftCard.phone || 'Sem telefone'}
+                    </span>
+                  </div>
+                  {/* Row: Mensagem */}
+                  <div className="grid grid-cols-[150px,1fr] items-center">
+                    <span className="font-bold text-right">
+                      Mensagem:
+                    </span>
+                    <span className="text-white ml-2">
+                      {giftCard.message || 'Sem mensagem'}
+                    </span>
+                  </div>
+                  {/* Row: Valor */}
+                  <div className="grid grid-cols-[150px,1fr] items-center">
+                    <span className="font-bold text-right">
+                      Valor:
+                    </span>
+                    <span className="text-white ml-2">
+                      ${(giftCard.amount / 100).toFixed(2)}
+                    </span>
+                  </div>
+                  {/* Row: Pago */}
+                  <div className="grid grid-cols-[150px,1fr] items-center">
+                    <span className="font-bold text-right">
+                      Pago:
+                    </span>
+                    <span className="text-white ml-2">
+                      {giftCard.stripePaymentId
+                        ? 'Sim'
+                        : 'Não'}
+                    </span>
+                  </div>
+                  {/* Row: Cancelado */}
+                  <div className="grid grid-cols-[150px,1fr] items-center">
+                    <span className="font-bold text-right">
+                      Cancelado:
+                    </span>
+                    <span className="text-white ml-2">
+                      {giftCard.cancelled ? 'Sim' : 'Não'}
+                    </span>
+                  </div>
+                  {/* Row: Data da Transação */}
+                  <div className="grid grid-cols-[150px,1fr] items-center">
+                    <span className="font-bold text-right whitespace-nowrap">
+                      Data da Transação:
+                    </span>
+                    <span className="text-white ml-2">
+                      {new Date(
+                        giftCard.createdAt
+                      ).toLocaleString()}
+                    </span>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           ))}
