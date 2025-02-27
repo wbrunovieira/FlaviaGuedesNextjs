@@ -7,6 +7,7 @@ const images = [
   '/images/flavia2.png',
   '/images/hair1.png',
   '/images/hair2.png',
+  '/images/ifierce2.png',
 ];
 
 export default function ImageSliderHero() {
