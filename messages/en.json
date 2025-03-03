@@ -182,5 +182,21 @@
     "sessionLabel": "Session ID",
     "registeringCancel": "Registering cancellation...",
     "cancelRegistered": "Cancellation registered successfully."
+  },
+  "Promotions": {
+"sectionTitle": "Exclusive Promotions",
+  "sectionSubtitle": "Discover our special offers and elevate your style!",
+  "referralTitle": "The Best Compliment I Could Receive? A Referral from You! 😊",
+  "referralSubtitle": "Spread the Love and Enjoy Fantastic Rewards! 🎉",
+  "referralDescription": "If you love your hair as much as I do, why not share that joy? At iFierce Beauty Lounge, we’ve created a special referral program for you!",
+  "learnMore": "Learn More",
+  "referralTerms": "Valid for new clients only, 2025.",
+  "welcomeTitle": "Welcome Special for New Clients - 2025! 🌟",
+  "welcomeDescription": "Are you ready for a fabulous hair transformation? We’ve created a delightful experience just for you!",
+  "welcomeItem1": "Base Color – Refresh or enhance your hair color",
+  "welcomeItem2": "Glossing or Conditioning Treatment – For shine and hydration, giving your hair a healthy glow",
+  "welcomeItem3": "Precision Haircut & Blowout – A flawless finish to complete your look",
+  "bookNow": "Book Now",
+  "welcomeAppointment": "Appointment only, with Flavia Stylists."
   }
 }

@@ -10,6 +10,7 @@ import Services from '@/components/Service';
 import Footer from '@/components/Footer';
 import Gallery from '@/components/Gallery';
 import GiftCardPurchase from '@/components/GiftCardPurchase';
+import Promotions from '@/components/Promotions';
 
 export default function Index() {
   return (
@@ -23,6 +24,7 @@ export default function Index() {
       <Services />
       <Gallery />
       <GiftCardPurchase />
+      <Promotions />
       <Footer />
     </div>
   );

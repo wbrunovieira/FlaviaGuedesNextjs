@@ -190,5 +190,21 @@
     "sessionLabel": "ID da Sessão",
     "registeringCancel": "Registrando o cancelamento...",
     "cancelRegistered": "O cancelamento foi registrado com sucesso."
+  },
+    "Promotions": {
+"sectionTitle": "Promoções Exclusivas",
+  "sectionSubtitle": "Descubra nossas ofertas especiais e eleve seu estilo!",
+  "referralTitle": "O melhor elogio que eu poderia receber? Uma indicação sua! 😊",
+  "referralSubtitle": "Espalhe o amor e aproveite recompensas fantásticas! 🎉",
+  "referralDescription": "Se você ama seu cabelo tanto quanto eu, por que não compartilhar essa alegria? No iFierce Beauty Lounge, criamos um programa especial de indicações para você!",
+  "learnMore": "Saiba Mais",
+  "referralTerms": "Válido apenas para novos clientes, 2025.",
+  "welcomeTitle": "Oferta Especial de Boas-Vindas para Novos Clientes - 2025! 🌟",
+  "welcomeDescription": "Você está pronta para uma transformação capilar fabulosa? Criamos uma experiência encantadora especialmente para você!",
+  "welcomeItem1": "Coloração Base – Renove ou realce a cor do seu cabelo",
+  "welcomeItem2": "Tratamento de Gloss ou Hidratação – Para brilho e hidratação, proporcionando um cabelo com aspecto saudável",
+  "welcomeItem3": "Corte de Precisão & Secagem – Um acabamento impecável para completar o seu look",
+  "bookNow": "Agende Agora",
+  "welcomeAppointment": "Somente com agendamento, com a estilista Flavia."
   }
 }
