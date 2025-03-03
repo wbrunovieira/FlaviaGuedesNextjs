@@ -8,6 +8,7 @@ import {
   FaMapMarkerAlt,
   FaEnvelope,
   FaTiktok,
+  FaCommentAlt,
 } from 'react-icons/fa';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -18,7 +19,6 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-background container text-gray-200 py-12 mt-16 mx-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Coluna 1: Logo e Breve Descrição */}
         <div>
           <div className="flex items-center">
             <Image
@@ -40,7 +40,6 @@ const Footer: React.FC = () => {
           </p>
         </div>
 
-        {/* Coluna 2: Informações de Contato */}
         <div>
           <h3 className="text-xl font-semibold mb-4 text-gold">
             {t('contactTitle')}
@@ -59,6 +58,16 @@ const Footer: React.FC = () => {
                 {t('phone')}
               </a>
             </li>
+
+            <li className="flex items-center transition-colors hover:text-gold duration-300">
+              <FaCommentAlt className="mr-2" />
+              <a
+                href="sms:+19544647349"
+                className="hover:text-gold"
+              >
+                {t('phone')}
+              </a>
+            </li>
             <li className="flex items-center transition-colors hover:text-gold duration-300">
               <FaEnvelope className="mr-2" />
               <a
@@ -71,7 +80,6 @@ const Footer: React.FC = () => {
           </ul>
         </div>
 
-        {/* Coluna 3: Redes Sociais */}
         <div>
           <h3 className="text-xl font-semibold mb-4 text-gold">
             {t('socialTitle')}
@@ -103,7 +111,6 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* Rodapé com direitos autorais */}
       <div className="mt-12 border-t border-gray-700 pt-4 text-center">
         <Link
           href="https://www.wbdigitalsolutions.com/"
