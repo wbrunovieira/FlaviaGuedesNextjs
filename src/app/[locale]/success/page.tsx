@@ -6,7 +6,7 @@ import {
   useRouter,
 } from 'next/navigation';
 import { gsap } from 'gsap';
-import { FaGift } from 'react-icons/fa';
+import { FaGift, FaHeart } from 'react-icons/fa'; // Adicionamos o FaHeart
 import { useTranslations } from 'next-intl';
 import { useGSAP } from '@gsap/react';
 
@@ -25,9 +25,10 @@ import html2canvas from 'html2canvas';
 interface GiftCardData {
   sessionId: string;
   name: string;
+  giftName?: string;
   phone?: string;
   message?: string;
-  amount: number; // cents
+  amount: number; // em centavos
   stripePaymentId?: string | null;
 }
 
@@ -108,6 +109,8 @@ export default function SuccessPage() {
     }
   }, [giftCard]);
 
+  console.log('giftCard', giftCard);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-b from-black to-gray-900 text-white">
       {confetti && (
@@ -159,6 +162,21 @@ export default function SuccessPage() {
                   </p>
                 </div>
               </div>
+
+              {giftCard.giftName && (
+                <div className="flex items-center p-3 bg-gold/5 rounded-lg border border-gold/20">
+                  {/* Ícone de coração vermelho para destacar o presenteado */}
+                  <FaHeart className="text-red-500 mr-3 flex-shrink-0 animate-pulse" />
+                  <div className="flex-1">
+                    <p className="text-xs text-gold/70 uppercase font-semibold">
+                      {t('giftNameLabel') || 'Para quem é?'}
+                    </p>
+                    <p className="text-lg font-medium">
+                      {giftCard.giftName}
+                    </p>
+                  </div>
+                </div>
+              )}
 
               {giftCard.phone && (
                 <div className="flex items-center p-3 bg-gold/5 rounded-lg border border-gold/20">

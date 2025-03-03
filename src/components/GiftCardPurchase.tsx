@@ -20,6 +20,7 @@ export default function GiftCardPurchase({
   const locale = useLocale();
   const [amount, setAmount] = useState<string>('');
   const [name, setName] = useState<string>('');
+  const [giftName, setGiftName] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [message, setMessage] = useState<string>('');
   const [showInput, setShowInput] =
@@ -62,6 +63,7 @@ export default function GiftCardPurchase({
           amount: amountInCents,
           locale,
           name,
+          giftName,
           phone,
           message,
         }),
@@ -125,6 +127,15 @@ export default function GiftCardPurchase({
               }
               value={name}
               onChange={e => setName(e.target.value)}
+              className="p-2 border rounded text-background"
+            />
+            <input
+              type="text"
+              placeholder={
+                t('namegiftPlaceholder') || 'Para quem é?'
+              }
+              value={giftName}
+              onChange={e => setGiftName(e.target.value)}
               className="p-2 border rounded text-background"
             />
             <input

@@ -158,6 +158,7 @@
     "inputPlaceholder": "Digite o valor em USD",
     "invalidAmount": "Por favor, insira um valor válido maior que zero.",
     "namePlaceholder": "Seu nome",
+    "namegiftPlaceholder": "Para quem é? (opcional)",
     "invalidName": "Por favor, insira seu nome.",
     "phonePlaceholder": "Seu telefone (opcional)",
     "messagePlaceholder": "Mensagem personalizada (opcional)",
@@ -170,7 +171,8 @@
     "paymentId": "ID do Pagamento",
 
     "giftCardHeading": "Gift Card",
-    "nameLabel": "Nome",
+    "nameLabel": "De:",
+    "giftNameLabel": "Para:",
     "phoneLabel": "Telefone",
     "messageLabel": "Mensagem",
     "amountLabel": "Valor",

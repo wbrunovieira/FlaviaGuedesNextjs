@@ -23,14 +23,21 @@ export async function POST(req: Request) {
     const body = await req.json();
     console.log('[DEBUG] Request body:', body);
 
-    const { amount, locale, name, phone, message } =
-      body as {
-        amount: number;
-        locale: string;
-        name: string;
-        phone?: string;
-        message?: string;
-      };
+    const {
+      amount,
+      locale,
+      name,
+      giftName,
+      phone,
+      message,
+    } = body as {
+      amount: number;
+      locale: string;
+      name: string;
+      giftName: string;
+      phone?: string;
+      message?: string;
+    };
 
     const origin =
       req.headers.get('origin') ||
@@ -44,6 +51,7 @@ export async function POST(req: Request) {
     console.log('        - Amount (in cents):', amount);
     console.log('        - Locale:', locale);
     console.log('        - Name:', name);
+    console.log('        - giftName:', giftName);
     console.log('        - Phone:', phone);
     console.log('        - Message:', message);
 
@@ -64,6 +72,7 @@ export async function POST(req: Request) {
       cancel_url: `${origin}/${locale}/cancel`,
       metadata: {
         name,
+        giftName,
         phone: phone || '',
         message: message || '',
       },
@@ -77,6 +86,7 @@ export async function POST(req: Request) {
     const giftCardData = {
       amount,
       name,
+      giftName,
       phone: phone || null,
       message: message || null,
       stripeSessionId: session.id,

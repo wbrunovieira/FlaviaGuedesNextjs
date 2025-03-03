@@ -33,6 +33,7 @@ export async function GET(req: Request) {
     return NextResponse.json({
       sessionId: giftCard.stripeSessionId,
       name: giftCard.name,
+      giftName: giftCard.giftName,
       phone: giftCard.phone,
       message: giftCard.message,
       amount: giftCard.amount, // valor em cents

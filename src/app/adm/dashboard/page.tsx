@@ -8,6 +8,7 @@ export default function AdminDashboard() {
   interface GiftCard {
     id: string;
     name: string;
+    giftName: string;
     phone?: string;
     message?: string;
     amount: number;
@@ -43,6 +44,12 @@ export default function AdminDashboard() {
         if (!response.ok)
           throw new Error('Failed to fetch gift cards');
         const data = await response.json();
+        // Ordena as transações, mais recentes primeiro:
+        data.sort(
+          (a: GiftCard, b: GiftCard) =>
+            new Date(b.createdAt).getTime() -
+            new Date(a.createdAt).getTime()
+        );
         setGiftCards(data);
       } catch (err) {
         if (err instanceof Error) {
@@ -112,6 +119,14 @@ export default function AdminDashboard() {
                     </span>
                     <span className="text-white ml-2">
                       {giftCard.name}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-[150px,1fr] items-center">
+                    <span className="font-bold text-right">
+                      Para:
+                    </span>
+                    <span className="text-white ml-2">
+                      {giftCard.giftName}
                     </span>
                   </div>
                   {/* Row: Telefone */}

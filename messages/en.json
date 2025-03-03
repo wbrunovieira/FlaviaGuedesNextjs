@@ -150,6 +150,7 @@
     "inputPlaceholder": "Enter amount in USD",
     "invalidAmount": "Please enter a valid amount greater than zero.",
     "namePlaceholder": "Your name",
+     "namegiftPlaceholder": "Who is it for? (optional)",
     "invalidName": "Please enter your name.",
     "phonePlaceholder": "Your phone (optional)",
     "messagePlaceholder": "Personalized message (optional)",
@@ -162,7 +163,8 @@
     "paymentId": "Payment ID",
 
     "giftCardHeading": "Gift Card",
-    "nameLabel": "Name",
+    "nameLabel": "From:",
+     "giftNameLabel": "to:",
     "phoneLabel": "Phone",
     "messageLabel": "Message",
     "amountLabel": "Amount",
