@@ -21,13 +21,19 @@ const products = [
     brand: 'K18',
     title: 'k18Title',
     description: 'k18Description',
-    image: '/images/k18.jpg',
+    image: '/images/IMG_4074.JPG',
   },
   {
     brand: 'Color Wow',
     title: 'colorWowTitle',
     description: 'colorWowDescription',
     image: '/images/wow.jpg',
+  },
+  {
+    brand: 'Roze + Quartz',
+    title: 'roze+quartzTitle',
+    description: 'roze+quartzDescription',
+    image: '/images/roze+quartz.png',
   },
 ];
 
