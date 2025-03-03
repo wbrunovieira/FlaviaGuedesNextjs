@@ -143,7 +143,7 @@ export default function About({
             {getTitleSpans(title1, title2)}
           </h2>
 
-          <div className="w-full max-w-xl mx-auto md:mx-0 z-50 space-y-6">
+          <div className="w-full max-w-xl mx-auto md:mx-0 z-50 ">
             {paragraphs.map((text, index) => (
               <div
                 key={index}
