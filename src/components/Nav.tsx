@@ -17,6 +17,7 @@ export default function Nav() {
 
   const navContainer = useRef<HTMLElement>(null);
   const menuItemsRef = useRef<HTMLLIElement[]>([]);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
   const [mobileMenuOpen, setMobileMenuOpen] =
     useState(false);
 
@@ -30,6 +31,7 @@ export default function Nav() {
     { name: 'giftcard', href: '#giftcard' },
   ];
 
+  // Animação de entrada do componente de navegação e dos itens do menu
   useGSAP(
     () => {
       if (navContainer.current) {
@@ -58,10 +60,11 @@ export default function Nav() {
     { scope: navContainer }
   );
 
+  // Animação de abertura do menu mobile
   useEffect(() => {
-    if (mobileMenuOpen) {
+    if (mobileMenuOpen && mobileMenuRef.current) {
       gsap.fromTo(
-        '.mobile-menu',
+        mobileMenuRef.current,
         { opacity: 0, x: -20 },
         {
           opacity: 1,
@@ -73,10 +76,34 @@ export default function Nav() {
     }
   }, [mobileMenuOpen]);
 
+  // Função para fechar o menu mobile com animação
+  const handleMobileMenuClose = () => {
+    if (mobileMenuRef.current) {
+      gsap.to(mobileMenuRef.current, {
+        opacity: 0,
+        x: -20,
+        duration: 0.5,
+        ease: 'power3.in',
+        onComplete: () => {
+          setMobileMenuOpen(false);
+        },
+      });
+    }
+  };
+
+  // Função para alternar o menu mobile
+  const toggleMobileMenu = () => {
+    if (mobileMenuOpen) {
+      handleMobileMenuClose();
+    } else {
+      setMobileMenuOpen(true);
+    }
+  };
+
   return (
     <nav
       ref={navContainer}
-      id="top" // âncora para o topo da página
+      id="top"
       className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-md text-foreground p-4 shadow-md z-50"
     >
       <div className="container mx-auto flex justify-between items-center w-full">
@@ -127,15 +154,16 @@ export default function Nav() {
 
           <ToggleButton
             checked={mobileMenuOpen}
-            onChange={() =>
-              setMobileMenuOpen(prev => !prev)
-            }
+            onChange={toggleMobileMenu}
           />
         </div>
       </div>
 
       {mobileMenuOpen && (
-        <div className="mobile-menu md:hidden mt-4 bg-background p-4 rounded-lg shadow-lg w-full">
+        <div
+          ref={mobileMenuRef}
+          className="mobile-menu md:hidden mt-4 bg-background p-4 rounded-lg shadow-lg w-full"
+        >
           <ul className="flex flex-col space-y-3 w-full">
             {menuItems.map((item, index) => (
               <li
@@ -147,6 +175,7 @@ export default function Nav() {
               >
                 <Link
                   href={item.href}
+                  onClick={handleMobileMenuClose}
                   className="cursor-pointer block text-lg"
                 >
                   {t(item.name, {
