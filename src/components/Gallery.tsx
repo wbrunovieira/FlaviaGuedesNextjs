@@ -9,6 +9,8 @@ import PhotoAlbum, {
 } from 'react-photo-album';
 import 'react-photo-album/styles.css';
 
+import { useTranslations } from 'next-intl';
+
 interface CustomPhoto extends Photo {
   blurDataURL?: string;
 }
@@ -166,6 +168,7 @@ function renderNextImage(
 export default function Gallery({
   id = 'gallery',
 }: GallerySectionProps) {
+  const t = useTranslations('Gallery');
   return (
     <section
       className="container mx-auto px-6 py-16 md:py-24 lg:py-32"
@@ -173,11 +176,10 @@ export default function Gallery({
     >
       <div className="text-center max-w-2xl mx-auto mb-12">
         <h2 className="text-2xl font-playfair md:text-4xl font-bold text-primary mb-4">
-          Our Photo Gallery
+          {t('title')}
         </h2>
         <p className="text-lg md:text-xl text-muted-foreground">
-          Discover moments we&apos;ve captured and shared.
-          High-resolution photos for your inspiration.
+          {t('subtitle')}
         </p>
         <hr className="border-t border-muted w-full md:w-3/4 my-4 mx-auto" />
       </div>
