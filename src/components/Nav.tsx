@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRef, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import Flag from 'react-world-flags';
 import ButtonAnimatedGradient from './ButtonAnimatedGradient';
 import { FiRefreshCcw } from 'react-icons/fi';
 import ToggleButton from './ToggleButton';
@@ -141,11 +141,18 @@ export default function Nav() {
             className="relative group"
           >
             <span className="flex items-center space-x-2">
-              <Flag
-                code={locale === 'pt' ? 'US' : 'BR'}
-                className="w-5 h-5 mr-2"
+              <Image
+                src={
+                  alternateLocale === 'pt'
+                    ? '/icons/brazil.svg'
+                    : '/icons/united.svg'
+                }
+                width={20}
+                height={12}
+                alt="Flag"
+                priority
               />
-              <FiRefreshCcw className="w-4 h-4 text-white opacity-80 " />
+              <FiRefreshCcw className="w-4 h-4 text-white opacity-80" />
             </span>
           </ButtonAnimatedGradient>
 
@@ -159,21 +166,21 @@ export default function Nav() {
       {mobileMenuOpen && (
         <div
           ref={mobileMenuRef}
-          className="mobile-menu md:hidden mt-4 bg-background p-4 rounded-lg shadow-lg w-full "
+          className="mobile-menu md:hidden mt-4 bg-background p-4 rounded-lg shadow-lg w-full"
         >
-          <ul className="flex flex-col space-y-3 w-full bg-background/55">
+          <ul className="flex flex-col space-y-3 w-full bg-black/55">
             {menuItems.map((item, index) => (
               <li
                 key={item.name}
                 ref={el => {
                   if (el) menuItemsRef.current[index] = el;
                 }}
-                className="hover:text-gold transition duration-200 text-right bg-background/55 "
+                className="hover:text-gold transition duration-200 text-right"
               >
                 <Link
                   href={item.href}
                   onClick={handleMobileMenuClose}
-                  className="cursor-pointer block "
+                  className="cursor-pointer block"
                 >
                   {t(item.name, {
                     defaultValue: item.name,

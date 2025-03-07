@@ -126,9 +126,10 @@ export default function About({
         <div className="w-full md:w-2/3 flex justify-center md:justify-start">
           <div className="relative w-full h-[350px] md:h-[500px] max-w-md bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
             <Image
-              src="/images/flavia2.png"
+              src="/images/flavia2.webp"
               alt="Flavia Guedes"
-              fill
+              width={600}
+              height={800}
               className="object-cover"
             />
           </div>
