@@ -29,9 +29,9 @@ export default function Nav() {
     { name: 'about', href: '#about' },
     { name: 'gallery', href: '#gallery' },
     { name: 'giftcard', href: '#giftcard' },
+    { name: 'promotions', href: '#promotions' },
   ];
 
-  // Animação de entrada do componente de navegação e dos itens do menu
   useGSAP(
     () => {
       if (navContainer.current) {
@@ -60,7 +60,6 @@ export default function Nav() {
     { scope: navContainer }
   );
 
-  // Animação de abertura do menu mobile
   useEffect(() => {
     if (mobileMenuOpen && mobileMenuRef.current) {
       gsap.fromTo(
@@ -76,7 +75,6 @@ export default function Nav() {
     }
   }, [mobileMenuOpen]);
 
-  // Função para fechar o menu mobile com animação
   const handleMobileMenuClose = () => {
     if (mobileMenuRef.current) {
       gsap.to(mobileMenuRef.current, {
@@ -91,7 +89,6 @@ export default function Nav() {
     }
   };
 
-  // Função para alternar o menu mobile
   const toggleMobileMenu = () => {
     if (mobileMenuOpen) {
       handleMobileMenuClose();
@@ -123,7 +120,7 @@ export default function Nav() {
               ref={el => {
                 if (el) menuItemsRef.current[index] = el;
               }}
-              className="hover:text-gold transition duration-200"
+              className="hover:text-gold transition duration-200 text-sm"
             >
               <Link
                 href={item.href}
@@ -148,7 +145,7 @@ export default function Nav() {
                 code={locale === 'pt' ? 'US' : 'BR'}
                 className="w-5 h-5 mr-2"
               />
-              <FiRefreshCcw className="w-4 h-4 text-white opacity-80" />
+              <FiRefreshCcw className="w-4 h-4 text-white opacity-80 " />
             </span>
           </ButtonAnimatedGradient>
 
@@ -162,21 +159,21 @@ export default function Nav() {
       {mobileMenuOpen && (
         <div
           ref={mobileMenuRef}
-          className="mobile-menu md:hidden mt-4 bg-background p-4 rounded-lg shadow-lg w-full"
+          className="mobile-menu md:hidden mt-4 bg-background p-4 rounded-lg shadow-lg w-full "
         >
-          <ul className="flex flex-col space-y-3 w-full">
+          <ul className="flex flex-col space-y-3 w-full bg-background/55">
             {menuItems.map((item, index) => (
               <li
                 key={item.name}
                 ref={el => {
                   if (el) menuItemsRef.current[index] = el;
                 }}
-                className="hover:text-gold transition duration-200"
+                className="hover:text-gold transition duration-200 text-right bg-background/55 "
               >
                 <Link
                   href={item.href}
                   onClick={handleMobileMenuClose}
-                  className="cursor-pointer block text-lg"
+                  className="cursor-pointer block "
                 >
                   {t(item.name, {
                     defaultValue: item.name,

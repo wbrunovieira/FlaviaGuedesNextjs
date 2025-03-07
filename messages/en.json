@@ -10,7 +10,9 @@
     "contact": "Contact",
      "giftcard": "Gift Card",
     "navigationLabel": "Main navigation",
-    "logoAria": "Home page"
+    "logoAria": "Home page",
+     "promotions": "Promotions"
+
   },
   "Hero": {
     "title1": "Perfect Hair,",
