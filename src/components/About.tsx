@@ -155,7 +155,7 @@ export default function About({
               >
                 <p
                   className={`
-            text-base sm:text-lg md:text-lg leading-relaxed 
+            text-base sm:text-lg md:text-lg leading-5
             whitespace-normal max-w-full z-50
             ${
               index === paragraphs.length - 1
