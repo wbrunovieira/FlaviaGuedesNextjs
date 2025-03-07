@@ -72,7 +72,7 @@ export default function Location({
         <div className="w-full md:w-1/2 flex justify-center md:justify-end">
           <div className="relative w-full h-[300px] md:h-[400px] max-w-lg bg-gray-800 rounded-2xl overflow-hidden shadow-xl">
             <Image
-              src="/images/location-salon.jpg"
+              src="/images/store.png"
               alt="Salão iFierce"
               fill
               className="object-cover"
