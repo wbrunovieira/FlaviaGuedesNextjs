@@ -37,6 +37,8 @@ export default function SuccessPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const sessionId = searchParams.get('session_id');
+  const paymentId = searchParams.get('payment_id');
+  const paymentType = searchParams.get('type');
 
   const [saved, setSaved] = useState<boolean>(false);
   const [giftCard, setGiftCard] =
@@ -47,6 +49,26 @@ export default function SuccessPage() {
 
   useEffect(() => {
     const updatePaymentAndFetchData = async () => {
+      // Handle Square payments
+      if (paymentType === 'square' && paymentId) {
+        const resGet = await fetch(
+          `/api/get-square-payment?paymentId=${paymentId}`
+        );
+        const getData = await resGet.json();
+        if (resGet.ok) {
+          setGiftCard(getData);
+          setConfetti(true);
+          setSaved(true);
+        } else {
+          setError(
+            getData.error ||
+              'Failed to retrieve gift card data.'
+          );
+        }
+        return;
+      }
+
+      // Handle Stripe payments (legacy)
       if (!sessionId) return;
 
       const resPost = await fetch('/api/save-payment', {
@@ -79,7 +101,7 @@ export default function SuccessPage() {
     };
 
     updatePaymentAndFetchData();
-  }, [sessionId]);
+  }, [sessionId, paymentId, paymentType]);
 
   const handleDownload = async () => {
     if (!cardRef.current) return;

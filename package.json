@@ -14,6 +14,7 @@
     "@prisma/adapter-pg": "^6.4.1",
     "@prisma/client": "6.4.1",
     "@radix-ui/react-slot": "^1.1.2",
+    "@square/web-sdk": "^2.1.0",
     "@stripe/stripe-js": "^5.6.0",
     "@tabler/icons-react": "^3.30.0",
     "@tsparticles/engine": "^3.8.1",
@@ -37,6 +38,8 @@
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
     "react-photo-album": "^3.0.2",
+    "react-square-web-payments-sdk": "3.2.4-beta.1",
+    "square": "^43.0.2",
     "stripe": "^17.6.0",
     "tailwind-merge": "^3.0.1"
   },

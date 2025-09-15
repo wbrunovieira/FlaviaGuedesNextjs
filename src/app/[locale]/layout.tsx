@@ -39,8 +39,8 @@ export default async function RootLocaleLayout(props: {
   ).default;
 
   return (
-    <html lang={locale} className={`${workSans.variable} ${merriweather.variable}`}>
-      <body className={workSans.className}>
+    <html lang={locale} className={`${workSans.variable} ${merriweather.variable}`} suppressHydrationWarning>
+      <body className={workSans.className} suppressHydrationWarning>
         <NextIntlClientProvider
           locale={locale}
           messages={messages}

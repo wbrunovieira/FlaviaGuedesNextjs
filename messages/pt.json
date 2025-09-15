@@ -168,7 +168,8 @@
     "messagePlaceholder": "Mensagem personalizada (opcional)",
     "purchaseSuccess": "Compra de gift card efetuada com sucesso!",
     "purchaseFailure": "Falha ao criar a sessão de pagamento. Por favor, tente novamente.",
-    "minAmount": "O valor mínimo é de $25."
+    "minAmount": "O valor mínimo é de $25.",
+    "processing": "Processando pagamento..."
   },
     "GiftCardSuccess": {
     "successTitle": "Pagamento Realizado com Sucesso!",
