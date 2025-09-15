@@ -46,7 +46,7 @@ export async function GET(req: Request) {
 
     // Also get latest payment status from Square
     try {
-      const paymentResponse = await client.payments.retrieve(paymentId);
+      const paymentResponse = await client.paymentsApi.getPayment(paymentId);
       if (paymentResponse.payment) {
         giftCard.paymentStatus = paymentResponse.payment.status;
         giftCard.receiptUrl = paymentResponse.payment.receiptUrl;
