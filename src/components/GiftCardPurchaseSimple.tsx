@@ -149,7 +149,7 @@ export default function GiftCardPurchaseSimple({
 
       <div
         id={id}
-        className="max-w-xl mx-auto p-8 bg-background shadow-xl rounded-lg border border-gold"
+        className="max-w-xl mx-4 md:mx-auto p-6 md:p-8 bg-background shadow-xl rounded-lg border border-gold"
       >
         <div className="flex flex-col items-center">
           <FaGift className="text-6xl text-gold mb-4" />

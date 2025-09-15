@@ -9,21 +9,6 @@ type AboutProps = {
   id?: string;
 };
 
-function splitParagraphIntoSpans(text: string) {
-  return text.split(' ').map((word, idx) => (
-    <span
-      key={`${word}-${idx}`}
-      style={{
-        opacity: 0,
-        filter: 'blur(10px)',
-        marginRight: '4px',
-      }}
-    >
-      {word}
-    </span>
-  ));
-}
-
 function getTitleSpans(title1: string, title2: string) {
   return (
     <>
@@ -89,19 +74,15 @@ export default function About({
         const paragraphEl = paragraphRefs.current[index];
         if (!paragraphEl) return;
 
-        tl.set(paragraphEl, { opacity: 1 });
-        const spans = paragraphEl.querySelectorAll('span');
-
         tl.fromTo(
-          spans,
-          { opacity: 0, filter: 'blur(10px)' },
+          paragraphEl,
+          { opacity: 0, y: 20 },
           {
             opacity: 1,
-            filter: 'blur(0px)',
+            y: 0,
             duration: 0.8,
-            stagger: 0.1,
           },
-          '+=0.3'
+          '+=0.2'
         );
       });
     }, containerRef);
@@ -113,7 +94,7 @@ export default function About({
     <section
       id={id}
       ref={containerRef}
-      className="relative container w-full py-16 px-6 md:px-12 lg:px-20 text-white overflow-hidden mx-auto mt-32"
+      className="relative container w-full py-16 px-4 sm:px-6 md:px-12 lg:px-20 text-white overflow-hidden mx-auto mt-32"
       style={{
         background: `
       radial-gradient(circle at top right, rgba(31, 31, 31, 0.7) 0%, transparent 60%),
@@ -123,7 +104,7 @@ export default function About({
       }}
     >
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-10 items-center">
-        <div className="w-full md:w-2/3 flex justify-center md:justify-start">
+        <div className="w-full md:w-1/2 flex justify-center md:justify-start">
           <div className="relative w-full h-[350px] md:h-[500px] max-w-md bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
             <Image
               src="/images/flavia2.webp"
@@ -135,7 +116,7 @@ export default function About({
           </div>
         </div>
 
-        <div className="w-full  flex flex-col items-center md:items-start text-center md:text-left space-y-8">
+        <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left space-y-8 overflow-hidden">
           <h2
             ref={titleRef}
             style={{ opacity: 0 }}
@@ -144,7 +125,7 @@ export default function About({
             {getTitleSpans(title1, title2)}
           </h2>
 
-          <div className="w-full max-w-xl mx-auto md:mx-0 z-50 ">
+          <div className="w-full z-50">
             {paragraphs.map((text, index) => (
               <div
                 key={index}
@@ -156,21 +137,16 @@ export default function About({
               >
                 <p
                   className={`
-            text-left text-base sm:text-lg md:text-lg leading-5
-            whitespace-normal max-w-full z-50
+            text-left text-sm sm:text-base md:text-lg leading-relaxed
+            z-50
             ${
               index === paragraphs.length - 1
                 ? 'text-gold font-semibold'
                 : 'text-white'
             }
           `}
-                  style={{
-                    wordBreak: 'break-word',
-                    overflowWrap: 'break-word',
-                    hyphens: 'auto',
-                  }}
                 >
-                  {splitParagraphIntoSpans(text)}
+                  {text}
                 </p>
                 <br />
               </div>
