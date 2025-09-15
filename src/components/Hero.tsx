@@ -35,7 +35,7 @@ export default function Hero() {
   useGSAP(() => {
     gsap.from(heroRef.current, {
       opacity: 0,
-      y: -50,
+      y: 0,
       duration: 1,
       ease: 'power3.out',
     });
@@ -60,7 +60,7 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative container mx-auto mt-24 md:mt-0 flex flex-col md:flex-row items-center justify-between min-h-screen px-6 md:px-12 lg:px-20 bg-black text-white"
+      className="relative container mx-auto pt-24 md:pt-20 flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-20 bg-black text-white"
     >
       <div
         ref={textRef}
@@ -111,7 +111,7 @@ export default function Hero() {
         ref={imageRef}
         className="w-full md:w-1/2 flex justify-center md:justify-end mt-10 md:mt-0"
       >
-        <div className="relative flex flex-col md:flex-row items-center justify-between min-h-screen px-6 md:px-12 lg:px-20 bg-black text-white">
+        <div className="relative flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-20 bg-black text-white">
           <ImageSliderHero />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
         </div>
