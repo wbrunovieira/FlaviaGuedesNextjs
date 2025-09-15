@@ -1,6 +1,11 @@
 // src/app/api/create-square-payment/route.ts
 import { NextResponse } from 'next/server';
 import { SquareClient, SquareEnvironment } from 'square';
+
+interface SquareClientOptions {
+  accessToken: string;
+  environment: SquareEnvironment;
+}
 import {
   db,
   setDoc,
@@ -20,12 +25,11 @@ console.log('[DEBUG] Token length:', accessToken?.length);
 
 // Initialize Square client with appropriate credentials
 const client = new SquareClient({
-  accessToken,
+  accessToken: accessToken,
   environment: isProduction
     ? SquareEnvironment.Production
     : SquareEnvironment.Sandbox,
-  squareVersion: '2025-08-20'
-});
+} as SquareClientOptions);
 
 export async function POST(req: Request) {
   console.log('[DEBUG] Square payment request received');
@@ -109,7 +113,13 @@ export async function POST(req: Request) {
       squareOrderId: payment.orderId || null,
       squareReceiptUrl: payment.receiptUrl || null,
       paymentStatus: payment.status,
+      paid: payment.status === 'COMPLETED', // Add paid boolean field
       cancelled: false,
+      // Payment method details
+      paymentMethod: payment.sourceType || 'UNKNOWN',
+      cardBrand: payment.cardDetails?.card?.cardBrand || null,
+      cardLast4: payment.cardDetails?.card?.last4 || null,
+      cardType: payment.cardDetails?.card?.cardType || null,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -128,14 +138,25 @@ export async function POST(req: Request) {
       giftCardData
     }, { status: 200 });
 
-  } catch (error: any) {
-    console.error('[ERROR] Square payment error:', error);
-    console.error('[ERROR] Error stack:', error.stack);
-    console.error('[ERROR] Error details:', JSON.stringify(error, null, 2));
+  } catch (error: unknown) {
+    interface SquareError {
+      errors?: Array<{
+        code: string;
+        detail: string;
+        field?: string;
+      }>;
+      stack?: string;
+      message?: string;
+    }
+
+    const errorObj = error as SquareError;
+    console.error('[ERROR] Square payment error:', errorObj);
+    console.error('[ERROR] Error stack:', errorObj.stack);
+    console.error('[ERROR] Error details:', JSON.stringify(errorObj, null, 2));
 
     // Handle Square-specific errors
-    if (error.errors) {
-      const squareErrors = error.errors.map((e: any) => ({
+    if (errorObj.errors) {
+      const squareErrors = errorObj.errors.map((e) => ({
         code: e.code,
         detail: e.detail,
         field: e.field
@@ -149,12 +170,13 @@ export async function POST(req: Request) {
       );
     }
 
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
     return NextResponse.json(
       {
-        error: error.message || 'Internal server error',
+        error: errorMessage,
         debug: {
-          name: error.name,
-          message: error.message,
+          name: error instanceof Error ? error.name : 'Unknown',
+          message: errorMessage,
           hasToken: !!process.env.SQUARE_SANDBOX_ACCESS_TOKEN
         }
       },

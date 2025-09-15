@@ -36,7 +36,7 @@ export default function GiftCardPurchaseSquare({
 
   const locationId = process.env.NEXT_PUBLIC_SQUARE_LOCATION_ID || '';
 
-  const handlePaymentSuccess = async (token: any) => {
+  const handlePaymentSuccess = async (token: { token?: string }) => {
     setIsProcessing(true);
     setError('');
 
@@ -54,7 +54,7 @@ export default function GiftCardPurchaseSquare({
           giftName,
           phone,
           message,
-          sourceId: token.token,
+          sourceId: token.token || '',
         }),
       });
 
@@ -66,7 +66,7 @@ export default function GiftCardPurchaseSquare({
       } else {
         setError(data.error || t('purchaseFailure') || 'Payment failed');
       }
-    } catch (err) {
+    } catch {
       setError(t('purchaseFailure') || 'Payment processing error');
     } finally {
       setIsProcessing(false);

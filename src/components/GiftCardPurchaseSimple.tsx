@@ -4,12 +4,7 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 import { FaGift, FaArrowRight } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
 import Script from 'next/script';
-
-declare global {
-  interface Window {
-    Square: any;
-  }
-}
+import type { SquarePaymentsInstance, SquareCard } from '@/types/square';
 
 type GiftCardPurchaseProps = {
   id?: string;
@@ -28,8 +23,8 @@ export default function GiftCardPurchaseSimple({
   const [showInput, setShowInput] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
-  const [card, setCard] = useState<any>(null);
-  const [payments, setPayments] = useState<any>(null);
+  const [card, setCard] = useState<SquareCard | null>(null);
+  const [payments, setPayments] = useState<SquarePaymentsInstance | null>(null);
 
   // Determine environment
   const isProduction = process.env.NODE_ENV === 'production';
@@ -58,7 +53,7 @@ export default function GiftCardPurchaseSimple({
 
       try {
         console.log('[DEBUG] Initializing Square payments with App ID:', applicationId);
-        const paymentsInstance = window.Square.payments(applicationId);
+        const paymentsInstance = window.Square.payments(applicationId!);
         setPayments(paymentsInstance);
 
         console.log('[DEBUG] Creating card instance...');
@@ -71,12 +66,12 @@ export default function GiftCardPurchaseSimple({
         console.log('[DEBUG] Square card initialized successfully');
       } catch (e) {
         console.error('[ERROR] Square initialization error:', e);
-        setError('Payment system initialization failed: ' + (e as any).message);
+        setError('Payment system initialization failed: ' + (e as Error).message);
       }
     };
 
     initializeSquare();
-  }, [showInput]); // Remove dependencies that cause re-initialization
+  }, [showInput, applicationId, card, payments]);
 
   const handlePayment = async () => {
     if (!card) {

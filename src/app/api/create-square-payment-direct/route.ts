@@ -130,7 +130,13 @@ export async function POST(req: Request) {
       squareOrderId: payment.order_id || null,
       squareReceiptUrl: payment.receipt_url || null,
       paymentStatus: payment.status,
+      paid: payment.status === 'COMPLETED', // Add paid boolean field
       cancelled: false,
+      // Payment method details
+      paymentMethod: payment.source_type || 'UNKNOWN',
+      cardBrand: payment.card_details?.card?.card_brand || null,
+      cardLast4: payment.card_details?.card?.last_4 || null,
+      cardType: payment.card_details?.card?.card_type || null,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -149,15 +155,16 @@ export async function POST(req: Request) {
       giftCardData
     }, { status: 200 });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('[ERROR] Square payment error:', error);
-    console.error('[ERROR] Error message:', error.message);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error('[ERROR] Error message:', errorMessage);
 
     let errorDetails;
     try {
-      errorDetails = JSON.parse(error.message);
+      errorDetails = JSON.parse(errorMessage);
     } catch {
-      errorDetails = { error: error.message };
+      errorDetails = { error: errorMessage };
     }
 
     return NextResponse.json(

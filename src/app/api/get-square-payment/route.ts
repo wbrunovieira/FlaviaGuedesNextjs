@@ -1,27 +1,16 @@
 // src/app/api/get-square-payment/route.ts
 import { NextResponse } from 'next/server';
-import { SquareClient, SquareEnvironment } from 'square';
 import {
   db,
   doc,
   getDoc,
 } from './../../../../firebase-config';
 
-const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
-
-const client = new SquareClient({
-  accessToken: isProduction
-    ? process.env.SQUARE_ACCESS_TOKEN!
-    : process.env.SQUARE_SANDBOX_ACCESS_TOKEN!,
-  environment: isProduction
-    ? SquareEnvironment.Production
-    : SquareEnvironment.Sandbox,
-  squareVersion: '2025-08-20'
-});
-
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const paymentId = searchParams.get('paymentId');
+
+  console.log('[DEBUG] Get Square Payment - paymentId:', paymentId);
 
   if (!paymentId) {
     return NextResponse.json(
@@ -36,6 +25,7 @@ export async function GET(req: Request) {
     const giftCardSnap = await getDoc(giftCardRef);
 
     if (!giftCardSnap.exists()) {
+      console.error('[ERROR] Gift card not found in Firebase for paymentId:', paymentId);
       return NextResponse.json(
         { error: 'Gift card not found' },
         { status: 404 }
@@ -43,17 +33,11 @@ export async function GET(req: Request) {
     }
 
     const giftCard = giftCardSnap.data();
+    console.log('[DEBUG] Gift card data from Firebase:', giftCard);
 
-    // Also get latest payment status from Square
-    try {
-      const paymentResponse = await client.paymentsApi.getPayment(paymentId);
-      if (paymentResponse.payment) {
-        giftCard.paymentStatus = paymentResponse.payment.status;
-        giftCard.receiptUrl = paymentResponse.payment.receiptUrl;
-      }
-    } catch (squareError) {
-      console.error('Error fetching Square payment:', squareError);
-    }
+    // Skip Square API call for now - using Firebase data
+    // TODO: Update when Square SDK is properly configured
+    console.log('[INFO] Using Firebase data for payment details');
 
     return NextResponse.json({
       paymentId: giftCard.squarePaymentId,

@@ -4,12 +4,7 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 import { FaGift, FaArrowRight, FaCreditCard, FaApple, FaGoogle, FaMobileAlt } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
 import Script from 'next/script';
-
-declare global {
-  interface Window {
-    Square: any;
-  }
-}
+import type { SquarePaymentsInstance, SquareCard, SquareApplePay, SquareGooglePay, SquareCashApp } from '@/types/square';
 
 type GiftCardPurchaseProps = {
   id?: string;
@@ -28,13 +23,13 @@ export default function GiftCardPurchaseMultiPayment({
   const [showInput, setShowInput] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
-  const [payments, setPayments] = useState<any>(null);
+  const [payments, setPayments] = useState<SquarePaymentsInstance | null>(null);
 
   // Payment methods
-  const [card, setCard] = useState<any>(null);
-  const [applePay, setApplePay] = useState<any>(null);
-  const [googlePay, setGooglePay] = useState<any>(null);
-  const [cashApp, setCashApp] = useState<any>(null);
+  const [card, setCard] = useState<SquareCard | null>(null);
+  const [applePay, setApplePay] = useState<SquareApplePay | null>(null);
+  const [googlePay, setGooglePay] = useState<SquareGooglePay | null>(null);
+  const [cashApp, setCashApp] = useState<SquareCashApp | null>(null);
 
   // Available payment methods
   const [availableMethods, setAvailableMethods] = useState({
@@ -77,7 +72,7 @@ export default function GiftCardPurchaseMultiPayment({
 
       try {
         console.log('[DEBUG] Initializing Square payments with App ID:', applicationId);
-        const paymentsInstance = window.Square.payments(applicationId);
+        const paymentsInstance = window.Square.payments(applicationId!);
         setPayments(paymentsInstance);
 
         // Initialize Card
@@ -160,12 +155,12 @@ export default function GiftCardPurchaseMultiPayment({
 
       } catch (e) {
         console.error('[ERROR] Square initialization error:', e);
-        setError('Payment system initialization failed: ' + (e as any).message);
+        setError('Payment system initialization failed: ' + (e as Error).message);
       }
     };
 
     initializeSquare();
-  }, [showInput]); // Remove amount dependency to avoid re-initialization
+  }, [showInput, amount, applicationId, isProduction, isSandbox, payments]);
 
   const processPayment = async (token: string) => {
     const numericAmount = Number(amount);
@@ -231,7 +226,7 @@ export default function GiftCardPurchaseMultiPayment({
         setTimeout(() => setError(''), 5000);
         return;
       }
-      const result = await applePay.tokenize();
+      const result = await applePay!.tokenize();
       if (result.status === 'OK') {
         await processPayment(result.token);
       } else {
@@ -258,7 +253,7 @@ export default function GiftCardPurchaseMultiPayment({
         setTimeout(() => setError(''), 5000);
         return;
       }
-      const result = await googlePay.tokenize();
+      const result = await googlePay!.tokenize();
       if (result.status === 'OK') {
         await processPayment(result.token);
       } else {
@@ -285,7 +280,7 @@ export default function GiftCardPurchaseMultiPayment({
         setTimeout(() => setError(''), 5000);
         return;
       }
-      const result = await cashApp.tokenize();
+      const result = await cashApp!.tokenize();
       if (result.status === 'OK') {
         await processPayment(result.token);
       } else {

@@ -13,8 +13,14 @@ export default function AdminDashboard() {
     message?: string;
     amount: number;
     stripePaymentId?: string;
+    squarePaymentId?: string;
+    paid?: boolean;
     cancelled?: boolean;
     createdAt: string;
+    paymentMethod?: string;
+    cardBrand?: string;
+    cardLast4?: string;
+    cardType?: string;
   }
 
   const [giftCards, setGiftCards] = useState<GiftCard[]>(
@@ -162,11 +168,29 @@ export default function AdminDashboard() {
                       Pago:
                     </span>
                     <span className="text-white ml-2">
-                      {giftCard.stripePaymentId
-                        ? 'Sim'
-                        : 'Não'}
+                      {giftCard.paid ? 'Sim' : 'Não'}
                     </span>
                   </div>
+                  {/* Row: Método de Pagamento */}
+                  <div className="grid grid-cols-[150px,1fr] items-center">
+                    <span className="font-bold text-right">
+                      Método:
+                    </span>
+                    <span className="text-white ml-2">
+                      {giftCard.paymentMethod || 'N/A'}
+                    </span>
+                  </div>
+                  {/* Row: Cartão */}
+                  {giftCard.cardBrand && (
+                    <div className="grid grid-cols-[150px,1fr] items-center">
+                      <span className="font-bold text-right">
+                        Cartão:
+                      </span>
+                      <span className="text-white ml-2">
+                        {giftCard.cardBrand} ****{giftCard.cardLast4} ({giftCard.cardType})
+                      </span>
+                    </div>
+                  )}
                   {/* Row: Cancelado */}
                   <div className="grid grid-cols-[150px,1fr] items-center">
                     <span className="font-bold text-right">
