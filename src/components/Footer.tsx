@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import {
   FaInstagram,
   FaPhoneAlt,
@@ -21,13 +20,6 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
           <div className="flex items-center">
-            <Image
-              src="/logo.png"
-              alt="Logo"
-              width={50}
-              height={50}
-              className="mr-2"
-            />
             <span className="text-2xl font-bold text-gold">
               Flavia Guedes
             </span>

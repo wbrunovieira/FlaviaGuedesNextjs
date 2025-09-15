@@ -109,7 +109,7 @@ export default function Nav() {
           className="hover:scale-105 transition duration-200"
         >
           <span className="text-2xl font-bold cursor-pointer">
-            {t('logo', { defaultValue: 'MyApp' })}
+            {t('logo')}
           </span>
         </Link>
 
@@ -126,7 +126,7 @@ export default function Nav() {
                 href={item.href}
                 className="cursor-pointer"
               >
-                {t(item.name, { defaultValue: item.name })}
+                {t(item.name)}
               </Link>
             </li>
           ))}

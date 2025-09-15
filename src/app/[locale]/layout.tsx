@@ -1,7 +1,21 @@
 // src/app/[locale]/layout.tsx
 import { NextIntlClientProvider } from 'next-intl';
 import type { Metadata } from 'next';
+import { Merriweather, Work_Sans } from 'next/font/google';
 import '../../app/globals.css';
+
+const workSans = Work_Sans({
+  subsets: ['latin'],
+  variable: '--font-work-sans',
+  display: 'swap',
+});
+
+const merriweather = Merriweather({
+  subsets: ['latin'],
+  weight: ['300', '400', '700', '900'],
+  variable: '--font-merriweather',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Flavia Guedes',
@@ -25,10 +39,9 @@ export default async function RootLocaleLayout(props: {
   ).default;
 
   return (
-    <html lang={locale}>
-      <body>
+    <html lang={locale} className={`${workSans.variable} ${merriweather.variable}`}>
+      <body className={workSans.className}>
         <NextIntlClientProvider
-          key={locale}
           locale={locale}
           messages={messages}
         >
