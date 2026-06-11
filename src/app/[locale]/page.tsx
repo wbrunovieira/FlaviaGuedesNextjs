@@ -13,10 +13,12 @@ import GiftCardPurchaseSimple from '@/components/GiftCardPurchaseSimple';
 import Promotions from '@/components/Promotions';
 import SectionReveal from '@/components/ui/SectionReveal';
 import SectionDivider from '@/components/ui/SectionDivider';
+import HashScrollFix from '@/components/ui/HashScrollFix';
 
 export default function Index() {
   return (
     <div className="bg-black w-full min-h-screen relative">
+      <HashScrollFix />
       <div className="bg-atmosphere" aria-hidden />
       <div className="grain-overlay" aria-hidden />
       <div className="relative z-10">
