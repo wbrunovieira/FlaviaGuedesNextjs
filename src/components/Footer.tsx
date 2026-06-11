@@ -14,10 +14,11 @@ import {
 import { FiArrowUpRight } from 'react-icons/fi';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 const Footer: React.FC = () => {
   const t = useTranslations('Footer');
+  const locale = useLocale();
 
   return (
     <footer className="bg-background container text-gray-200 py-12 mt-16 mx-auto">
@@ -38,6 +39,12 @@ const Footer: React.FC = () => {
           <p className="mt-4 text-gray-400 text-sm leading-relaxed">
             {t('description2')}
           </p>
+          <Link
+            href={`/${locale}/about`}
+            className="mt-4 inline-flex items-center gap-1.5 text-sm text-gold/80 transition-colors duration-300 hover:text-gold"
+          >
+            {t('myStory')} →
+          </Link>
         </div>
 
         <div>

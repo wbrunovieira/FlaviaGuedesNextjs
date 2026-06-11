@@ -3,7 +3,9 @@
 import { useRef, useEffect, useMemo } from 'react';
 import gsap from 'gsap';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { FaArrowRight } from 'react-icons/fa';
+import { useTranslations, useLocale } from 'next-intl';
 
 type AboutProps = {
   id?: string;
@@ -23,6 +25,7 @@ export default function About({
   id = 'about',
 }: AboutProps) {
   const t = useTranslations('About');
+  const locale = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const paragraphRefs = useRef<HTMLDivElement[]>([]);
@@ -152,6 +155,14 @@ export default function About({
               </div>
             ))}
           </div>
+
+          <Link
+            href={`/${locale}/about`}
+            className="inline-flex items-center gap-2 rounded-full border border-gold/50 px-6 py-3 font-semibold text-gold transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:gap-3"
+          >
+            {t('readMore')}
+            <FaArrowRight className="text-sm" />
+          </Link>
         </div>
       </div>
     </section>

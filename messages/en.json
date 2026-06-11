@@ -43,11 +43,12 @@
   "About": {
     "title1": "Flavia Guedes",
     "title2": "Colorist & Hair Stylist",
-    "paragraph1": "Hello! I'm Flavia, specializing in hair coloring—especially blondes, balayage, and ombré. Since 2006, I've been deeply involved in the beauty industry, and since 2017, I've been working at iFierce Beauty Lounge.",
-    "paragraph2": "My passion for hair transformation started early when I used to color my mom’s hair. That led me to invest in courses, training, and hands-on experience at various salons until I finally earned my own chair. Today, I see every client as an opportunity to enhance the confidence they already carry within.",
-    "paragraph3": "My specialty is creating modern and healthy looks while preserving hair integrity. I also love getting to know each client and building long-lasting relationships. For me, hair is not just color—it’s expression, connection, and genuine care.",
-    "paragraph4": "Every day, I learn from my team and the unique challenges that come through the salon doors. If you're looking to lighten your hair or completely transform your look, I'm here to help.",
-    "motto": "Motto: “Too much ego will kill your talent.”"
+    "paragraph1": "I'm originally from Brazil and moved to South Florida at 18. What began as a love for coloring my mother's hair grew into a 20+ year career in beauty — at iFierce Beauty Lounge since 2017.",
+    "paragraph2": "My specialties: natural-looking blondes, balayage, dimensional color and gray coverage — always preserving your hair's health and integrity.",
+    "paragraph3": "Every guest is unique: each appointment begins with a personalized consultation about your lifestyle, routine and goals. Because beautiful hair starts with healthy hair.",
+    "paragraph4": "Many of my guests have trusted me with their hair for more than a decade — a trust I never take for granted.",
+    "motto": "“Talent opens doors, but humility, kindness, and continuous learning create lasting success.”",
+    "readMore": "Read my story"
   },
   "Services": {
     "title": "Our Services",
@@ -258,7 +259,8 @@
     "developedWith": "Developed with",
     "by": "by",
     "appointmentsTitle": "Appointments Required",
-    "appointmentsNote": "All services are provided by appointment only. Please call, text, or message us."
+    "appointmentsNote": "All services are provided by appointment only. Please call, text, or message us.",
+    "myStory": "My Story"
   },
   "GiftCard": {
     "title": "Purchase Gift Card",
@@ -326,5 +328,31 @@
   "Gallery": {
     "title": "Our Photo Gallery",
     "subtitle": "Discover moments we&apos;ve captured and shared.  Photos for your inspiration."
+  },
+  "AboutPage": {
+    "heroTitle": "My Story",
+    "heroSubtitle": "Hair Stylist & Colorist · iFierce Beauty Lounge, Fort Lauderdale",
+    "p1": "I am originally from Brazil. I moved to South Florida at 18 years old with a dream of building a better future through hard work, passion, and dedication. What began as a simple love for helping my mother color her hair eventually grew into a lifelong career in the beauty industry.",
+    "p2": "Today, with more than 20 years of experience, I have the privilege of helping women look and feel their absolute best. My specialties include natural-looking blondes, balayage, dimensional color, gray coverage, and customized hair transformations, all while preserving hair health and integrity.",
+    "quote1": "I believe that beautiful hair starts with healthy hair.",
+    "p3": "Every guest who sits in my chair is unique, which is why I begin every appointment with a personalized consultation. I take the time to understand your lifestyle, maintenance preferences, and hair goals so we can create a look that not only enhances your natural beauty but also fits seamlessly into your everyday life.",
+    "p4": "Since joining iFierce Beauty Lounge in 2017, I have remained committed to continuing education, advanced techniques, and the highest-quality professional products. My goal is to provide results that are beautiful on the day of your appointment and continue to look amazing long after you leave the salon.",
+    "p5": "One of the greatest blessings of my career is the trust my clients have placed in me throughout the years. Many of my guests have been with me for years, and some have trusted me with their hair for more than a decade. Their loyalty means the world to me and is something I never take for granted.",
+    "p6": "What I love most about this profession is not just creating beautiful hair; it's building relationships. I genuinely care about every person who sits in my chair and strive to make each visit feel welcoming, comfortable, and enjoyable. My goal is for you to feel heard, valued, relaxed, and confident throughout your experience.",
+    "p7": "Nothing brings me greater joy than seeing a client's smile when they look in the mirror and feel beautiful, confident, and renewed. Helping people feel their best is at the heart of everything I do.",
+    "p8": "When I'm not in the salon, you'll often find me at the beach. Living in South Florida has allowed me to enjoy one of my favorite places in the world. The sound of the waves, the warmth of the sun, and the peaceful energy of the ocean help me stay grounded, grateful, and inspired. I also love spending time with my husband, family, friends, and my beloved Malteses Pingo & Mel 💗.",
+    "p9": "I believe that kindness, gratitude, meaningful relationships, and continuous learning are some of life's greatest gifts. Those same values guide the way I care for my clients every day.",
+    "guestsTitle": "New Guests Are Always Welcome",
+    "guestsP1": "If you're visiting my salon for the first time, I would be honored to be part of your hair journey. During your consultation, we'll discuss your hair history, goals, lifestyle, and maintenance preferences to create a personalized plan.",
+    "guestsP2": "As a thank-you for choosing me, I am pleased to offer 15% off your first visit. It's my way of welcoming you and helping you experience the personalized care, attention, and expertise that my clients have trusted for years.",
+    "guestsCta": "Book Your First Visit",
+    "missionTitle": "My Mission",
+    "missionP1": "My mission is simple: to create beautiful, healthy hair while providing an experience where every client feels welcomed, appreciated, cared for, and confident.",
+    "missionP2": "When you sit in my chair, you're not just another appointment; you're someone I genuinely care about.",
+    "missionP3": "I look forward to meeting you and helping you achieve hair that makes you feel like the very best version of yourself.",
+    "mottoTitle": "Personal Motto",
+    "motto": "“Talent opens doors, but humility, kindness, and continuous learning create lasting success.”",
+    "signature": "— Flavia Guedes",
+    "back": "Back to home"
   }
 }

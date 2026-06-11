@@ -43,11 +43,12 @@
   "About": {
     "title1": "Flavia Guedes",
     "title2": "Colorista & Hair Stylist",
-    "paragraph1": "Olá! Sou a Flavia, especializada em coloração — especialmente em loiros, balayage e ombré. Desde 2006, vivo intensamente o mundo da beleza e, desde 2017, atendo no iFierce Beauty Lounge.",
-    "paragraph2": "Meu amor pela transformação capilar começou cedo, quando coloria o cabelo da minha mãe. Isso me levou a investir em cursos, aprendizados e vivências em diversos salões até conquistar minha própria cadeira. Hoje, vejo cada cliente como uma oportunidade de realçar a confiança que ela já traz dentro de si.",
-    "paragraph3": "Minha especialidade é criar visuais modernos e saudáveis, sempre zelando pela integridade dos fios. Além disso, amo conhecer cada história e estabelecer laços duradouros. Para mim, cabelo não é só cor — é expressão, conexão e cuidado genuíno.",
-    "paragraph4": "Diariamente, aprendo com minha equipe e com cada desafio que entra pela porta. Se você quer clarear seus fios ou inovar completamente o visual, estou aqui para ajudar.",
-    "motto": "Lema: “Muito ego matará o seu talento.”"
+    "paragraph1": "Sou brasileira e cheguei ao sul da Flórida aos 18 anos. O que começou como o amor de colorir o cabelo da minha mãe virou uma carreira de mais de 20 anos no mundo da beleza — desde 2017 no iFierce Beauty Lounge.",
+    "paragraph2": "Minhas especialidades: loiros naturais, balayage, cor dimensional e cobertura de grisalhos — sempre preservando a saúde e a integridade dos fios.",
+    "paragraph3": "Cada cliente é única: todo atendimento começa com uma consulta personalizada sobre seu estilo de vida, rotina e objetivos. Porque cabelo bonito começa com cabelo saudável.",
+    "paragraph4": "Muitas das minhas clientes confiam seus cabelos a mim há mais de uma década — uma confiança que eu nunca tomo como garantida.",
+    "motto": "“O talento abre portas, mas a humildade, a gentileza e o aprendizado contínuo criam o sucesso duradouro.”",
+    "readMore": "Leia minha história"
   },
   "Services": {
     "title": "Nossos Serviços",
@@ -258,7 +259,8 @@
     "developedWith": "Desenvolvido com",
     "by": "por",
     "appointmentsTitle": "Atendimento com Hora Marcada",
-    "appointmentsNote": "Todos os serviços são realizados somente com horário agendado. Ligue, envie um SMS ou mande uma mensagem."
+    "appointmentsNote": "Todos os serviços são realizados somente com horário agendado. Ligue, envie um SMS ou mande uma mensagem.",
+    "myStory": "Minha História"
   },
   "GiftCard": {
     "title": "Compra de Gift Card",
@@ -326,5 +328,31 @@
   "Gallery": {
     "title": "Nossa Galeria de Fotos",
     "subtitle": "Descubra momentos que capturamos e fotos para sua inspiração."
+  },
+  "AboutPage": {
+    "heroTitle": "Minha História",
+    "heroSubtitle": "Hair Stylist & Colorista · iFierce Beauty Lounge, Fort Lauderdale",
+    "p1": "Sou brasileira. Mudei para o sul da Flórida aos 18 anos com o sonho de construir um futuro melhor com muito trabalho, paixão e dedicação. O que começou como o simples amor de ajudar minha mãe a colorir o cabelo se transformou em uma carreira para a vida inteira no mundo da beleza.",
+    "p2": "Hoje, com mais de 20 anos de experiência, tenho o privilégio de ajudar mulheres a ficarem — e se sentirem — o mais bonitas possível. Minhas especialidades incluem loiros naturais, balayage, cor dimensional, cobertura de grisalhos e transformações personalizadas, sempre preservando a saúde e a integridade dos fios.",
+    "quote1": "Eu acredito que cabelo bonito começa com cabelo saudável.",
+    "p3": "Cada cliente que senta na minha cadeira é única — por isso, todo atendimento começa com uma consulta personalizada. Tiro um tempo para entender seu estilo de vida, sua rotina de manutenção e seus objetivos, para criarmos um visual que realce sua beleza natural e se encaixe perfeitamente no seu dia a dia.",
+    "p4": "Desde que entrei para o iFierce Beauty Lounge, em 2017, mantenho o compromisso com a educação continuada, técnicas avançadas e produtos profissionais da mais alta qualidade. Meu objetivo é entregar um resultado lindo no dia do atendimento — e que continue lindo muito depois de você sair do salão.",
+    "p5": "Uma das maiores bênçãos da minha carreira é a confiança que minhas clientes depositam em mim ao longo dos anos. Muitas estão comigo há anos — algumas confiam seus cabelos a mim há mais de uma década. Essa lealdade significa o mundo para mim e é algo que eu nunca tomo como garantido.",
+    "p6": "O que eu mais amo nessa profissão não é só criar cabelos bonitos; é construir relacionamentos. Eu me importo de verdade com cada pessoa que senta na minha cadeira e me esforço para que cada visita seja acolhedora, confortável e prazerosa. Quero que você se sinta ouvida, valorizada, relaxada e confiante do início ao fim.",
+    "p7": "Nada me traz mais alegria do que ver o sorriso de uma cliente ao se olhar no espelho e se sentir bonita, confiante e renovada. Ajudar as pessoas a se sentirem bem é o coração de tudo o que eu faço.",
+    "p8": "Quando não estou no salão, você provavelmente vai me encontrar na praia. Morar no sul da Flórida me permite aproveitar um dos meus lugares favoritos no mundo: o som das ondas, o calor do sol e a energia tranquila do mar me mantêm com os pés no chão, grata e inspirada. Também amo passar tempo com meu marido, minha família, meus amigos e minhas amadas maltesas Pingo & Mel 💗.",
+    "p9": "Acredito que gentileza, gratidão, relacionamentos verdadeiros e aprendizado contínuo são alguns dos maiores presentes da vida. São esses mesmos valores que guiam o cuidado com minhas clientes todos os dias.",
+    "guestsTitle": "Novas clientes são sempre bem-vindas",
+    "guestsP1": "Se esta é a sua primeira visita ao meu salão, será uma honra fazer parte da sua jornada capilar. Na consulta, vamos conversar sobre seu histórico, seus objetivos, seu estilo de vida e suas preferências de manutenção para criar um plano personalizado.",
+    "guestsP2": "Como agradecimento por me escolher, ofereço 15% de desconto na sua primeira visita. É a minha forma de dar as boas-vindas e de apresentar o cuidado, a atenção e a expertise que minhas clientes confiam há anos.",
+    "guestsCta": "Agendar Primeira Visita",
+    "missionTitle": "Minha Missão",
+    "missionP1": "Minha missão é simples: criar cabelos bonitos e saudáveis, em uma experiência onde cada cliente se sinta bem-vinda, valorizada, cuidada e confiante.",
+    "missionP2": "Quando você senta na minha cadeira, você não é apenas mais um horário na agenda — é alguém com quem eu me importo de verdade.",
+    "missionP3": "Mal posso esperar para te conhecer e te ajudar a conquistar um cabelo que faça você se sentir a melhor versão de si mesma.",
+    "mottoTitle": "Lema Pessoal",
+    "motto": "“O talento abre portas, mas a humildade, a gentileza e o aprendizado contínuo criam o sucesso duradouro.”",
+    "signature": "— Flavia Guedes",
+    "back": "Voltar ao início"
   }
 }
