@@ -81,18 +81,18 @@ const photos: CustomPhoto[] = [
   },
 
   {
-    src: '/images/IMG_1775.jpg',
+    src: '/images/IMG_1775.JPG',
     width: 750,
     height: 1000,
     alt: 'A modern, stylish haircut with clean lines and expertly crafted layers, showcasing a fresh and contemporary look.',
-    blurDataURL: '/images/IMG_1775.jpg',
+    blurDataURL: '/images/IMG_1775.JPG',
   },
   {
-    src: '/images/IMG_1833.jpg',
+    src: '/images/IMG_1833.JPG',
     width: 700,
     height: 500,
     alt: 'A modern, stylish haircut with clean lines and expertly crafted layers, showcasing a fresh and contemporary look.',
-    blurDataURL: '/images/IMG_1833.jpg',
+    blurDataURL: '/images/IMG_1833.JPG',
   },
   {
     src: '/images/IMG_3697.jpg',
