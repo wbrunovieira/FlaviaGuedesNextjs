@@ -120,6 +120,7 @@ const photos: CustomPhoto[] = [
 function renderNextImage({ title, sizes }: RenderImageProps, { photo, width, height }: RenderImageContext) {
   return (
     <div
+      className="group overflow-hidden rounded-lg"
       style={{
         width: '100%',
         position: 'relative',
@@ -135,8 +136,9 @@ function renderNextImage({ title, sizes }: RenderImageProps, { photo, width, hei
         placeholder={(photo as CustomPhoto).blurDataURL ? 'blur' : undefined}
         priority={width >= 1200}
         blurDataURL={(photo as CustomPhoto).blurDataURL}
-        className="object-cover"
+        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
       />
+      <div className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition duration-500 group-hover:ring-gold/50 group-hover:shadow-[inset_0_-40px_60px_-30px_rgba(200,160,75,0.25)]" />
     </div>
   );
 }

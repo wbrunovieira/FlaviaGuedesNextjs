@@ -60,16 +60,16 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative container mx-auto pt-24 md:pt-20 flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-20 bg-black text-white"
+      className="relative container mx-auto pt-24 md:pt-20 flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-20 text-white"
     >
       <div
         ref={textRef}
         className="w-full max-w-2xl text-center md:text-left flex flex-col items-center md:items-start"
       >
-        <h1 className="text-4xl sm:text-5xl md:text-5xl font-serif leading-tight">
+        <h1 className="text-4xl sm:text-5xl md:text-5xl font-display leading-tight">
           {t('title1')}
         </h1>
-        <p className="text-4xl sm:text-5xl md:text-4xl font-serif leading-tight text-gold mt-2">
+        <p className="text-4xl sm:text-5xl md:text-4xl font-display italic leading-tight text-gold mt-2">
           {t('title2')}
         </p>
         <div className="w-1/2">

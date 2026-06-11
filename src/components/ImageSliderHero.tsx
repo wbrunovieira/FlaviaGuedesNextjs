@@ -15,10 +15,13 @@ const MemoizedSlide = memo(function MemoizedSlide({
   return (
     <motion.div
       key={src}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={{ opacity: 0, scale: 1 }}
+      animate={{ opacity: 1, scale: 1.08 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
+      transition={{
+        opacity: { duration: 0.8, ease: 'easeOut' },
+        scale: { duration: 5.2, ease: 'linear' },
+      }}
       className="absolute inset-0"
     >
       <Image
@@ -49,7 +52,7 @@ const ImageSliderHero: React.FC = () => {
       setIndex(
         prevIndex => (prevIndex + 1) % images.length
       );
-    }, 4000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);

@@ -124,7 +124,7 @@ export default function Nav() {
             >
               <Link
                 href={item.href}
-                className="cursor-pointer"
+                className="cursor-pointer nav-link"
               >
                 {t(item.name)}
               </Link>

@@ -11,21 +11,43 @@ import Footer from '@/components/Footer';
 import Gallery from '@/components/Gallery';
 import GiftCardPurchaseSimple from '@/components/GiftCardPurchaseSimple';
 import Promotions from '@/components/Promotions';
+import SectionReveal from '@/components/ui/SectionReveal';
+import SectionDivider from '@/components/ui/SectionDivider';
 
 export default function Index() {
   return (
-    <div className="bg-black w-full min-h-screen">
-      <Nav />
-      <Hero />
-      <ProductsShowcase />
-      <Location />
-      <About />
-
-      <Services />
-      <Gallery />
-      <GiftCardPurchaseSimple />
-      <Promotions />
-      <Footer />
+    <div className="bg-black w-full min-h-screen relative">
+      <div className="bg-atmosphere" aria-hidden />
+      <div className="grain-overlay" aria-hidden />
+      <div className="relative z-10">
+        <Nav />
+        <Hero />
+        <SectionReveal>
+          <ProductsShowcase />
+        </SectionReveal>
+        <SectionReveal>
+          <Location />
+        </SectionReveal>
+        <SectionDivider />
+        <SectionReveal>
+          <About />
+        </SectionReveal>
+        <SectionReveal>
+          <Services />
+        </SectionReveal>
+        <SectionDivider />
+        <SectionReveal>
+          <Gallery />
+        </SectionReveal>
+        <SectionReveal>
+          <GiftCardPurchaseSimple />
+        </SectionReveal>
+        <SectionDivider />
+        <SectionReveal>
+          <Promotions />
+        </SectionReveal>
+        <Footer />
+      </div>
     </div>
   );
 }

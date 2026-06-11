@@ -18,6 +18,7 @@ export default {
       fontFamily: {
         sans: 'var(--font-work-sans), sans-serif',
         serif: 'var(--font-merriweather), serif',
+        display: 'var(--font-fraunces), serif',
       },
     },
   },
