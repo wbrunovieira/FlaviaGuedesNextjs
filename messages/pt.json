@@ -297,12 +297,9 @@
     "sectionTitle": "Promoções Exclusivas",
     "sectionSubtitle": "Descubra nossas ofertas especiais e eleve seu estilo!",
     "referralTitle": "O melhor elogio que eu poderia receber? Uma indicação sua! 😊",
-    "referralSubtitle": "Espalhe o amor e aproveite recompensas fantásticas! 🎉",
-    "referralDescription": "Se você ama seu cabelo tanto quanto eu, por que não compartilhar essa alegria? No iFierce Beauty Lounge, criamos um programa especial de indicações para você!",
-    "learnMore": "Pergunte como funciona",
     "buyNow": "Comprar Agora",
     "welcomePrefillMessage": "Oferta de Boas-Vindas — Novo Cliente",
-    "referralTerms": "Válido apenas para novos clientes.",
+    "referralTerms": "Válido apenas para novas clientes. Crédito aplicado após o primeiro serviço concluído da indicada.",
     "welcomeTitle": "Oferta Especial de Boas-Vindas para Novos Clientes - 2026! 🌟",
     "welcomePriceLabel": "Pacote completo",
     "welcomeDescription": "Você está pronta para uma transformação capilar fabulosa? Criamos uma experiência encantadora especialmente para você!",
@@ -311,7 +308,13 @@
     "welcomeItem3": "Corte de Precisão & Secagem – Um acabamento impecável para completar o seu look",
     "bookNow": "Agende Agora",
     "welcomeAppointment": "Somente com agendamento, com a estilista Flavia.",
-    "welcomeValidDays": "Válido somente às terças e quartas."
+    "welcomeValidDays": "Válido somente às terças e quartas.",
+    "referralHow": "Basta a nova cliente mencionar o nome de quem indicou ao agendar.",
+    "referralThanks": "Obrigada por apoiar meu pequeno negócio e confiar seu cabelo a mim. 💛",
+    "referralForFriend": "Para sua amiga",
+    "referralFirstVisit": "na primeira visita",
+    "referralForYou": "Para você",
+    "referralCreditLabel": "de crédito no salão"
   },
   "Gallery": {
     "title": "Nossa Galeria de Fotos",

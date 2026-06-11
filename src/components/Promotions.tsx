@@ -123,38 +123,61 @@ export default function Promotions() {
             <FaUserFriends className="text-gold text-2xl" />
           </div>
 
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold/70 text-center">
-            {t('referralSubtitle') ||
-              'Spread the Love and Enjoy Fantastic Rewards! 🎉'}
-          </span>
-
           <h3 className="font-display text-2xl md:text-3xl text-foreground text-center mt-3 leading-snug">
             {t('referralTitle') ||
               'The Best Compliment I Could Receive? A Referral from You! 😊'}
           </h3>
 
+          {/* Destaque duplo: benefício da amiga e de quem indica */}
+          <div className="mt-6 flex items-stretch justify-center gap-8 text-center">
+            <div>
+              <span className="block text-xs font-semibold uppercase tracking-[0.25em] text-grayMedium">
+                {t('referralForFriend') || 'For your friend'}
+              </span>
+              <span className="mt-1 block font-display text-4xl md:text-5xl font-semibold text-gold">
+                15% OFF
+              </span>
+              <span className="mt-2 block text-xs font-medium text-gold/80">
+                {t('referralFirstVisit') || 'on their first visit'}
+              </span>
+            </div>
+            <div className="w-px bg-gold/25" />
+            <div>
+              <span className="block text-xs font-semibold uppercase tracking-[0.25em] text-grayMedium">
+                {t('referralForYou') || 'For you'}
+              </span>
+              <span className="mt-1 block font-display text-4xl md:text-5xl font-semibold text-gold">
+                $25
+              </span>
+              <span className="mt-2 block text-xs font-medium text-gold/80">
+                {t('referralCreditLabel') || 'salon credit'}
+              </span>
+            </div>
+          </div>
+
           <div className="mx-auto mt-6 h-px w-24 bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
 
-          <p className="text-grayMedium leading-relaxed mt-6 flex-1">
-            {t('referralDescription') ||
-              'If you love your hair as much as I do, why not share that joy? At iFierce Beauty Lounge, we’ve created a special referral program for you!'}
+          <ul className="mt-6 space-y-4">
+            <li className="flex items-start gap-3">
+              <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold/15 text-gold">
+                <FaCheck className="text-xs" />
+              </span>
+              <span className="text-base text-grayMedium leading-relaxed">
+                {t('referralHow') ||
+                  'Simply mention the name of the client who referred you when booking.'}
+              </span>
+            </li>
+          </ul>
+
+          <p className="mt-7 text-base italic text-gold/80 leading-relaxed text-center flex-1">
+            {t('referralThanks') ||
+              'Thank you for supporting my small business and trusting me with your hair. 💛'}
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-            <a
-              href="https://www.instagram.com/flaviaguedesstylist/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-semibold text-background transition-all duration-300 hover:bg-opacity-90 hover:gap-3"
-            >
-              {t('learnMore') || 'Ask How It Works'}
-              <FaArrowRight className="text-sm" />
-            </a>
-            <p className="text-xs italic text-gray-500">
-              {t('referralTerms') ||
-                'Valid for new clients only.'}
-            </p>
-          </div>
+          <p className="mt-8 text-xs italic text-gray-500 text-center">
+            {t('referralTerms') ||
+              "New clients only. Credit applied after the referral's first completed service."}
+          </p>
         </div>
 
         {/* Card 2 — Boas-vindas para novos clientes */}
