@@ -1,6 +1,7 @@
 'use client';
 
-import React, { ReactNode } from 'react';
+import React from 'react';
+import type { IconType } from 'react-icons';
 import { useTranslations } from 'next-intl';
 import {
   FaSpa,
@@ -34,29 +35,45 @@ type ServiceSectionProps = {
 
 const GroupedCard: React.FC<{
   group: ServiceGroup;
-  icon: ReactNode;
-}> = ({ group, icon }) => {
+  icon: IconType;
+}> = ({ group, icon: Icon }) => {
   const t = useTranslations('Services');
   return (
-    <div className="p-4 bg-graphite rounded-lg shadow-md w-full md:w-auto">
-      <div className="flex items-center mb-2">
-        {icon}
-        <span className="text-white font-bold ml-2">
+    <div className="group/card relative w-full md:w-[340px] self-stretch rounded-xl border border-gold/15 bg-gradient-to-b from-graphite to-black/60 p-6 shadow-lg transition-all duration-500 hover:-translate-y-1 hover:border-gold/40 hover:shadow-[0_20px_50px_-20px_rgba(200,160,75,0.3)]">
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gold/10 text-gold transition-colors duration-500 group-hover/card:bg-gold/20">
+          <Icon className="text-base" />
+        </div>
+        <h3 className="font-display text-xl text-white leading-snug">
           {group.name}
-        </span>
+        </h3>
       </div>
-      <ul className="text-gray-300 mt-8">
+
+      <div className="mt-4 h-px w-full bg-gradient-to-r from-gold/40 to-transparent" />
+
+      <ul className="mt-4">
         {group.items.map((item, idx) => (
           <li
             key={idx}
-            className="flex justify-between border-b border-gray-700 py-1"
+            className="flex items-baseline gap-2 py-2"
           >
-            <span className="mr-4">{item.name}</span>
-            <span>{item.price} +</span>
+            <span className="text-sm text-gray-300">
+              {item.name}
+            </span>
+            <span className="flex-1 -translate-y-[3px] border-b border-dotted border-gray-600/60" />
+            <span className="whitespace-nowrap text-sm font-medium tabular-nums text-gold">
+              {item.price}{' '}
+              <span className="text-xs text-gray-500">
+                +
+              </span>
+            </span>
           </li>
         ))}
-        <p className="mt-8 text-xs">{t('final_price')}</p>
       </ul>
+
+      <p className="mt-6 text-xs italic text-gray-500">
+        {t('final_price')}
+      </p>
     </div>
   );
 };
@@ -66,23 +83,13 @@ const ServiceSection: React.FC<ServiceSectionProps> = ({
 }) => {
   const t = useTranslations('Services');
 
-  const serviceIcons: Record<string, ReactNode> = {
-    hair_color_services: (
-      <FaPalette className="text-white text-3xl" />
-    ),
-    haircuts: <FaCut className="text-white text-3xl" />,
-    add_on_treatment: (
-      <FaPumpSoap className="text-white text-3xl" />
-    ),
-    design_styling: (
-      <FaCut className="text-white text-3xl" />
-    ),
-    conditioning_treatment: (
-      <FaSpa className="text-white text-3xl" />
-    ),
-    keratin_treatment: (
-      <FaBrush className="text-white text-3xl" />
-    ),
+  const serviceIcons: Record<string, IconType> = {
+    hair_color_services: FaPalette,
+    haircuts: FaCut,
+    add_on_treatment: FaPumpSoap,
+    design_styling: FaCut,
+    conditioning_treatment: FaSpa,
+    keratin_treatment: FaBrush,
   };
 
   // Estrutura refatorada: cada categoria possui grupos de serviços
@@ -129,34 +136,32 @@ const ServiceSection: React.FC<ServiceSectionProps> = ({
         {t('subtitle')}
       </p>
       <div className="flex flex-col gap-6">
-        {services.map((category, index) => (
-          <div key={index}>
-            <div className="flex flex-col items-center justify-center gap-2 mt-4 p-6">
-              {serviceIcons[category.key] || (
-                <FaSpa className="text-white text-3xl" />
-              )}
-              <span className="text-4xl font-semibold text-gold">
-                {category.name}
-              </span>
+        {services.map((category, index) => {
+          const CategoryIcon =
+            serviceIcons[category.key] || FaSpa;
+          return (
+            <div key={index}>
+              <div className="flex flex-col items-center justify-center gap-2 mt-4 p-6">
+                <CategoryIcon className="text-gold text-3xl" />
+                <span className="font-display text-4xl font-semibold text-gold text-center">
+                  {category.name}
+                </span>
+              </div>
+              <div className="ml-48 w-1/2 items-center justify-center -mt-4">
+                <SparklesHero />
+              </div>
+              <div className="flex flex-wrap justify-center items-stretch gap-5 mt-8">
+                {category.groups.map(group => (
+                  <GroupedCard
+                    key={group.key}
+                    group={group}
+                    icon={CategoryIcon}
+                  />
+                ))}
+              </div>
             </div>
-            <div className="ml-48 w-1/2 items-center justify-center -mt-4">
-              <SparklesHero />
-            </div>
-            <div className="flex flex-wrap justify-center items-center gap-4 mt-8">
-              {category.groups.map(group => (
-                <GroupedCard
-                  key={group.key}
-                  group={group}
-                  icon={
-                    serviceIcons[category.key] || (
-                      <FaSpa className="text-white text-xl" />
-                    )
-                  }
-                />
-              ))}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
