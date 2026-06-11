@@ -8,12 +8,11 @@
     "about": "About",
     "gallery": "Gallery",
     "contact": "Contact",
-     "giftcard": "Gift Card",
+    "giftcard": "Gift Card",
     "navigationLabel": "Main navigation",
     "logoAria": "Home page",
-     "promotions": "Promotions",
+    "promotions": "Promotions",
     "bookNow": "Book Now"
-
   },
   "Hero": {
     "title1": "Perfect Hair,",
@@ -32,11 +31,10 @@
     "k18Description": "Biotech-powered formula that restores hair strength and elasticity in just 4 minutes.",
     "colorWowTitle": "Color Wow - The Science of Stunning Hair",
     "colorWowDescription": "Advanced, science-backed formulas for high-performance color care without harmful ingredients.",
-     "roze+quartzTitle": "Roze + Quartz - Advanced Clean Bond-Repair Haircare",
-  "roze+quartzDescription": "Experience a pure, clean formula free of sulfates, parabens, and harmful chemicals. Powered by advanced bond-repair technology, it visibly strengthens and restores your hair."
-
+    "roze+quartzTitle": "Roze + Quartz - Advanced Clean Bond-Repair Haircare",
+    "roze+quartzDescription": "Experience a pure, clean formula free of sulfates, parabens, and harmful chemicals. Powered by advanced bond-repair technology, it visibly strengthens and restores your hair."
   },
-   "Location": {
+  "Location": {
     "title": "iFierce Beauty Lounge",
     "subtitle": "Come visit us and discover how the right care can help you feel even more confident and radiant.",
     "address": "2685 E. Oakland Park Blvd\nFort Lauderdale, FL 33306",
@@ -51,10 +49,10 @@
     "paragraph4": "Every day, I learn from my team and the unique challenges that come through the salon doors. If you're looking to lighten your hair or completely transform your look, I'm here to help.",
     "motto": "Motto: “Too much ego will kill your talent.”"
   },
- "Services": {
-   "title": "Our Services",
-   "subtitle": "Elevate your beauty experience with our premium hair care services. From deep conditioning treatments to luxurious blowouts, we provide the best for you.",
-   "final_price": "*final price is given under consultation",
+  "Services": {
+    "title": "Our Services",
+    "subtitle": "Elevate your beauty experience with our premium hair care services. From deep conditioning treatments to luxurious blowouts, we provide the best for you.",
+    "final_price": "*final price is given under consultation",
     "categories": {
       "hair_color_services": {
         "name": "Hair Color Services",
@@ -62,21 +60,71 @@
           "basic_coloring": {
             "name": "Basic Coloring",
             "items": {
-              "item_1": { "name": "Single Process", "price": "$75" },
-              "item_2": { "name": "Single Process Natural Color", "price": "$80" },
-              "item_3": { "name": "Goldwell Single Process", "price": "$85" },
-              "item_4": { "name": "All Over Color", "price": "$95" },
-              "item_5": { "name": "Base Brake", "price": "$70" }
+              "item_1": {
+                "name": "Single Process",
+                "price": "$80"
+              },
+              "item_2": {
+                "name": "Single Process Natural Color",
+                "price": "$85"
+              },
+              "item_3": {
+                "name": "Goldwell Single Process",
+                "price": "$85"
+              },
+              "item_4": {
+                "name": "All Over Color",
+                "price": "$125"
+              },
+              "item_5": {
+                "name": "Base Brake",
+                "price": "$80"
+              }
             }
           },
           "advanced_techniques": {
             "name": "Advanced Techniques",
             "items": {
-              "item_6": { "name": "Balayage/Ombre", "price": "$175" },
-              "item_7": { "name": "Color/Clear Gloss-Glaze Stand Alone", "price": "$65" },
-              "item_8": { "name": "Colorance Toner Stand Alone", "price": "$65" },
-              "item_9": { "name": "Double Process Color", "price": "$185" },
-              "item_10": { "name": "Face-Frame Highlights/LowLights", "price": "$75" }
+              "item_6": {
+                "name": "Balayage/Ombre",
+                "price": "$195"
+              },
+              "item_10": {
+                "name": "Face-Frame Highlights/LowLights",
+                "price": "$85"
+              },
+              "item_11": {
+                "name": "Few Highlights/LowLights",
+                "price": "$75"
+              },
+              "item_12": {
+                "name": "Full-Head Highlights",
+                "price": "$195"
+              },
+              "item_13": {
+                "name": "Partial Highlights/LowLights",
+                "price": "$135"
+              },
+              "item_14": {
+                "name": "Single & Faceframe Highlights",
+                "price": "$175"
+              },
+              "item_15": {
+                "name": "Single & Full-highlights",
+                "price": "$245"
+              },
+              "item_16": {
+                "name": "Single & Partial Highlights",
+                "price": "$215"
+              },
+              "item_17": {
+                "name": "Sunkiss Highlights",
+                "price": "$125"
+              },
+              "item_18": {
+                "name": "Corrective Color",
+                "price": "Consultation"
+              }
             }
           }
         }
@@ -87,9 +135,31 @@
           "adult_haircuts": {
             "name": "Adults",
             "items": {
-              "item_1": { "name": "Haircut & Blowout", "price": "$75" },
-              "item_3": { "name": "Haircut Only", "price": "$55" },
-              "item_5": { "name": "Bangs/Fringe Trim", "price": "$12" }
+              "item_1": {
+                "name": "Haircut & Blowout",
+                "price": "$80"
+              },
+              "item_3": {
+                "name": "Haircut Only",
+                "price": "$60"
+              },
+              "item_5": {
+                "name": "Bangs/Fringe Trim",
+                "price": "$20"
+              }
+            }
+          },
+          "children_haircuts": {
+            "name": "Children",
+            "items": {
+              "item_2": {
+                "name": "Haircut And Blowout (11 & under)",
+                "price": "$60"
+              },
+              "item_4": {
+                "name": "Haircut (11 & under)",
+                "price": "$45"
+              }
             }
           }
         }
@@ -100,15 +170,42 @@
           "treatments": {
             "name": "Treatments",
             "items": {
-              "item_1": { "name": "ANTIDOTPRO - Relieves And Protects Hair And Scalp", "price": "$5" },
-              "item_2": { "name": "b3 Brazilian Bond Builder", "price": "$35" },
-              "item_3": { "name": "Olaplex Treatment Add-On", "price": "$35" },
-              "item_4": { "name": "Mini Olaplex Treatment", "price": "$25" },
-              "item_5": { "name": "Olaplex Treatment Stand Alone", "price": "$75" },
-              "item_6": { "name": "Gloss-Glaze Add On", "price": "$45" },
-              "item_7": { "name": "Color Melt", "price": "$60" },
-              "item_8": { "name": "Moroccanoil Chromatech Treatment", "price": "$20" },
-              "item_9": { "name": "Toner Add On", "price": "$35" }
+              "item_1": {
+                "name": "ANTIDOTPRO - Relieves And Protects Hair And Scalp",
+                "price": "$5"
+              },
+              "item_2": {
+                "name": "b3 Brazilian Bond Builder",
+                "price": "$40"
+              },
+              "item_3": {
+                "name": "Olaplex Treatment Add-On",
+                "price": "$35"
+              },
+              "item_4": {
+                "name": "Mini Olaplex Treatment",
+                "price": "$25"
+              },
+              "item_5": {
+                "name": "Olaplex Treatment Stand Alone",
+                "price": "$75"
+              },
+              "item_6": {
+                "name": "Gloss-Glaze Add On",
+                "price": "$45"
+              },
+              "item_7": {
+                "name": "Color Melt",
+                "price": "$85"
+              },
+              "item_8": {
+                "name": "Moroccanoil Chromatech Treatment",
+                "price": "$20"
+              },
+              "item_9": {
+                "name": "Toner Add On",
+                "price": "$55"
+              }
             }
           }
         }
@@ -119,17 +216,30 @@
           "basic_styling": {
             "name": "Basic Styling",
             "items": {
-              "item_1": { "name": "Shampoo & Blowout", "price": "$45" },
-              "item_2": { "name": "Shampoo & Blowout for Long Hair", "price": "$50" },
-              "item_3": { "name": "Shampoo & Blowout for Extra Long Hair", "price": "$55" },
-              "item_4": { "name": "Braid", "price": "$15" }
+              "item_1": {
+                "name": "Shampoo & Blowout",
+                "price": "$50"
+              },
+              "item_2": {
+                "name": "Shampoo & Blowout for Long Hair",
+                "price": "$55"
+              },
+              "item_3": {
+                "name": "Shampoo & Blowout for Extra Long Hair",
+                "price": "$65"
+              },
+              "item_4": {
+                "name": "Braid",
+                "price": "$15"
+              }
             }
           }
         }
       }
-    }
+    },
+    "surcharge_note": "A surcharge will be applied to all credit card payments."
   },
-   "Footer": {
+  "Footer": {
     "contactTitle": "Contact",
     "socialTitle": "Follow Us",
     "description1": "Specialist in coloring (blondes, balayage, and ombré) and hair transformation.",
@@ -143,7 +253,7 @@
     "developedWith": "Developed with",
     "by": "by"
   },
-"GiftCard": {
+  "GiftCard": {
     "title": "Purchase Gift Card",
     "description": "Buy a gift card to treat someone special or even yourself.",
     "buttonText": "Buy Now",
@@ -151,22 +261,21 @@
     "inputPlaceholder": "Enter amount in USD",
     "invalidAmount": "Please enter a valid amount greater than zero.",
     "namePlaceholder": "Your name",
-     "namegiftPlaceholder": "Who is it for? (optional)",
+    "namegiftPlaceholder": "Who is it for? (optional)",
     "invalidName": "Please enter your name.",
     "phonePlaceholder": "Your phone (optional)",
     "messagePlaceholder": "Personalized message (optional)",
     "purchaseSuccess": "Gift card purchase completed successfully!",
     "purchaseFailure": "Failed to create checkout session. Please try again.",
-     "minAmount": "The minimum amount is $25.",
-     "processing": "Processing payment..."
+    "minAmount": "The minimum amount is $25.",
+    "processing": "Processing payment..."
   },
-    "GiftCardSuccess": {
+  "GiftCardSuccess": {
     "successTitle": "Payment Successful!",
     "paymentId": "Payment ID",
-
     "giftCardHeading": "Gift Card",
     "nameLabel": "From:",
-     "giftNameLabel": "to:",
+    "giftNameLabel": "to:",
     "phoneLabel": "Phone",
     "messageLabel": "Message",
     "amountLabel": "Amount",
@@ -174,37 +283,37 @@
     "registeringPaymentData": "Registering payment data...",
     "thankYouMessage": "Thank you for your purchase. ",
     "flaviaguedesUse": "This gift card is to be enjoyed with Flavia Guedes!",
-     "downloadCard": "Download Gift Card",
-
-     "backHome": "Back to Home Page",
-       "paymentSaved": "Payment data has been saved successfully."
+    "downloadCard": "Download Gift Card",
+    "backHome": "Back to Home Page",
+    "paymentSaved": "Payment data has been saved successfully."
   },
-    "GiftCardCancel": {
+  "GiftCardCancel": {
     "cancelTitle": "Payment Cancelled",
     "sessionLabel": "Session ID",
     "registeringCancel": "Registering cancellation...",
     "cancelRegistered": "Cancellation registered successfully."
   },
   "Promotions": {
-"sectionTitle": "Exclusive Promotions",
-  "sectionSubtitle": "Discover our special offers and elevate your style!",
-  "referralTitle": "The Best Compliment I Could Receive? A Referral from You! 😊",
-  "referralSubtitle": "Spread the Love and Enjoy Fantastic Rewards! 🎉",
-  "referralDescription": "If you love your hair as much as I do, why not share that joy? At iFierce Beauty Lounge, we’ve created a special referral program for you!",
-  "learnMore": "Ask How It Works",
-  "buyNow": "Buy Now",
-  "welcomePrefillMessage": "Welcome Special — New Client",
-  "referralTerms": "Valid for new clients only.",
-  "welcomeTitle": "Welcome Special for New Clients! 🌟",
-  "welcomePriceLabel": "Complete package",
-  "welcomeDescription": "Are you ready for a fabulous hair transformation? We’ve created a delightful experience just for you!",
-  "welcomeItem1": "Base Color – Refresh or enhance your hair color",
-  "welcomeItem2": "Glossing or Conditioning Treatment – For shine and hydration, giving your hair a healthy glow",
-  "welcomeItem3": "Precision Haircut & Blowout – A flawless finish to complete your look",
-  "bookNow": "Book Now",
-  "welcomeAppointment": "Appointment only, with Flavia Stylists."
+    "sectionTitle": "Exclusive Promotions",
+    "sectionSubtitle": "Discover our special offers and elevate your style!",
+    "referralTitle": "The Best Compliment I Could Receive? A Referral from You! 😊",
+    "referralSubtitle": "Spread the Love and Enjoy Fantastic Rewards! 🎉",
+    "referralDescription": "If you love your hair as much as I do, why not share that joy? At iFierce Beauty Lounge, we’ve created a special referral program for you!",
+    "learnMore": "Ask How It Works",
+    "buyNow": "Buy Now",
+    "welcomePrefillMessage": "Welcome Special — New Client",
+    "referralTerms": "Valid for new clients only.",
+    "welcomeTitle": "Welcome Special for New Clients - 2026! 🌟",
+    "welcomePriceLabel": "Complete package",
+    "welcomeDescription": "Are you ready for a fabulous hair transformation? We’ve created a delightful experience just for you!",
+    "welcomeItem1": "Base Color – Refresh or enhance your hair color",
+    "welcomeItem2": "Glossing or Conditioning Treatment – For shine and hydration, giving your hair a healthy glow",
+    "welcomeItem3": "Precision Haircut & Blowout – A flawless finish to complete your look",
+    "bookNow": "Book Now",
+    "welcomeAppointment": "Appointment only, with Flavia Stylists.",
+    "welcomeValidDays": "Valid on Tuesdays and Wednesdays only."
   },
-   "Gallery": {
+  "Gallery": {
     "title": "Our Photo Gallery",
     "subtitle": "Discover moments we&apos;ve captured and shared.  Photos for your inspiration."
   }

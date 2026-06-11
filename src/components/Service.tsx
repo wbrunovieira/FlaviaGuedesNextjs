@@ -163,6 +163,10 @@ const ServiceSection: React.FC<ServiceSectionProps> = ({
           );
         })}
       </div>
+
+      <p className="mt-10 text-center text-xs italic text-gray-500">
+        {t('surcharge_note')}
+      </p>
     </section>
   );
 };

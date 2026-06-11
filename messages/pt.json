@@ -31,9 +31,8 @@
     "k18Description": "Fórmula de biotecnologia que restaura a força e a elasticidade do cabelo em apenas 4 minutos.",
     "colorWowTitle": "Color Wow - A Ciência do Cabelo Deslumbrante",
     "colorWowDescription": "Fórmulas avançadas e cientificamente comprovadas para cuidados de cores de alto desempenho sem ingredientes prejudiciais.",
-     "roze+quartzTitle": "Roze + Quartz - Cuidados Capilares com Fórmula Limpa e Reparação Avançada",
-  "roze+quartzDescription": "Experimente uma fórmula pura e limpa, sem sulfatos, parabenos e outros químicos prejudiciais. Com tecnologia avançada de reparação, fortalece e restaura seus cabelos visivelmente."
-
+    "roze+quartzTitle": "Roze + Quartz - Cuidados Capilares com Fórmula Limpa e Reparação Avançada",
+    "roze+quartzDescription": "Experimente uma fórmula pura e limpa, sem sulfatos, parabenos e outros químicos prejudiciais. Com tecnologia avançada de reparação, fortalece e restaura seus cabelos visivelmente."
   },
   "Location": {
     "title": "iFierce Beauty Lounge",
@@ -41,7 +40,7 @@
     "address": "2685 E. Oakland Park Blvd\nFort Lauderdale, FL 33306",
     "buttonLabel": "Ver no Google Maps"
   },
-    "About": {
+  "About": {
     "title1": "Flavia Guedes",
     "title2": "Colorista & Hair Stylist",
     "paragraph1": "Olá! Sou a Flavia, especializada em coloração — especialmente em loiros, balayage e ombré. Desde 2006, vivo intensamente o mundo da beleza e, desde 2017, atendo no iFierce Beauty Lounge.",
@@ -50,7 +49,7 @@
     "paragraph4": "Diariamente, aprendo com minha equipe e com cada desafio que entra pela porta. Se você quer clarear seus fios ou inovar completamente o visual, estou aqui para ajudar.",
     "motto": "Lema: “Muito ego matará o seu talento.”"
   },
-    "Services": {
+  "Services": {
     "title": "Nossos Serviços",
     "subtitle": "Eleve sua experiência de beleza com nossos serviços premium para cabelos. Desde tratamentos profundos até alisamentos luxuosos, oferecemos o que há de melhor para você.",
     "final_price": "*o preço final é informado sob consulta",
@@ -61,29 +60,71 @@
           "coloracao_basica": {
             "name": "Coloração Básica",
             "items": {
-              "item_1": { "name": "Single Process", "price": "$75" },
-              "item_2": { "name": "Single Process Natural Color", "price": "$80" },
-              "item_3": { "name": "Goldwell Single Process", "price": "$85" },
-              "item_4": { "name": "All Over Color", "price": "$95" },
-              "item_5": { "name": "Base Brake", "price": "$70" }
+              "item_1": {
+                "name": "Single Process",
+                "price": "$80"
+              },
+              "item_2": {
+                "name": "Single Process Natural Color",
+                "price": "$85"
+              },
+              "item_3": {
+                "name": "Goldwell Single Process",
+                "price": "$85"
+              },
+              "item_4": {
+                "name": "All Over Color",
+                "price": "$125"
+              },
+              "item_5": {
+                "name": "Base Brake",
+                "price": "$80"
+              }
             }
           },
           "destaques_tecnicas": {
             "name": "Destaques e Técnicas",
             "items": {
-              "item_6": { "name": "Balayage/Ombre", "price": "$175" },
-              "item_7": { "name": "Color/Clear Gloss-Glaze Stand Alone", "price": "$65" },
-              "item_8": { "name": "Colorance Toner Stand Alone", "price": "$65" },
-              "item_9": { "name": "Double Process Color", "price": "$185" },
-              "item_10": { "name": "Face-Frame Highlights/LowLights", "price": "$75" },
-              "item_11": { "name": "Few Highlights/LowLights", "price": "$45" },
-              "item_12": { "name": "Full-Head Highlights", "price": "$155" },
-              "item_13": { "name": "Partial Highlights/LowLights", "price": "$115" },
-              "item_14": { "name": "Single & Faceframe Highlights", "price": "$150" },
-              "item_15": { "name": "Single & Full-highlights", "price": "$215" },
-              "item_16": { "name": "Single & Partial Highlights", "price": "$175" },
-              "item_17": { "name": "Sunkiss Highlights", "price": "$75" },
-              "item_18": { "name": "Coloração Corretiva", "price": "Consulta" }
+              "item_6": {
+                "name": "Balayage/Ombre",
+                "price": "$195"
+              },
+              "item_10": {
+                "name": "Face-Frame Highlights/LowLights",
+                "price": "$85"
+              },
+              "item_11": {
+                "name": "Few Highlights/LowLights",
+                "price": "$75"
+              },
+              "item_12": {
+                "name": "Full-Head Highlights",
+                "price": "$195"
+              },
+              "item_13": {
+                "name": "Partial Highlights/LowLights",
+                "price": "$135"
+              },
+              "item_14": {
+                "name": "Single & Faceframe Highlights",
+                "price": "$175"
+              },
+              "item_15": {
+                "name": "Single & Full-highlights",
+                "price": "$245"
+              },
+              "item_16": {
+                "name": "Single & Partial Highlights",
+                "price": "$215"
+              },
+              "item_17": {
+                "name": "Sunkiss Highlights",
+                "price": "$125"
+              },
+              "item_18": {
+                "name": "Coloração Corretiva",
+                "price": "Consulta"
+              }
             }
           }
         }
@@ -94,9 +135,31 @@
           "adultos": {
             "name": "Adultos",
             "items": {
-              "item_1": { "name": "Corte e Escova", "price": "$75" },
-              "item_3": { "name": "Apenas Corte", "price": "$55" },
-              "item_5": { "name": "Franja", "price": "$12" }
+              "item_1": {
+                "name": "Corte e Escova",
+                "price": "$80"
+              },
+              "item_3": {
+                "name": "Apenas Corte",
+                "price": "$60"
+              },
+              "item_5": {
+                "name": "Franja",
+                "price": "$20"
+              }
+            }
+          },
+          "infantis": {
+            "name": "Infantis",
+            "items": {
+              "item_2": {
+                "name": "Corte e Escova (11 anos ou menos)",
+                "price": "$60"
+              },
+              "item_4": {
+                "name": "Corte Infantil",
+                "price": "$45"
+              }
             }
           }
         }
@@ -107,15 +170,42 @@
           "tratamentos": {
             "name": "Tratamentos",
             "items": {
-              "item_1": { "name": "ANTIDOTPRO - Protege e Alivia Couro Cabeludo", "price": "$5" },
-              "item_2": { "name": "Reconstrução Capilar Brasileira b3", "price": "$35" },
-              "item_3": { "name": "Tratamento Olaplex Adicional", "price": "$35" },
-              "item_4": { "name": "Mini Tratamento Olaplex", "price": "$25" },
-              "item_5": { "name": "Tratamento Olaplex Completo", "price": "$75" },
-              "item_6": { "name": "Gloss-Glaze Adicional", "price": "$45" },
-              "item_7": { "name": "Color Melt", "price": "$60" },
-              "item_8": { "name": "Tratamento Moroccanoil Chromatech", "price": "$20" },
-              "item_9": { "name": "Toner Adicional", "price": "$35" }
+              "item_1": {
+                "name": "ANTIDOTPRO - Protege e Alivia Couro Cabeludo",
+                "price": "$5"
+              },
+              "item_2": {
+                "name": "Reconstrução Capilar Brasileira b3",
+                "price": "$40"
+              },
+              "item_3": {
+                "name": "Tratamento Olaplex Adicional",
+                "price": "$35"
+              },
+              "item_4": {
+                "name": "Mini Tratamento Olaplex",
+                "price": "$25"
+              },
+              "item_5": {
+                "name": "Tratamento Olaplex Completo",
+                "price": "$75"
+              },
+              "item_6": {
+                "name": "Gloss-Glaze Adicional",
+                "price": "$45"
+              },
+              "item_7": {
+                "name": "Color Melt",
+                "price": "$85"
+              },
+              "item_8": {
+                "name": "Tratamento Moroccanoil Chromatech",
+                "price": "$20"
+              },
+              "item_9": {
+                "name": "Toner Adicional",
+                "price": "$55"
+              }
             }
           }
         }
@@ -126,15 +216,28 @@
           "estilizacao_basica": {
             "name": "Estilização Básica",
             "items": {
-              "item_1": { "name": "Shampoo & Escova", "price": "$45" },
-              "item_2": { "name": "Shampoo & Escova Cabelos Longos", "price": "$50" },
-              "item_3": { "name": "Shampoo & Escova Cabelos Extra Longos", "price": "$55" },
-              "item_4": { "name": "Trança", "price": "$15" }
+              "item_1": {
+                "name": "Shampoo & Escova",
+                "price": "$50"
+              },
+              "item_2": {
+                "name": "Shampoo & Escova Cabelos Longos",
+                "price": "$55"
+              },
+              "item_3": {
+                "name": "Shampoo & Escova Cabelos Extra Longos",
+                "price": "$65"
+              },
+              "item_4": {
+                "name": "Trança",
+                "price": "$15"
+              }
             }
           }
         }
       }
-    }
+    },
+    "surcharge_note": "Uma taxa adicional será aplicada a todos os pagamentos com cartão de crédito."
   },
   "Footer": {
     "contactTitle": "Contato",
@@ -167,10 +270,9 @@
     "minAmount": "O valor mínimo é de $25.",
     "processing": "Processando pagamento..."
   },
-    "GiftCardSuccess": {
+  "GiftCardSuccess": {
     "successTitle": "Pagamento Realizado com Sucesso!",
     "paymentId": "ID do Pagamento",
-
     "giftCardHeading": "Gift Card",
     "nameLabel": "De:",
     "giftNameLabel": "Para:",
@@ -181,35 +283,35 @@
     "registeringPaymentData": "Registrando os dados do pagamento...",
     "flaviaguedesUse": "Este gift card é para usufruir com a Flavia Guedes!",
     "backHome": "Voltar para a Página Inicial",
-
-     "downloadCard": "Baixar Gift Card",
-      "paymentSaved": "Os dados do pagamento foram salvos com sucesso.",
+    "downloadCard": "Baixar Gift Card",
+    "paymentSaved": "Os dados do pagamento foram salvos com sucesso.",
     "thankYouMessage": "Obrigado pela sua compra. "
   },
-   "GiftCardCancel": {
+  "GiftCardCancel": {
     "cancelTitle": "Pagamento Cancelado",
     "sessionLabel": "ID da Sessão",
     "registeringCancel": "Registrando o cancelamento...",
     "cancelRegistered": "O cancelamento foi registrado com sucesso."
   },
-    "Promotions": {
-"sectionTitle": "Promoções Exclusivas",
-  "sectionSubtitle": "Descubra nossas ofertas especiais e eleve seu estilo!",
-  "referralTitle": "O melhor elogio que eu poderia receber? Uma indicação sua! 😊",
-  "referralSubtitle": "Espalhe o amor e aproveite recompensas fantásticas! 🎉",
-  "referralDescription": "Se você ama seu cabelo tanto quanto eu, por que não compartilhar essa alegria? No iFierce Beauty Lounge, criamos um programa especial de indicações para você!",
-  "learnMore": "Pergunte como funciona",
-  "buyNow": "Comprar Agora",
-  "welcomePrefillMessage": "Oferta de Boas-Vindas — Novo Cliente",
-  "referralTerms": "Válido apenas para novos clientes.",
-  "welcomeTitle": "Oferta Especial de Boas-Vindas para Novos Clientes! 🌟",
-  "welcomePriceLabel": "Pacote completo",
-  "welcomeDescription": "Você está pronta para uma transformação capilar fabulosa? Criamos uma experiência encantadora especialmente para você!",
-  "welcomeItem1": "Coloração Base – Renove ou realce a cor do seu cabelo",
-  "welcomeItem2": "Tratamento de Gloss ou Hidratação – Para brilho e hidratação, proporcionando um cabelo com aspecto saudável",
-  "welcomeItem3": "Corte de Precisão & Secagem – Um acabamento impecável para completar o seu look",
-  "bookNow": "Agende Agora",
-  "welcomeAppointment": "Somente com agendamento, com a estilista Flavia."
+  "Promotions": {
+    "sectionTitle": "Promoções Exclusivas",
+    "sectionSubtitle": "Descubra nossas ofertas especiais e eleve seu estilo!",
+    "referralTitle": "O melhor elogio que eu poderia receber? Uma indicação sua! 😊",
+    "referralSubtitle": "Espalhe o amor e aproveite recompensas fantásticas! 🎉",
+    "referralDescription": "Se você ama seu cabelo tanto quanto eu, por que não compartilhar essa alegria? No iFierce Beauty Lounge, criamos um programa especial de indicações para você!",
+    "learnMore": "Pergunte como funciona",
+    "buyNow": "Comprar Agora",
+    "welcomePrefillMessage": "Oferta de Boas-Vindas — Novo Cliente",
+    "referralTerms": "Válido apenas para novos clientes.",
+    "welcomeTitle": "Oferta Especial de Boas-Vindas para Novos Clientes - 2026! 🌟",
+    "welcomePriceLabel": "Pacote completo",
+    "welcomeDescription": "Você está pronta para uma transformação capilar fabulosa? Criamos uma experiência encantadora especialmente para você!",
+    "welcomeItem1": "Coloração Base – Renove ou realce a cor do seu cabelo",
+    "welcomeItem2": "Tratamento de Gloss ou Hidratação – Para brilho e hidratação, proporcionando um cabelo com aspecto saudável",
+    "welcomeItem3": "Corte de Precisão & Secagem – Um acabamento impecável para completar o seu look",
+    "bookNow": "Agende Agora",
+    "welcomeAppointment": "Somente com agendamento, com a estilista Flavia.",
+    "welcomeValidDays": "Válido somente às terças e quartas."
   },
   "Gallery": {
     "title": "Nossa Galeria de Fotos",

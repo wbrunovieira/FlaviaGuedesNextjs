@@ -178,6 +178,10 @@ export default function Promotions() {
             <span className="mt-1 block font-display text-5xl font-semibold text-gold">
               $150
             </span>
+            <span className="mt-2 block text-xs font-medium text-gold/80">
+              {t('welcomeValidDays') ||
+                'Valid on Tuesdays and Wednesdays only.'}
+            </span>
           </div>
 
           <div className="mx-auto mt-6 h-px w-24 bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
