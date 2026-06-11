@@ -84,9 +84,9 @@ export default function GiftCardPurchaseSquare({
       return false;
     }
 
-    if (numericAmount < 1) {
+    if (numericAmount < 25) {
       setError(
-        t('minAmount') || 'Minimum amount is $1.'
+        t('minAmount') || 'Minimum amount is $25.'
       );
       return false;
     }
@@ -131,7 +131,7 @@ export default function GiftCardPurchaseSquare({
               value={amount}
               onChange={handleInputChange}
               className="p-2 border rounded text-background"
-              min="1"
+              min="25"
               disabled={isProcessing}
             />
             <input
