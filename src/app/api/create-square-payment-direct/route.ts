@@ -10,28 +10,17 @@ import {
 const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
 
 export async function POST(req: Request) {
-  console.log('[DEBUG] Square payment request received (Direct API)');
-  console.log('[DEBUG] Environment:', isProduction ? 'Production' : 'Sandbox');
 
   try {
     const body = await req.json();
     const {
       amount,
-      locale,
       name,
       giftName,
       phone,
       message,
       sourceId,
     } = body;
-
-    console.log('[DEBUG] Payment details:', {
-      amount,
-      locale,
-      name,
-      giftName,
-      sourceId: sourceId ? 'provided' : 'missing'
-    });
 
     // Get the appropriate access token
     const accessToken = isProduction
@@ -42,14 +31,10 @@ export async function POST(req: Request) {
       ? 'https://connect.squareup.com'
       : 'https://connect.squareupsandbox.com';
 
-    console.log('[DEBUG] Using access token:', accessToken ? `${accessToken.substring(0, 10)}...` : 'MISSING');
-    console.log('[DEBUG] Base URL:', baseUrl);
-
     // First, get location ID
     let locationId = process.env.SQUARE_LOCATION_ID;
 
     if (!locationId) {
-      console.log('[DEBUG] Fetching locations from Square API directly');
 
       const locationsResponse = await fetch(`${baseUrl}/v2/locations`, {
         method: 'GET',
@@ -60,11 +45,8 @@ export async function POST(req: Request) {
         },
       });
 
-      console.log('[DEBUG] Locations response status:', locationsResponse.status);
-
       if (locationsResponse.ok) {
         const locationsData = await locationsResponse.json();
-        console.log('[DEBUG] Locations data:', JSON.stringify(locationsData, null, 2));
 
         if (locationsData.locations && locationsData.locations.length > 0) {
           // Inactive locations reject payments, so prefer an ACTIVE one
@@ -73,7 +55,6 @@ export async function POST(req: Request) {
               (loc: { status?: string }) => loc.status === 'ACTIVE'
             ) ?? locationsData.locations[0];
           locationId = activeLocation.id;
-          console.log('[DEBUG] Using location ID:', locationId);
         }
       } else {
         const errorData = await locationsResponse.json();
@@ -100,8 +81,6 @@ export async function POST(req: Request) {
       autocomplete: true
     };
 
-    console.log('[DEBUG] Payment request:', JSON.stringify(paymentRequest, null, 2));
-
     // Create payment
     const paymentResponse = await fetch(`${baseUrl}/v2/payments`, {
       method: 'POST',
@@ -113,10 +92,7 @@ export async function POST(req: Request) {
       body: JSON.stringify(paymentRequest),
     });
 
-    console.log('[DEBUG] Payment response status:', paymentResponse.status);
-
     const paymentData = await paymentResponse.json();
-    console.log('[DEBUG] Payment response data:', JSON.stringify(paymentData, null, 2));
 
     if (!paymentResponse.ok) {
       throw new Error(JSON.stringify(paymentData));
@@ -150,7 +126,6 @@ export async function POST(req: Request) {
       doc(db, 'giftCards', payment.id),
       giftCardData
     );
-    console.log('[DEBUG] Gift card saved to Firebase');
 
     return NextResponse.json({
       success: true,
@@ -176,10 +151,6 @@ export async function POST(req: Request) {
       {
         error: 'Payment failed',
         details: errorDetails,
-        debug: {
-          hasToken: !!process.env.SQUARE_SANDBOX_ACCESS_TOKEN,
-          tokenLength: process.env.SQUARE_SANDBOX_ACCESS_TOKEN?.length
-        }
       },
       { status: 400 }
     );

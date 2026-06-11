@@ -21,25 +21,13 @@ function parseAcceptLanguage(
 export default getRequestConfig(
   async ({ requestLocale }) => {
     let locale = await requestLocale;
-    console.log(
-      'locale do request antes do tratamento:',
-      locale
-    );
 
     if (!locale) {
       const reqHeaders = await headers();
       const acceptLanguage =
         reqHeaders.get('accept-language') || '';
-      console.log(
-        'accept-language header:',
-        acceptLanguage
-      );
 
       const preferred = parseAcceptLanguage(acceptLanguage);
-      console.log(
-        'preferred language from header:',
-        preferred
-      );
 
       if (preferred.toLowerCase().includes('pt')) {
         locale = 'pt';
@@ -53,10 +41,6 @@ export default getRequestConfig(
     if (locale !== 'en' && locale !== 'pt') {
       locale = routing.defaultLocale;
     }
-    console.log(
-      'locale do request após tratamento:',
-      locale
-    );
 
     const messages = (
       await (locale === 'pt'

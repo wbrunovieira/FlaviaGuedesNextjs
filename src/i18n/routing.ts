@@ -8,9 +8,3 @@ export const routing = defineRouting({
   localeDetection: true,
 });
 
-console.log('locales do routing', routing.locales);
-console.log(
-  'locales do routing localeDetection',
-  routing.localeDetection
-);
-console.log(' routing', routing);

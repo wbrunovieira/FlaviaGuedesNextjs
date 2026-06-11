@@ -10,8 +10,6 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const paymentId = searchParams.get('paymentId');
 
-  console.log('[DEBUG] Get Square Payment - paymentId:', paymentId);
-
   if (!paymentId) {
     return NextResponse.json(
       { error: 'Missing paymentId' },
@@ -33,11 +31,9 @@ export async function GET(req: Request) {
     }
 
     const giftCard = giftCardSnap.data();
-    console.log('[DEBUG] Gift card data from Firebase:', giftCard);
 
     // Skip Square API call for now - using Firebase data
     // TODO: Update when Square SDK is properly configured
-    console.log('[INFO] Using Firebase data for payment details');
 
     return NextResponse.json({
       paymentId: giftCard.squarePaymentId,

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/react';
 import { Fraunces, Work_Sans } from 'next/font/google';
 import '../globals.css';
 
@@ -40,6 +41,7 @@ export default function CardLayout({
     >
       <body className={workSans.className}>
         {children}
+        <Analytics />
       </body>
     </html>
   );

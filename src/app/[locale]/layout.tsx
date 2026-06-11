@@ -1,5 +1,6 @@
 // src/app/[locale]/layout.tsx
 import { NextIntlClientProvider } from 'next-intl';
+import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 import {
   Fraunces,
@@ -175,6 +176,7 @@ export default async function RootLocaleLayout(props: {
         >
           {props.children}
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );

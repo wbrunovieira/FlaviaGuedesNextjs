@@ -40,7 +40,6 @@ export default function GiftCardPurchaseSimple({
       // Wait for Square to load
       let attempts = 0;
       while (!window.Square && attempts < 20) {
-        console.log('[DEBUG] Waiting for Square SDK to load...');
         await new Promise(resolve => setTimeout(resolve, 500));
         attempts++;
       }
@@ -52,18 +51,14 @@ export default function GiftCardPurchaseSimple({
       }
 
       try {
-        console.log('[DEBUG] Initializing Square payments with App ID:', applicationId);
         const paymentsInstance = window.Square.payments(applicationId!);
         setPayments(paymentsInstance);
 
-        console.log('[DEBUG] Creating card instance...');
         const cardInstance = await paymentsInstance.card();
 
-        console.log('[DEBUG] Attaching card to container...');
         await cardInstance.attach('#card-container');
         setCard(cardInstance);
 
-        console.log('[DEBUG] Square card initialized successfully');
       } catch (e) {
         console.error('[ERROR] Square initialization error:', e);
         setError('Payment system initialization failed: ' + (e as Error).message);

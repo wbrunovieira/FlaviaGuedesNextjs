@@ -23,10 +23,8 @@ export default async function RootPage() {
   const requestHeaders = await headers();
   const acceptLanguage =
     requestHeaders.get('accept-language') || '';
-  console.log('acceptLanguage page', acceptLanguage);
 
   const preferred = parseAcceptLanguage(acceptLanguage);
-  console.log('Preferred language:', preferred);
 
   let locale: 'en' | 'pt' = 'en';
   if (preferred.toLowerCase().includes('pt')) {
@@ -36,7 +34,6 @@ export default async function RootPage() {
   } else {
     locale = 'en';
   }
-  console.log('locale do page', locale);
 
   redirect(`/${locale}`);
 }
