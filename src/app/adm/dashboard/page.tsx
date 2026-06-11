@@ -346,7 +346,18 @@ export default function AdminDashboard() {
                   <p className="text-yellow-100 text-sm font-medium">Total Gift Cards</p>
                   <p className="text-3xl font-bold text-white mt-2">{giftCards.length}</p>
                   <p className="text-yellow-200/70 text-xs mt-1 flex items-center gap-1">
-                    <FaArrowUp className="text-xs" /> +12% este mês
+                    <FaArrowUp className="text-xs" />
+                    {(() => {
+                      const now = new Date();
+                      const thisMonth = giftCards.filter(card => {
+                        const d = new Date(card.createdAt);
+                        return (
+                          d.getMonth() === now.getMonth() &&
+                          d.getFullYear() === now.getFullYear()
+                        );
+                      }).length;
+                      return `+${thisMonth} este mês`;
+                    })()}
                   </p>
                 </div>
                 <FaGift className="text-4xl text-yellow-200 opacity-70" />
