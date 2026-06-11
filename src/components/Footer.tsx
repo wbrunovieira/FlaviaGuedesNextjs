@@ -13,6 +13,7 @@ import {
 } from 'react-icons/fa';
 import { FiArrowUpRight } from 'react-icons/fi';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 const Footer: React.FC = () => {
@@ -23,9 +24,13 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
           <div className="flex items-center">
-            <span className="text-2xl font-bold text-gold">
-              Flavia Guedes
-            </span>
+            <Image
+              src="/images/flavia-logo.svg"
+              alt="Flavia Guedes — Hair Studio"
+              width={174}
+              height={60}
+              className="h-12 w-auto"
+            />
           </div>
           <p className="mt-4 text-gray-400 text-sm leading-relaxed">
             {t('description1')}

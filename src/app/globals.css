@@ -141,3 +141,7 @@ h6 {
 .nav-link:hover::after {
   transform: scaleX(1);
 }
+
+.nav-link-active::after {
+  transform: scaleX(1);
+}

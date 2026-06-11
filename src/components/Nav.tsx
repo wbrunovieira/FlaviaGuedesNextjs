@@ -24,6 +24,57 @@ export default function Nav() {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const [mobileMenuOpen, setMobileMenuOpen] =
     useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] =
+    useState('top');
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      // The "top" anchor lives on the fixed nav itself, so the
+      // IntersectionObserver never sees it — detect it by scroll position
+      if (window.scrollY < 300) {
+        setActiveSection('top');
+      }
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, {
+      passive: true,
+    });
+    return () =>
+      window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const ids = [
+      'top',
+      'products',
+      'services',
+      'location',
+      'about',
+      'gallery',
+      'giftcard',
+      'promotions',
+    ];
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (
+            entry.isIntersecting &&
+            window.scrollY >= 300
+          ) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   const menuItems = [
     { name: 'home', href: '#top' },
@@ -105,16 +156,36 @@ export default function Nav() {
     <nav
       ref={navContainer}
       id="top"
-      className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-md text-foreground p-4 shadow-md z-50"
+      className={`fixed top-0 left-0 w-full text-foreground px-4 z-50 transition-all duration-500 ${
+        scrolled
+          ? 'bg-background/90 backdrop-blur-md py-1.5 shadow-[0_10px_30px_-12px_rgba(200,160,75,0.3)]'
+          : 'bg-background/50 backdrop-blur-sm py-2.5'
+      }`}
     >
+      <div
+        className={`absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-gold/50 to-transparent transition-opacity duration-500 ${
+          scrolled ? 'opacity-100' : 'opacity-50'
+        }`}
+        aria-hidden
+      />
       <div className="container mx-auto flex justify-between items-center w-full">
         <Link
           href="#top"
           className="hover:scale-105 transition duration-200"
+          aria-label={t('logoAria')}
         >
-          <span className="text-2xl font-bold cursor-pointer">
-            {t('logo')}
-          </span>
+          <Image
+            src="/images/flavia-logo.svg"
+            alt="Flavia Guedes — Hair Studio"
+            width={290}
+            height={100}
+            priority
+            className={`w-auto cursor-pointer transition-all duration-500 ${
+              scrolled
+                ? 'h-12 sm:h-14'
+                : 'h-14 sm:h-[4.5rem]'
+            }`}
+          />
         </Link>
 
         <ul className="hidden md:flex space-x-6">
@@ -128,7 +199,11 @@ export default function Nav() {
             >
               <Link
                 href={item.href}
-                className="cursor-pointer nav-link"
+                className={`cursor-pointer nav-link ${
+                  activeSection === item.href.slice(1)
+                    ? 'text-gold nav-link-active'
+                    : ''
+                }`}
               >
                 {t(item.name)}
               </Link>

@@ -60,7 +60,7 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative container mx-auto pt-24 md:pt-20 flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-20 text-white"
+      className="relative container mx-auto pt-28 md:pt-32 flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-20 text-white"
     >
       <div
         ref={textRef}
