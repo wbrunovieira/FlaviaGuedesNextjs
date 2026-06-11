@@ -2,11 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import PhotoAlbum, {
-  Photo,
-  RenderImageProps,
-  RenderImageContext,
-} from 'react-photo-album';
+import PhotoAlbum, { Photo, RenderImageProps, RenderImageContext } from 'react-photo-album';
 import 'react-photo-album/styles.css';
 
 import { useTranslations } from 'next-intl';
@@ -83,20 +79,7 @@ const photos: CustomPhoto[] = [
     alt: 'A modern, stylish haircut with clean lines and expertly crafted layers, showcasing a fresh and contemporary look.',
     blurDataURL: '/images/image8.jpeg',
   },
-  {
-    src: '/images/image9.jpeg',
-    width: 600,
-    height: 900,
-    alt: 'A modern, stylish haircut with clean lines and expertly crafted layers, showcasing a fresh and contemporary look.',
-    blurDataURL: '/images/image9.jpeg',
-  },
-  {
-    src: '/images/IMG_1425.jpg',
-    width: 1000,
-    height: 750,
-    alt: 'A modern, stylish haircut with clean lines and expertly crafted layers, showcasing a fresh and contemporary look.',
-    blurDataURL: '/images/IMG_1425.jpg',
-  },
+
   {
     src: '/images/IMG_1775.jpg',
     width: 750,
@@ -134,10 +117,7 @@ const photos: CustomPhoto[] = [
   },
 ];
 
-function renderNextImage(
-  { title, sizes }: RenderImageProps,
-  { photo, width, height }: RenderImageContext
-) {
+function renderNextImage({ title, sizes }: RenderImageProps, { photo, width, height }: RenderImageContext) {
   return (
     <div
       style={{
@@ -152,11 +132,7 @@ function renderNextImage(
         alt={photo.alt || 'kundalini section'}
         title={title}
         sizes={sizes}
-        placeholder={
-          (photo as CustomPhoto).blurDataURL
-            ? 'blur'
-            : undefined
-        }
+        placeholder={(photo as CustomPhoto).blurDataURL ? 'blur' : undefined}
         priority={width >= 1200}
         blurDataURL={(photo as CustomPhoto).blurDataURL}
         className="object-cover"
@@ -165,22 +141,13 @@ function renderNextImage(
   );
 }
 
-export default function Gallery({
-  id = 'gallery',
-}: GallerySectionProps) {
+export default function Gallery({ id = 'gallery' }: GallerySectionProps) {
   const t = useTranslations('Gallery');
   return (
-    <section
-      className="container mx-auto px-6 py-16 md:py-24 lg:py-32"
-      id={id}
-    >
+    <section className="container mx-auto px-6 py-16 md:py-24 lg:py-32" id={id}>
       <div className="text-center max-w-2xl mx-auto mb-12">
-        <h2 className="text-2xl font-playfair md:text-4xl font-bold text-primary mb-4">
-          {t('title')}
-        </h2>
-        <p className="text-lg md:text-xl text-muted-foreground">
-          {t('subtitle')}
-        </p>
+        <h2 className="text-2xl font-playfair md:text-4xl font-bold text-primary mb-4">{t('title')}</h2>
+        <p className="text-lg md:text-xl text-muted-foreground">{t('subtitle')}</p>
         <hr className="border-t border-muted w-full md:w-3/4 my-4 mx-auto" />
       </div>
 
@@ -192,9 +159,7 @@ export default function Gallery({
           if (containerWidth < 800) return 3;
           return 4;
         }}
-        spacing={containerWidth =>
-          containerWidth < 600 ? 10 : 20
-        }
+        spacing={containerWidth => (containerWidth < 600 ? 10 : 20)}
         render={{ image: renderNextImage }}
         defaultContainerWidth={1200}
         sizes={{
