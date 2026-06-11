@@ -67,7 +67,12 @@ export async function POST(req: Request) {
         console.log('[DEBUG] Locations data:', JSON.stringify(locationsData, null, 2));
 
         if (locationsData.locations && locationsData.locations.length > 0) {
-          locationId = locationsData.locations[0].id;
+          // Inactive locations reject payments, so prefer an ACTIVE one
+          const activeLocation =
+            locationsData.locations.find(
+              (loc: { status?: string }) => loc.status === 'ACTIVE'
+            ) ?? locationsData.locations[0];
+          locationId = activeLocation.id;
           console.log('[DEBUG] Using location ID:', locationId);
         }
       } else {

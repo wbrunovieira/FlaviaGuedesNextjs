@@ -63,7 +63,11 @@ export async function POST(req: Request) {
       try {
         const locationsResponse = await client.locations.list();
         if (locationsResponse.locations && locationsResponse.locations.length > 0) {
-          locationId = locationsResponse.locations[0].id!;
+          // Inactive locations reject payments, so prefer an ACTIVE one
+          const activeLocation =
+            locationsResponse.locations.find(loc => loc.status === 'ACTIVE') ??
+            locationsResponse.locations[0];
+          locationId = activeLocation.id!;
           console.log('[DEBUG] Using location ID:', locationId);
         } else {
           // Use default location for sandbox
