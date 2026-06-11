@@ -73,6 +73,22 @@ export default function GiftCardPurchaseSimple({
     initializeSquare();
   }, [showInput, applicationId, card, payments]);
 
+  // Allows other sections (e.g. the welcome promo) to open the form pre-filled
+  useEffect(() => {
+    const handlePrefill = (e: Event) => {
+      const detail = (
+        e as CustomEvent<{ amount?: number; message?: string }>
+      ).detail;
+      setShowInput(true);
+      if (detail?.amount) setAmount(String(detail.amount));
+      if (detail?.message) setMessage(detail.message);
+      setError('');
+    };
+    window.addEventListener('giftcard:prefill', handlePrefill);
+    return () =>
+      window.removeEventListener('giftcard:prefill', handlePrefill);
+  }, []);
+
   const handlePayment = async () => {
     if (!card) {
       setError('Payment method not ready');

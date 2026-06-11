@@ -8,6 +8,7 @@ import {
   FaStar,
   FaArrowRight,
   FaCheck,
+  FaGift,
 } from 'react-icons/fa';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -42,6 +43,22 @@ function HairStrands() {
 export default function Promotions() {
   const t = useTranslations('Promotions');
   const sectionRef = useRef<HTMLElement>(null);
+
+  const handleBuyWelcome = () => {
+    window.dispatchEvent(
+      new CustomEvent('giftcard:prefill', {
+        detail: {
+          amount: 150,
+          message:
+            t('welcomePrefillMessage') ||
+            'Welcome Special — New Client',
+        },
+      })
+    );
+    document
+      .getElementById('giftcard')
+      ?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -186,16 +203,25 @@ export default function Promotions() {
             ))}
           </ul>
 
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-            <a
-              href="https://app.salonrunner.com/customer/home/ifiercebeautylounge/index.htm"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-semibold text-background transition-all duration-300 hover:bg-opacity-90 hover:gap-3"
-            >
-              {t('bookNow') || 'Book Now'}
-              <FaArrowRight className="text-sm" />
-            </a>
+          <div className="mt-8 flex flex-col gap-3">
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="https://app.salonrunner.com/customer/home/ifiercebeautylounge/index.htm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-semibold text-background transition-all duration-300 hover:bg-opacity-90 hover:gap-3"
+              >
+                {t('bookNow') || 'Book Now'}
+                <FaArrowRight className="text-sm" />
+              </a>
+              <button
+                onClick={handleBuyWelcome}
+                className="inline-flex items-center gap-2 rounded-full border border-gold/50 bg-transparent px-6 py-3 font-semibold text-gold transition-all duration-300 hover:bg-gold/10 hover:border-gold hover:gap-3"
+              >
+                <FaGift className="text-sm" />
+                {t('buyNow') || 'Buy Now'}
+              </button>
+            </div>
             <p className="text-xs italic text-gray-500">
               {t('welcomeAppointment') ||
                 'Appointment only, with Flavia Stylists.'}

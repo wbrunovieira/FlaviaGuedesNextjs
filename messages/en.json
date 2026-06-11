@@ -91,13 +91,6 @@
               "item_3": { "name": "Haircut Only", "price": "$55" },
               "item_5": { "name": "Bangs/Fringe Trim", "price": "$12" }
             }
-          },
-          "children_haircuts": {
-            "name": "Children",
-            "items": {
-              "item_2": { "name": "Haircut And Blowout (11under)", "price": "$50" },
-              "item_4": { "name": "Haircut (11under)", "price": "$35" }
-            }
           }
         }
       },
@@ -199,6 +192,8 @@
   "referralSubtitle": "Spread the Love and Enjoy Fantastic Rewards! 🎉",
   "referralDescription": "If you love your hair as much as I do, why not share that joy? At iFierce Beauty Lounge, we’ve created a special referral program for you!",
   "learnMore": "Ask How It Works",
+  "buyNow": "Buy Now",
+  "welcomePrefillMessage": "Welcome Special — New Client",
   "referralTerms": "Valid for new clients only.",
   "welcomeTitle": "Welcome Special for New Clients! 🌟",
   "welcomePriceLabel": "Complete package",

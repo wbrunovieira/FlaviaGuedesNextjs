@@ -98,13 +98,6 @@
               "item_3": { "name": "Apenas Corte", "price": "$55" },
               "item_5": { "name": "Franja", "price": "$12" }
             }
-          },
-          "infantis": {
-            "name": "Infantis",
-            "items": {
-              "item_2": { "name": "Corte e Escova (11 anos ou menos)", "price": "$50" },
-              "item_4": { "name": "Corte Infantil", "price": "$35" }
-            }
           }
         }
       },
@@ -206,6 +199,8 @@
   "referralSubtitle": "Espalhe o amor e aproveite recompensas fantásticas! 🎉",
   "referralDescription": "Se você ama seu cabelo tanto quanto eu, por que não compartilhar essa alegria? No iFierce Beauty Lounge, criamos um programa especial de indicações para você!",
   "learnMore": "Pergunte como funciona",
+  "buyNow": "Comprar Agora",
+  "welcomePrefillMessage": "Oferta de Boas-Vindas — Novo Cliente",
   "referralTerms": "Válido apenas para novos clientes.",
   "welcomeTitle": "Oferta Especial de Boas-Vindas para Novos Clientes! 🌟",
   "welcomePriceLabel": "Pacote completo",
