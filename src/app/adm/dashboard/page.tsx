@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
@@ -61,6 +61,10 @@ export default function AdminDashboard() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [statusFilter, setStatusFilter] = useState<'all' | 'paid' | 'pending'>('all');
   const [dateRange, setDateRange] = useState<'all' | 'today' | 'week' | 'month'>('all');
+
+  // Pagination
+  const ITEMS_PER_PAGE = 12;
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Delete states
   const [confirmTarget, setConfirmTarget] = useState<GiftCard | null>(null);
@@ -176,7 +180,17 @@ export default function AdminDashboard() {
     });
 
     setFilteredCards(filtered);
+    setCurrentPage(1);
   }, [giftCards, searchTerm, sortOrder, statusFilter, dateRange]);
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredCards.length / ITEMS_PER_PAGE)
+  );
+  const paginatedCards = filteredCards.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   const toggleCardExpansion = (id: string) => {
     const newExpanded = new Set(expandedCards);
@@ -597,7 +611,7 @@ export default function AdminDashboard() {
               Últimas Transações
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCards.map(giftCard => (
+            {paginatedCards.map(giftCard => (
               <Card
                 key={giftCard.id}
                 className="bg-graphite/80 backdrop-blur-md border border-gold/30 shadow-xl hover:shadow-2xl hover:border-gold/50 transition-all duration-300"
@@ -716,6 +730,58 @@ export default function AdminDashboard() {
               </Card>
             ))}
             </div>
+
+            {/* Paginação */}
+            {totalPages > 1 && (
+              <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p className="text-sm text-grayMedium">
+                  Mostrando{' '}
+                  {(currentPage - 1) * ITEMS_PER_PAGE + 1}–
+                  {Math.min(currentPage * ITEMS_PER_PAGE, filteredCards.length)}{' '}
+                  de {filteredCards.length} transações
+                </p>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 rounded-lg border border-gold/30 text-gold text-sm font-medium transition-all duration-300 hover:bg-gold/10 disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    Anterior
+                  </button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1)
+                    .filter(
+                      page =>
+                        page === 1 ||
+                        page === totalPages ||
+                        Math.abs(page - currentPage) <= 1
+                    )
+                    .map((page, idx, pages) => (
+                      <React.Fragment key={page}>
+                        {idx > 0 && pages[idx - 1] !== page - 1 && (
+                          <span className="text-grayMedium px-1">…</span>
+                        )}
+                        <button
+                          onClick={() => setCurrentPage(page)}
+                          className={`h-9 w-9 rounded-lg text-sm font-medium transition-all duration-300 ${
+                            currentPage === page
+                              ? 'bg-gold text-background'
+                              : 'border border-gold/30 text-gold hover:bg-gold/10'
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      </React.Fragment>
+                    ))}
+                  <button
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 rounded-lg border border-gold/30 text-gold text-sm font-medium transition-all duration-300 hover:bg-gold/10 disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    Próxima
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
