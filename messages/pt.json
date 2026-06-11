@@ -148,19 +148,6 @@
                 "price": "$20"
               }
             }
-          },
-          "infantis": {
-            "name": "Infantis",
-            "items": {
-              "item_2": {
-                "name": "Corte e Escova (11 anos ou menos)",
-                "price": "$60"
-              },
-              "item_4": {
-                "name": "Corte Infantil",
-                "price": "$45"
-              }
-            }
           }
         }
       },
@@ -251,7 +238,9 @@
     "tiktok": "@guedesflavia6",
     "rightsReserved": "Todos os direitos reservados.",
     "developedWith": "Desenvolvido com",
-    "by": "por"
+    "by": "por",
+    "appointmentsTitle": "Atendimento com Hora Marcada",
+    "appointmentsNote": "Todos os serviços são realizados somente com horário agendado. Ligue, envie um SMS ou mande uma mensagem."
   },
   "GiftCard": {
     "title": "Compra de Gift Card",

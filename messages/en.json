@@ -148,19 +148,6 @@
                 "price": "$20"
               }
             }
-          },
-          "children_haircuts": {
-            "name": "Children",
-            "items": {
-              "item_2": {
-                "name": "Haircut And Blowout (11 & under)",
-                "price": "$60"
-              },
-              "item_4": {
-                "name": "Haircut (11 & under)",
-                "price": "$45"
-              }
-            }
           }
         }
       },
@@ -251,7 +238,9 @@
     "tiktok": "@guedesflavia6",
     "rightsReserved": "All rights reserved.",
     "developedWith": "Developed with",
-    "by": "by"
+    "by": "by",
+    "appointmentsTitle": "Appointments Required",
+    "appointmentsNote": "All services are provided by appointment only. Please call, text, or message us."
   },
   "GiftCard": {
     "title": "Purchase Gift Card",

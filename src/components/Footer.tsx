@@ -78,6 +78,15 @@ const Footer: React.FC = () => {
               </a>
             </li>
           </ul>
+
+          <div className="mt-5 rounded-lg border border-gold/25 bg-gold/5 px-4 py-3">
+            <p className="text-sm font-semibold text-gold">
+              {t('appointmentsTitle')}
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-gray-400">
+              {t('appointmentsNote')}
+            </p>
+          </div>
         </div>
 
         <div>
