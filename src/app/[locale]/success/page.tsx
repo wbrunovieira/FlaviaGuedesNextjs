@@ -6,19 +6,11 @@ import {
   useRouter,
 } from 'next/navigation';
 import { gsap } from 'gsap';
-import { FaGift, FaHeart } from 'react-icons/fa'; // Adicionamos o FaHeart
+import { FaGift } from 'react-icons/fa';
 import { useTranslations } from 'next-intl';
 import { useGSAP } from '@gsap/react';
 
-import {
-  FiDownload,
-  FiHome,
-  FiUser,
-  FiPhone,
-  FiMessageSquare,
-  FiDollarSign,
-  FiCreditCard,
-} from 'react-icons/fi';
+import { FiDownload, FiHome } from 'react-icons/fi';
 import Confetti from 'react-confetti';
 import html2canvas from 'html2canvas';
 
@@ -131,8 +123,6 @@ export default function SuccessPage() {
     }
   }, [giftCard]);
 
-  console.log('giftCard', giftCard);
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-b from-black to-gray-900 text-white">
       {confetti && (
@@ -156,109 +146,89 @@ export default function SuccessPage() {
         <>
           <div
             ref={cardRef}
-            className="max-w-md w-full p-6 bg-gradient-to-br from-gray-900 to-black border-4 border-gold rounded-lg shadow-2xl mt-4 relative overflow-hidden"
+            className="max-w-md w-full rounded-2xl bg-gradient-to-br from-gold via-yellow-700 to-gold p-[2px] shadow-2xl mt-4"
           >
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-70"></div>
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-70"></div>
-            <div className="absolute top-0 right-0 h-full w-1 bg-gradient-to-b from-transparent via-gold to-transparent opacity-70"></div>
-            <div className="absolute top-0 left-0 h-full w-1 bg-gradient-to-b from-transparent via-gold to-transparent opacity-70"></div>
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-graphite via-black to-graphite px-8 py-10 text-center">
+              {/* Brilho dourado no topo */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(380px circle at 50% 0%, rgba(200,160,75,0.14), transparent 70%)',
+                }}
+              />
 
-            <div className="flex flex-col items-center mb-6 pb-4 border-b border-gold/30">
-              <div className="bg-gold/10 p-3 rounded-full mb-2">
-                <FaGift className="text-5xl text-gold animate-pulse" />
-              </div>
-              <h2 className="text-3xl font-bold text-gold">
-                {t('giftCardHeading')}
-              </h2>
-            </div>
+              <div className="relative">
+                {/* Marca */}
+                <p className="font-display text-3xl text-gold tracking-wide">
+                  Flavia Guedes
+                </p>
+                <p className="mt-2 text-[11px] uppercase tracking-[0.4em] text-gold/70">
+                  {t('giftCardHeading')}
+                </p>
 
-            <div className="space-y-4">
-              <div className="flex items-center p-3 bg-gold/5 rounded-lg border border-gold/20">
-                <FiUser className="text-gold mr-3 flex-shrink-0" />
-                <div className="flex-1">
-                  <p className="text-xs text-gold/70 uppercase font-semibold">
-                    {t('nameLabel')}
-                  </p>
-                  <p className="text-lg font-medium">
-                    {giftCard.name}
-                  </p>
+                {/* Divisor com presente */}
+                <div className="my-7 flex items-center justify-center gap-4">
+                  <div className="h-px w-16 bg-gradient-to-r from-transparent to-gold/60" />
+                  <FaGift className="text-xl text-gold" />
+                  <div className="h-px w-16 bg-gradient-to-l from-transparent to-gold/60" />
                 </div>
-              </div>
 
-              {giftCard.giftName && (
-                <div className="flex items-center p-3 bg-gold/5 rounded-lg border border-gold/20">
-                  {/* Ícone de coração vermelho para destacar o presenteado */}
-                  <FaHeart className="text-red-500 mr-3 flex-shrink-0 animate-pulse" />
-                  <div className="flex-1">
-                    <p className="text-xs text-gold/70 uppercase font-semibold">
-                      {t('giftNameLabel') || 'Para quem é?'}
+                {/* Valor */}
+                <p className="font-display text-6xl font-semibold text-gold leading-none">
+                  ${(giftCard.amount / 100).toFixed(2)}
+                </p>
+
+                {/* Mensagem do presente */}
+                {giftCard.message && (
+                  <p className="mt-7 font-display italic text-xl text-gray-200 leading-relaxed">
+                    &ldquo;{giftCard.message}&rdquo;
+                  </p>
+                )}
+
+                {/* De / Para */}
+                <div className="mt-8 flex items-stretch justify-center gap-8">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-gold/60">
+                      {t('nameLabel')}
                     </p>
-                    <p className="text-lg font-medium">
-                      {giftCard.giftName}
+                    <p className="mt-1 font-medium text-white">
+                      {giftCard.name}
                     </p>
                   </div>
+                  {giftCard.giftName && (
+                    <>
+                      <div className="w-px bg-gold/25" />
+                      <div>
+                        <p className="text-[10px] uppercase tracking-[0.3em] text-gold/60">
+                          {t('giftNameLabel') || 'Para'}
+                        </p>
+                        <p className="mt-1 font-medium text-white">
+                          {giftCard.giftName}
+                        </p>
+                      </div>
+                    </>
+                  )}
                 </div>
-              )}
 
-              {giftCard.phone && (
-                <div className="flex items-center p-3 bg-gold/5 rounded-lg border border-gold/20">
-                  <FiPhone className="text-gold mr-3 flex-shrink-0" />
-                  <div className="flex-1">
-                    <p className="text-xs text-gold/70 uppercase font-semibold">
-                      {t('phoneLabel')}
-                    </p>
-                    <p className="text-lg font-medium">
-                      {giftCard.phone}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {giftCard.message && (
-                <div className="flex p-3 bg-gold/5 rounded-lg border border-gold/20">
-                  <FiMessageSquare className="text-gold mr-3 flex-shrink-0 mt-1" />
-                  <div className="flex-1">
-                    <p className="text-xs text-gold/70 uppercase font-semibold">
-                      {t('messageLabel')}
-                    </p>
-                    <p className="text-lg font-medium">
-                      {giftCard.message}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              <div className="flex items-center p-3 bg-gold/10 rounded-lg border border-gold/30">
-                <FiDollarSign className="text-gold mr-3 flex-shrink-0 text-xl" />
-                <div className="flex-1">
-                  <p className="text-xs text-gold/70 uppercase font-semibold">
-                    {t('amountLabel')}
+                {/* Rodapé do cartão */}
+                <div className="mt-9 border-t border-gold/20 pt-5">
+                  <p className="text-sm text-gold/90">
+                    ✨ {t('flaviaguedesUse')} ✨
                   </p>
-                  <p className="text-2xl font-bold text-gold">
-                    ${(giftCard.amount / 100).toFixed(2)}
-                  </p>
-                </div>
-              </div>
-
-              {giftCard.stripePaymentId && (
-                <div className="flex items-center p-3 bg-gold/5 rounded-lg border border-gold/20">
-                  <FiCreditCard className="text-gold/70 mr-3 flex-shrink-0" />
-                  <div className="flex-1">
-                    <p className="text-xs text-gold/70 uppercase font-semibold">
-                      {t('paymentId')}
+                  {giftCard.phone && (
+                    <p className="mt-3 text-[10px] tracking-wide text-gray-500">
+                      {t('phoneLabel')}: {giftCard.phone}
                     </p>
-                    <p className="text-sm font-medium text-gray-400 truncate">
+                  )}
+                  {giftCard.stripePaymentId && (
+                    <p className="mt-1 text-[10px] tracking-wide text-gray-600 truncate">
+                      {t('paymentId')}:{' '}
                       {giftCard.stripePaymentId}
                     </p>
-                  </div>
+                  )}
                 </div>
-              )}
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-gold/30 text-center">
-              <p className="text-lg font-medium text-gold">
-                ✨ {t('flaviaguedesUse')} ✨
-              </p>
+              </div>
             </div>
           </div>
 
