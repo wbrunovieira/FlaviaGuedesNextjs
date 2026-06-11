@@ -84,12 +84,13 @@ export default function GiftCardPurchaseSquare({
       return false;
     }
 
-    if (numericAmount < 25) {
-      setError(
-        t('minAmount') || 'Minimum amount is $25.'
-      );
-      return false;
-    }
+    // TODO: re-enable after live purchase test (commented out 2026-06-11)
+    // if (numericAmount < 25) {
+    //   setError(
+    //     t('minAmount') || 'Minimum amount is $25.'
+    //   );
+    //   return false;
+    // }
 
     if (!name.trim()) {
       setError(
@@ -131,7 +132,7 @@ export default function GiftCardPurchaseSquare({
               value={amount}
               onChange={handleInputChange}
               className="p-2 border rounded text-background"
-              min="25"
+              min="1"
               disabled={isProcessing}
             />
             <input
