@@ -14,6 +14,7 @@ import {
   FaGift,
   FaRegCalendarCheck,
   FaUserPlus,
+  FaHeart,
 } from 'react-icons/fa';
 import { FiArrowUpRight } from 'react-icons/fi';
 
@@ -49,6 +50,8 @@ const strings = {
       'Conditioning & Care',
     ],
     scan: 'Scan to share',
+    developedWith: 'Developed with',
+    by: 'by',
   },
   pt: {
     role: 'Hair Stylist & Colorista',
@@ -75,6 +78,8 @@ const strings = {
       'Tratamentos & Hidratação',
     ],
     scan: 'Escaneie para compartilhar',
+    developedWith: 'Desenvolvido com',
+    by: 'por',
   },
 } as const;
 
@@ -319,6 +324,20 @@ export default function DigitalCard() {
           <p className="text-sm text-grayMedium">
             card.flaviaguedes.com
           </p>
+
+          <div className="mt-6 flex items-center gap-1.5 text-[11px] text-gray-500">
+            <span>{t.developedWith}</span>
+            <FaHeart className="text-[9px] text-gold animate-pulse" />
+            <span>{t.by}</span>
+            <a
+              href="https://www.wbdigitalsolutions.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-gold/80 transition-colors duration-300 hover:text-gold"
+            >
+              WB Digital Solutions
+            </a>
+          </div>
         </footer>
       </main>
     </div>
