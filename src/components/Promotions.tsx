@@ -176,7 +176,7 @@ export default function Promotions() {
 
           <p className="mt-8 text-xs italic text-gray-500 text-center">
             {t('referralTerms') ||
-              "New clients only. Credit applied after the referral's first completed service."}
+              "New clients only. Cannot be combined with any other offer, promotion, gift card, new client special, or $150 gift certificate. Referral credit applied after the referred guest's first completed service."}
           </p>
         </div>
 
