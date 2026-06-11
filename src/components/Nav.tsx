@@ -8,7 +8,11 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import ButtonAnimatedGradient from './ButtonAnimatedGradient';
 import { FiRefreshCcw } from 'react-icons/fi';
+import { FaRegCalendarCheck } from 'react-icons/fa';
 import ToggleButton from './ToggleButton';
+
+const BOOKING_URL =
+  'https://app.salonrunner.com/customer/home/ifiercebeautylounge/index.htm';
 
 export default function Nav() {
   const t = useTranslations('Nav');
@@ -133,6 +137,15 @@ export default function Nav() {
         </ul>
 
         <div className="flex items-center space-x-4">
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2 text-sm font-semibold text-background shadow-lg shadow-gold/20 transition-all duration-300 hover:bg-opacity-90 hover:shadow-gold/40"
+          >
+            <FaRegCalendarCheck className="text-sm" />
+            {t('bookNow')}
+          </a>
           <ButtonAnimatedGradient
             size="sm"
             onClick={() =>
@@ -188,6 +201,18 @@ export default function Nav() {
                 </Link>
               </li>
             ))}
+            <li className="pt-2">
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleMobileMenuClose}
+                className="flex w-full items-center justify-center gap-2 rounded-full bg-gold px-5 py-3 font-semibold text-background transition-all duration-300 hover:bg-opacity-90"
+              >
+                <FaRegCalendarCheck />
+                {t('bookNow')}
+              </a>
+            </li>
           </ul>
         </div>
       )}
