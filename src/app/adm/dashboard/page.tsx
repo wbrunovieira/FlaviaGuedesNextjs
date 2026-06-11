@@ -43,6 +43,8 @@ export default function AdminDashboard() {
     squarePaymentId?: string;
     paid?: boolean;
     cancelled?: boolean;
+    redeemed?: boolean;
+    redeemedAt?: string | null;
     createdAt: string;
     paymentMethod?: string;
     cardBrand?: string;
@@ -59,7 +61,7 @@ export default function AdminDashboard() {
   // Filter states
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [statusFilter, setStatusFilter] = useState<'all' | 'paid' | 'pending'>('all');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'paid' | 'pending' | 'redeemed' | 'unredeemed'>('all');
   const [dateRange, setDateRange] = useState<'all' | 'today' | 'week' | 'month'>('all');
 
   // Pagination
@@ -71,11 +73,80 @@ export default function AdminDashboard() {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
+  // Redeem states
+  const [redeemTarget, setRedeemTarget] = useState<GiftCard | null>(null);
+  const [redeemDate, setRedeemDate] = useState<string>('');
+  const [redeemSaving, setRedeemSaving] = useState<boolean>(false);
+
   const router = useRouter();
 
   const showToast = (type: 'success' | 'error', message: string) => {
     setToast({ type, message });
     setTimeout(() => setToast(null), 4000);
+  };
+
+  const openRedeemModal = (card: GiftCard) => {
+    setRedeemTarget(card);
+    setRedeemDate(new Date().toISOString().slice(0, 10));
+  };
+
+  const handleConfirmRedeem = async () => {
+    if (!redeemTarget || !redeemDate) return;
+    setRedeemSaving(true);
+    try {
+      const response = await fetch('/api/adm-redeem-giftcard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: redeemTarget.id,
+          redeemedAt: `${redeemDate}T12:00:00`,
+        }),
+      });
+      if (response.status === 401) {
+        router.push('/adm');
+        return;
+      }
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Failed');
+      setGiftCards(prev =>
+        prev.map(card =>
+          card.id === redeemTarget.id
+            ? { ...card, redeemed: true, redeemedAt: data.redeemedAt }
+            : card
+        )
+      );
+      showToast('success', `Gift card de ${redeemTarget.name} marcado como utilizado`);
+      setRedeemTarget(null);
+    } catch {
+      showToast('error', 'Erro ao marcar como utilizado. Tente novamente.');
+    } finally {
+      setRedeemSaving(false);
+    }
+  };
+
+  const handleUndoRedeem = async (card: GiftCard) => {
+    try {
+      const response = await fetch('/api/adm-redeem-giftcard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: card.id, undo: true }),
+      });
+      if (response.status === 401) {
+        router.push('/adm');
+        return;
+      }
+      if (!response.ok) throw new Error('Failed');
+      setGiftCards(prev =>
+        prev.map(c =>
+          c.id === card.id
+            ? { ...c, redeemed: false, redeemedAt: null }
+            : c
+        )
+      );
+      showToast('success', 'Marcação de uso desfeita');
+    } catch {
+      showToast('error', 'Erro ao desfazer. Tente novamente.');
+    }
   };
 
   const handleConfirmDelete = async () => {
@@ -155,6 +226,10 @@ export default function AdminDashboard() {
       filtered = filtered.filter(card => card.paid === true);
     } else if (statusFilter === 'pending') {
       filtered = filtered.filter(card => card.paid !== true);
+    } else if (statusFilter === 'redeemed') {
+      filtered = filtered.filter(card => card.redeemed === true);
+    } else if (statusFilter === 'unredeemed') {
+      filtered = filtered.filter(card => !card.redeemed && !card.cancelled);
     }
 
     // Date range filter
@@ -209,11 +284,18 @@ export default function AdminDashboard() {
     return <FaCreditCard className="text-gold/70" />;
   };
 
-  const getStatusBadge = (paid?: boolean, cancelled?: boolean) => {
+  const getStatusBadge = (paid?: boolean, cancelled?: boolean, redeemed?: boolean) => {
     if (cancelled) {
       return (
         <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-red-900/30 text-red-400 border border-red-500/30">
           <FaTimesCircle /> Cancelado
+        </span>
+      );
+    }
+    if (redeemed) {
+      return (
+        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-gold/20 text-gold border border-gold/50">
+          <FaCheckCircle /> Utilizado
         </span>
       );
     }
@@ -297,6 +379,81 @@ export default function AdminDashboard() {
         </AnimatePresence>
       </div>
 
+      {/* Modal: marcar gift card como utilizado */}
+      <AnimatePresence>
+        {redeemTarget && (
+          <motion.div
+            key="redeem-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+            onClick={() => !redeemSaving && setRedeemTarget(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 24, scale: 0.96 }}
+              transition={{ duration: 0.25 }}
+              className="w-full max-w-sm rounded-xl border border-gold/40 bg-graphite p-6 shadow-2xl shadow-gold/10"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="flex items-center gap-3">
+                <div className="rounded-lg bg-gold/15 p-2.5">
+                  <FaCheckCircle className="text-gold" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-white">Marcar como utilizado</h3>
+                  <p className="text-xs text-grayMedium">
+                    {redeemTarget.name} — ${(redeemTarget.amount / 100).toFixed(2)}
+                  </p>
+                </div>
+              </div>
+
+              <label
+                htmlFor="redeem-date"
+                className="mt-5 block text-xs font-medium text-grayMedium"
+              >
+                Data em que o serviço foi realizado
+              </label>
+              <input
+                id="redeem-date"
+                type="date"
+                value={redeemDate}
+                max={new Date().toISOString().slice(0, 10)}
+                onChange={e => setRedeemDate(e.target.value)}
+                className="mt-1.5 w-full rounded-lg border border-gold/30 bg-background px-4 py-2.5 text-white focus:border-gold/60 focus:outline-none [color-scheme:dark]"
+              />
+              <p className="mt-2 text-[11px] text-gray-500">
+                Se marcar errado, dá para desfazer depois no próprio card.
+              </p>
+
+              <div className="mt-6 flex gap-3">
+                <button
+                  onClick={handleConfirmRedeem}
+                  disabled={redeemSaving || !redeemDate}
+                  className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-gold px-4 py-2.5 font-semibold text-background transition-all duration-300 hover:bg-opacity-90 disabled:opacity-50"
+                >
+                  {redeemSaving ? (
+                    <FaSpinner className="animate-spin" />
+                  ) : (
+                    <FaCheckCircle className="text-sm" />
+                  )}
+                  Salvar
+                </button>
+                <button
+                  onClick={() => setRedeemTarget(null)}
+                  disabled={redeemSaving}
+                  className="flex-1 rounded-lg border border-gold/30 px-4 py-2.5 font-medium text-gold transition-all duration-300 hover:bg-gold/10 disabled:opacity-50"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Animated background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-gold rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
@@ -343,7 +500,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {/* Card 1 - Total Gift Cards */}
           <Card className="bg-gradient-to-br from-gold to-yellow-600 border-0 shadow-xl hover:shadow-2xl hover:shadow-gold/30 transition-all duration-300 hover:scale-105">
             <CardContent className="p-6">
@@ -432,6 +589,38 @@ export default function AdminDashboard() {
                   <p className="text-grayMedium text-xs mt-1">Por gift card</p>
                 </div>
                 <FaTrophy className="text-4xl text-gold opacity-50" />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Card 5 - Utilizados */}
+          <Card className="bg-gradient-to-br from-gold/80 to-yellow-700 border-0 shadow-xl hover:shadow-2xl hover:shadow-gold/30 transition-all duration-300 hover:scale-105">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-yellow-100 text-sm font-medium">Utilizados</p>
+                  <p className="text-3xl font-bold text-white mt-2">
+                    {giftCards.filter(card => card.redeemed).length}
+                  </p>
+                  <p className="text-yellow-200/70 text-xs mt-1">Serviço já realizado</p>
+                </div>
+                <FaCheckCircle className="text-4xl text-yellow-200 opacity-70" />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Card 6 - A Utilizar */}
+          <Card className="bg-gradient-to-br from-graphite to-gray-800 border border-gold/30 shadow-xl hover:shadow-2xl hover:shadow-gold/20 transition-all duration-300 hover:scale-105">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gold text-sm font-medium">A Utilizar</p>
+                  <p className="text-3xl font-bold text-white mt-2">
+                    {giftCards.filter(card => !card.redeemed && !card.cancelled).length}
+                  </p>
+                  <p className="text-grayMedium text-xs mt-1">Aguardando o cliente</p>
+                </div>
+                <FaClock className="text-4xl text-gold opacity-50" />
               </div>
             </CardContent>
           </Card>
@@ -524,10 +713,12 @@ export default function AdminDashboard() {
                     <select
                       id="filter-status"
                       value={statusFilter}
-                      onChange={(e) => setStatusFilter(e.target.value as 'all' | 'paid' | 'pending')}
+                      onChange={(e) => setStatusFilter(e.target.value as 'all' | 'paid' | 'pending' | 'redeemed' | 'unredeemed')}
                       className="w-full px-4 py-2 bg-graphite/80 border border-gold/30 rounded-lg text-white appearance-none cursor-pointer focus:outline-none focus:border-gold/50 transition-all duration-300"
                     >
                       <option value="all">Todos</option>
+                      <option value="unredeemed">Não utilizados</option>
+                      <option value="redeemed">Utilizados</option>
                       <option value="paid">Pagos</option>
                       <option value="pending">Pendentes</option>
                     </select>
@@ -586,7 +777,12 @@ export default function AdminDashboard() {
                     )}
                     {statusFilter !== 'all' && (
                       <span className="px-2 py-1 bg-gold/20 border border-gold/30 rounded-lg text-gold text-xs">
-                        Status: {statusFilter === 'paid' ? 'Pagos' : 'Pendentes'}
+                        Status: {
+                          statusFilter === 'paid' ? 'Pagos' :
+                          statusFilter === 'pending' ? 'Pendentes' :
+                          statusFilter === 'redeemed' ? 'Utilizados' :
+                          'Não utilizados'
+                        }
                       </span>
                     )}
                     {dateRange !== 'all' && (
@@ -626,7 +822,7 @@ export default function AdminDashboard() {
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                           <h3 className="text-lg font-semibold text-white">{giftCard.name}</h3>
-                          {getStatusBadge(giftCard.paid, giftCard.cancelled)}
+                          {getStatusBadge(giftCard.paid, giftCard.cancelled, giftCard.redeemed)}
                         </div>
                         <p className="text-sm text-grayMedium">Para: {giftCard.giftName || 'Não especificado'}</p>
                       </div>
@@ -691,6 +887,35 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                   </div>
+
+                  {/* Uso do gift card */}
+                  {!giftCard.cancelled && (
+                    giftCard.redeemed ? (
+                      <div className="mt-4 flex items-center justify-between rounded-lg border border-gold/30 bg-gold/10 px-3 py-2">
+                        <span className="text-xs text-gold">
+                          Utilizado em{' '}
+                          {giftCard.redeemedAt
+                            ? new Date(giftCard.redeemedAt).toLocaleDateString('pt-BR')
+                            : '—'}
+                        </span>
+                        <button
+                          onClick={() => handleUndoRedeem(giftCard)}
+                          className="text-xs text-grayMedium underline transition-colors hover:text-gold"
+                          title="Desfazer marcação de uso"
+                        >
+                          Desfazer
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => openRedeemModal(giftCard)}
+                        className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-gold/40 px-3 py-2 text-sm font-medium text-gold transition-all duration-300 hover:border-gold hover:bg-gold/10"
+                      >
+                        <FaCheckCircle className="text-xs" />
+                        Marcar como utilizado
+                      </button>
+                    )
+                  )}
 
                   {/* Expanded Details */}
                   {expandedCards.has(giftCard.id) && (

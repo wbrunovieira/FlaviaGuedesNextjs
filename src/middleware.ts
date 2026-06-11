@@ -55,5 +55,6 @@ export const config = {
     '/adm/dashboard/:path*',
     '/api/adm-get-giftcards',
     '/api/adm-delete-giftcard',
+    '/api/adm-redeem-giftcard',
   ],
 };
