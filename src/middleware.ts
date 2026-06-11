@@ -9,6 +9,21 @@ import {
 } from '@/lib/admin-auth';
 
 export async function middleware(request: NextRequest) {
+  // card.flaviaguedes.com serves the digital business card
+  const host = request.headers.get('host') ?? '';
+  if (host.startsWith('card.')) {
+    if (request.nextUrl.pathname === '/') {
+      return NextResponse.rewrite(
+        new URL('/card', request.url)
+      );
+    }
+    return NextResponse.next();
+  }
+
+  if (request.nextUrl.pathname === '/') {
+    return NextResponse.next();
+  }
+
   const token = request.cookies.get(
     ADMIN_SESSION_COOKIE
   )?.value;
@@ -36,6 +51,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    '/',
     '/adm/dashboard/:path*',
     '/api/adm-get-giftcards',
     '/api/adm-delete-giftcard',
