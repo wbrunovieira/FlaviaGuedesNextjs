@@ -4,77 +4,70 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Next.js 15 application for Flávia Guedes, featuring a multi-language e-commerce site with gift card purchasing functionality. The application uses TypeScript, Tailwind CSS, and integrates with Stripe for payments and Firebase for authentication.
+Next.js 15 (App Router) site for Flávia Guedes' hair salon: a multi-language marketing site with gift card purchasing. TypeScript, Tailwind CSS, Stripe and Square payments, dual persistence (PostgreSQL via Prisma + Firebase Firestore).
 
 ## Development Commands
 
+The project uses **pnpm** (`pnpm-lock.yaml` is committed — do not use npm/yarn).
+
 ```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Build for production (includes Prisma generation)
-npm run build
-
-# Start production server
-npm run start
-
-# Run linting
-npm run lint
-
-# Generate Prisma client
-npx prisma generate
-
-# Run Prisma migrations
-npx prisma migrate dev
-
-# Open Prisma Studio
-npx prisma studio
+pnpm install              # Install dependencies
+pnpm dev                  # Run development server
+pnpm build                # Production build (runs `prisma generate` first)
+pnpm lint                 # ESLint via next lint
+npx prisma generate       # Regenerate Prisma client
+npx prisma migrate dev    # Run migrations
+npx prisma studio         # Inspect the database
+ANALYZE=true pnpm build   # Bundle analysis (@next/bundle-analyzer)
 ```
 
-## Architecture and Project Structure
+There is no test suite configured.
 
-### Core Technologies
-- **Framework**: Next.js 15 with App Router
-- **Language**: TypeScript with strict mode
-- **Styling**: Tailwind CSS with custom theme colors (gold, graphite, grayMedium)
-- **Database**: PostgreSQL with Prisma ORM
-- **Payments**: Stripe integration
-- **Authentication**: Firebase Auth
-- **Internationalization**: next-intl with 'en' and 'pt' locales
-- **Animations**: GSAP and Framer Motion
+## Architecture
 
-### Directory Structure
-- `src/app/`: Next.js app router pages and API routes
-  - `[locale]/`: Internationalized pages (success, cancel)
-  - `adm/`: Admin dashboard
-  - `api/`: API endpoints for gift cards and Stripe checkout
-- `src/components/`: React components (Hero, Gallery, About, etc.)
-  - `ui/`: Reusable UI components
-- `src/i18n/`: Internationalization configuration
-- `messages/`: Translation JSON files for each locale
-- `prisma/`: Database schema and migrations
+### Routing and Internationalization
 
-### Key Patterns
+- next-intl with locales `en` and `pt` (`src/i18n/routing.ts`, messages in `messages/{en,pt}.json`), `localePrefix: 'always'`.
+- **There is no middleware.ts.** Locale detection happens in `src/app/page.tsx`, which parses the `Accept-Language` header and redirects to `/{locale}`.
+- User-facing pages live under `src/app/[locale]/` (home, `success`, `cancel` for payment outcomes).
+- The admin area `src/app/adm/` sits **outside** the `[locale]` segment and is not internationalized. Login (`adm/page.tsx`) is client-side only: it compares against `NEXT_PUBLIC_ADMIN_EMAIL`/`NEXT_PUBLIC_ADMIN_PASSWORD` and sets `localStorage['admin-auth']` before routing to `adm/dashboard`.
 
-1. **Internationalization**: All user-facing pages use the `[locale]` dynamic segment pattern with next-intl
-2. **API Routes**: Located in `src/app/api/` following Next.js App Router conventions
-3. **Database**: Uses Prisma with PostgreSQL, GiftCard model for tracking purchases
-4. **Styling**: Tailwind CSS with custom theme configuration, uses CSS-in-JS for complex animations
-5. **Path Aliases**: Uses `@/*` to reference `src/*` directory
+### Payments (gift cards)
 
-### Environment Variables Required
-- `POSTGRES_URL`: PostgreSQL connection string
-- Firebase configuration variables
-- Stripe API keys
+Two gateways coexist; Square is the one currently in use (see `docs/sqaure.md`):
 
-### Important Notes
-- The build process requires Prisma client generation before Next.js build
-- Application supports English and Portuguese languages with automatic locale detection
-- Custom color scheme: background (#0A0A0A), foreground (#EDEDED), gold (#C8A04B)
-- Uses Work Sans and Merriweather fonts
+- **Stripe**: `api/create-checkout-session` (Checkout redirect flow), client uses `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`.
+- **Square**: `api/create-square-payment`, `api/create-square-payment-direct`, `api/get-square-payment`, `api/test-square`. Sandbox vs production credentials are switched at runtime (sandbox vars are the `*_SANDBOX_*` ones). Square sandbox test cards are listed in `docs/sqaure.md`.
+- Three purchase component variants in `src/components/`: `GiftCardPurchaseSimple`, `GiftCardPurchaseMultiPayment`, `GiftCardPurchaseSquare`.
+
+### Dual Database
+
+Gift card purchases are written to **both** stores; changes to gift card persistence must keep them in sync:
+
+- PostgreSQL via Prisma — single `GiftCard` model in `prisma/schema.prisma` (keyed by `stripeSessionId`).
+- Firebase Firestore — helpers exported from `firebase-config.ts` at the **repo root** (not in `src/`).
+
+Other API routes: `api/get-giftcard`, `api/adm-get-giftcards` (admin dashboard), `api/save-payment`.
+
+### Conventions
+
+- Path alias `@/*` → `src/*`.
+- Tailwind custom theme colors: background `#0A0A0A`, foreground `#EDEDED`, gold `#C8A04B`, graphite `#1E1E1E`, grayMedium `#B0B0B0`. Fonts: Work Sans and Merriweather.
+- Animations use GSAP, Framer Motion, and tsparticles; UI primitives in `src/components/ui/` (Radix-based, cva/clsx/tailwind-merge).
+
+### Environment Variables
+
+- `POSTGRES_URL` — Prisma/PostgreSQL connection
+- `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_PROJECT_ID`, `FIREBASE_STORAGE_BUCKET`, `FIREBASE_MESSAGING_SENDER_ID`, `FIREBASE_APP_ID`, `FIREBASE_MEASUREMENT_ID`
+- `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+- `SQUARE_ACCESS_TOKEN`, `SQUARE_LOCATION_ID`, `NEXT_PUBLIC_SQUARE_APPLICATION_ID`, `NEXT_PUBLIC_SQUARE_LOCATION_ID`; sandbox: `SQUARE_SANDBOX_ACCESS_TOKEN`, `NEXT_PUBLIC_SQUARE_SANDBOX_APPLICATION_ID`
+- `NEXT_PUBLIC_ADMIN_EMAIL`, `NEXT_PUBLIC_ADMIN_PASSWORD` — admin login
+- `BASE_URL` — used for payment redirect URLs
+
+### Reference Docs
+
+- `docs/stripe.md` and `docs/sqaure.md` (note the typo in the filename): payment gateway setup notes and Square sandbox test cards (in Portuguese)
+- `servicos.md`: salon service list
 
 ## Git Commit Rules
 
@@ -117,15 +110,6 @@ git commit -m "refactor: simplify payment logic"
 4. **Be specific** (not "fix bug" or "update files")
 5. **NEVER add automatic attributions or metadata**
 6. **NEVER use HEREDOC or complex formatting**
-
-### Examples:
-```bash
-git commit -m "feat: add password recovery"
-git commit -m "fix: prevent form double submission"
-git commit -m "refactor: extract shared modal logic"
-git commit -m "style: improve button spacing"
-git commit -m "docs: update setup instructions"
-```
 
 ### IMPORTANT: GitHub Trigger
 **When the user types "github"**: EXECUTE a git commit immediately with the recent changes, don't explain the rules. Just run:

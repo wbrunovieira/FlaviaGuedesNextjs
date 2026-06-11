@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,6 +22,7 @@ import {
   FaArrowUp,
   FaSearch,
   FaFilter,
+  FaTrash,
   FaSortAmountDown,
   FaSortAmountUp
 } from 'react-icons/fa';
@@ -61,7 +63,36 @@ export default function AdminDashboard() {
   const [dateRange, setDateRange] = useState<'all' | 'today' | 'week' | 'month'>('all');
   const [paymentTypeFilter, setPaymentTypeFilter] = useState<'all' | 'card' | 'other'>('all');
 
+  // Delete states
+  const [confirmTarget, setConfirmTarget] = useState<GiftCard | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
   const router = useRouter();
+
+  const showToast = (type: 'success' | 'error', message: string) => {
+    setToast({ type, message });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!confirmTarget) return;
+    const target = confirmTarget;
+    setConfirmTarget(null);
+    setDeletingId(target.id);
+    try {
+      const response = await fetch(`/api/adm-delete-giftcard?id=${target.id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Failed to delete gift card');
+      setGiftCards(prev => prev.filter(card => card.id !== target.id));
+      showToast('success', `Transação de ${target.name} excluída com sucesso`);
+    } catch {
+      showToast('error', 'Erro ao excluir a transação. Tente novamente.');
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('admin-auth');
@@ -187,6 +218,70 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-graphite to-background">
+      {/* Toasts */}
+      <div className="fixed top-4 right-4 z-50 flex flex-col gap-3 w-[calc(100%-2rem)] max-w-sm">
+        <AnimatePresence>
+          {confirmTarget && (
+            <motion.div
+              key="confirm-toast"
+              initial={{ opacity: 0, y: -16, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -16, scale: 0.96 }}
+              transition={{ duration: 0.2 }}
+              className="bg-graphite/95 backdrop-blur-md border border-red-500/40 rounded-xl shadow-2xl shadow-red-500/10 p-4"
+            >
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-red-500/20 rounded-lg shrink-0">
+                  <FaTrash className="text-red-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-white">Excluir transação?</p>
+                  <p className="text-xs text-grayMedium mt-1 truncate">
+                    {confirmTarget.name} — ${(confirmTarget.amount / 100).toFixed(2)}
+                  </p>
+                  <p className="text-xs text-red-400/80 mt-1">Essa ação não pode ser desfeita.</p>
+                  <div className="flex gap-2 mt-3">
+                    <button
+                      onClick={handleConfirmDelete}
+                      className="px-3 py-1.5 bg-red-500/90 hover:bg-red-500 rounded-lg text-white text-xs font-medium transition-colors"
+                    >
+                      Excluir
+                    </button>
+                    <button
+                      onClick={() => setConfirmTarget(null)}
+                      className="px-3 py-1.5 bg-transparent hover:bg-gold/10 border border-gold/30 rounded-lg text-gold text-xs font-medium transition-colors"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+          {toast && (
+            <motion.div
+              key="result-toast"
+              initial={{ opacity: 0, y: -16, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -16, scale: 0.96 }}
+              transition={{ duration: 0.2 }}
+              className={`bg-graphite/95 backdrop-blur-md border rounded-xl shadow-2xl p-4 flex items-center gap-3 ${
+                toast.type === 'success'
+                  ? 'border-green-500/40 shadow-green-500/10'
+                  : 'border-red-500/40 shadow-red-500/10'
+              }`}
+            >
+              {toast.type === 'success' ? (
+                <FaCheckCircle className="text-green-400 shrink-0" />
+              ) : (
+                <FaExclamationTriangle className="text-red-400 shrink-0" />
+              )}
+              <p className="text-sm text-white">{toast.message}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
       {/* Animated background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-gold rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
@@ -475,16 +570,30 @@ export default function AdminDashboard() {
                         <p className="text-sm text-grayMedium">Para: {giftCard.giftName || 'Não especificado'}</p>
                       </div>
                     </div>
-                    <button
-                      onClick={() => toggleCardExpansion(giftCard.id)}
-                      className="p-2 hover:bg-gold/20 rounded-lg transition-colors"
-                    >
-                      {expandedCards.has(giftCard.id) ? (
-                        <HiChevronUp className="text-xl text-gold" />
-                      ) : (
-                        <HiChevronDown className="text-xl text-gold" />
-                      )}
-                    </button>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => setConfirmTarget(giftCard)}
+                        disabled={deletingId === giftCard.id}
+                        title="Excluir transação"
+                        className="p-2 hover:bg-red-500/20 rounded-lg transition-colors group disabled:opacity-50"
+                      >
+                        {deletingId === giftCard.id ? (
+                          <FaSpinner className="text-lg text-red-400 animate-spin" />
+                        ) : (
+                          <FaTrash className="text-lg text-red-400/60 group-hover:text-red-400 transition-colors" />
+                        )}
+                      </button>
+                      <button
+                        onClick={() => toggleCardExpansion(giftCard.id)}
+                        className="p-2 hover:bg-gold/20 rounded-lg transition-colors"
+                      >
+                        {expandedCards.has(giftCard.id) ? (
+                          <HiChevronUp className="text-xl text-gold" />
+                        ) : (
+                          <HiChevronDown className="text-xl text-gold" />
+                        )}
+                      </button>
+                    </div>
                   </div>
 
                   {/* Main Info */}
