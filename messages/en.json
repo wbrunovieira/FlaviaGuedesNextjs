@@ -146,7 +146,9 @@
     "email": "guedesflavia@yahoo.com",
     "instagram": "@flaviaguedesstylist",
     "tiktok": "@guedesflavia6",
-    "copyright": "WB Digital Solutions. All rights reserved."
+    "rightsReserved": "All rights reserved.",
+    "developedWith": "Developed with",
+    "by": "by"
   },
 "GiftCard": {
     "title": "Purchase Gift Card",
