@@ -107,7 +107,7 @@ export default function About({
         <div className="w-full md:w-1/2 flex justify-center md:justify-start">
           <div className="relative w-full h-[350px] md:h-[500px] max-w-md bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
             <Image
-              src="/images/flavia2.webp"
+              src="/images/flavia.webp"
               alt="Flavia Guedes"
               width={600}
               height={800}

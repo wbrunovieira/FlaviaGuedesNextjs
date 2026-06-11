@@ -172,12 +172,12 @@ export default function DigitalCard() {
         <header className="text-center">
           <div className="mx-auto h-32 w-32 rounded-full bg-gradient-to-br from-gold via-yellow-700 to-gold p-[3px] shadow-lg shadow-gold/25">
             <Image
-              src="/images/flavia2.webp"
+              src="/images/flavia.webp"
               alt="Flavia Guedes"
               width={256}
               height={256}
               priority
-              className="h-full w-full rounded-full bg-black object-cover object-top"
+              className="h-full w-full rounded-full bg-black object-cover object-[50%_22%]"
             />
           </div>
           <Image

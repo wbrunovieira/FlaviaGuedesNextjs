@@ -36,7 +36,7 @@ const MemoizedSlide = memo(function MemoizedSlide({
 });
 
 const images: string[] = [
-  '/images/flavia2.webp',
+  '/images/flavia.webp',
   '/images/hair1.png',
   '/images/hair2.png',
   '/images/ifierce2.png',
