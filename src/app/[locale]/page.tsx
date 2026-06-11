@@ -21,7 +21,7 @@ export default function Index() {
       <HashScrollFix />
       <div className="bg-atmosphere" aria-hidden />
       <div className="grain-overlay" aria-hidden />
-      <div className="relative z-10">
+      <main className="relative z-10">
         <Nav />
         <Hero />
         <SectionReveal>
@@ -49,7 +49,7 @@ export default function Index() {
           <Promotions />
         </SectionReveal>
         <Footer />
-      </div>
+      </main>
     </div>
   );
 }

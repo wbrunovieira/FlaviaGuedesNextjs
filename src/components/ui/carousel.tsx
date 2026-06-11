@@ -128,6 +128,7 @@ export function Carousel({ slides }: CarouselProps) {
       <div className="flex justify-center space-x-4 mt-4 md:hidden">
         <button
           onClick={handlePrev}
+          aria-label="Previous product"
           className="w-10 h-10 flex items-center justify-center bg-neutral-200 border-3 border-transparent rounded-full focus:border-[#6D64F7] focus:outline-none hover:-translate-y-0.5 active:translate-y-0.5 transition duration-200"
         >
           <IconArrowNarrowRight className="text-neutral-600 rotate-180" />
@@ -135,6 +136,7 @@ export function Carousel({ slides }: CarouselProps) {
 
         <button
           onClick={handleNext}
+          aria-label="Next product"
           className="w-10 h-10 flex items-center justify-center bg-neutral-200 border-3 border-transparent rounded-full focus:border-[#6D64F7] focus:outline-none hover:-translate-y-0.5 active:translate-y-0.5 transition duration-200"
         >
           <IconArrowNarrowRight className="text-neutral-600" />
