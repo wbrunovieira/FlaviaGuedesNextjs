@@ -76,8 +76,10 @@ export default function Hero() {
           <SparklesHero />
         </div>
 
-        <div className="flex items-start md:justify-start gap-0 md:gap-2 mt-4 w-full p-2 sm:p-4">
-          <GiHairStrands className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-gold flex-shrink-0" />{' '}
+        <div className="flex items-start md:justify-start gap-3 mt-4 w-full p-2 sm:p-4">
+          <span className="flex h-11 w-11 sm:h-12 sm:w-12 md:h-14 md:w-14 shrink-0 items-center justify-center rounded-xl border border-gold/30 bg-gold/10 p-2 sm:p-2.5">
+            <GiHairStrands className="h-full w-full text-gold" />
+          </span>
           <p className="text-base sm:text-lg md:text-lg text-gray-300 break-words whitespace-normal md:w-1/2">
             {t('description')}
           </p>
