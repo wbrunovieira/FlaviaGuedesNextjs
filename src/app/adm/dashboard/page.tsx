@@ -84,6 +84,10 @@ export default function AdminDashboard() {
       const response = await fetch(`/api/adm-delete-giftcard?id=${target.id}`, {
         method: 'DELETE',
       });
+      if (response.status === 401) {
+        router.push('/adm');
+        return;
+      }
       if (!response.ok) throw new Error('Failed to delete gift card');
       setGiftCards(prev => prev.filter(card => card.id !== target.id));
       showToast('success', `Transação de ${target.name} excluída com sucesso`);
@@ -94,17 +98,22 @@ export default function AdminDashboard() {
     }
   };
 
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem('admin-auth');
-    if (!isAuthenticated) {
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/adm-logout', { method: 'POST' });
+    } finally {
       router.push('/adm');
     }
-  }, [router]);
+  };
 
   useEffect(() => {
     const fetchGiftCards = async () => {
       try {
         const response = await fetch('/api/adm-get-giftcards');
+        if (response.status === 401) {
+          router.push('/adm');
+          return;
+        }
         if (!response.ok) throw new Error('Failed to fetch gift cards');
         const data = await response.json();
         data.sort((a: GiftCard, b: GiftCard) =>
@@ -123,7 +132,7 @@ export default function AdminDashboard() {
       }
     };
     fetchGiftCards();
-  }, []);
+  }, [router]);
 
   // Filter logic
   useEffect(() => {
@@ -295,7 +304,7 @@ export default function AdminDashboard() {
           {/* Mobile: Logout button at top */}
           <div className="sm:hidden flex justify-end mb-4">
             <Button
-              onClick={() => router.push('/adm')}
+              onClick={handleLogout}
               className="bg-gradient-to-r from-graphite to-gray-800 hover:from-gray-800 hover:to-gray-900 text-gold border border-gold/30 shadow-lg transition-all duration-300 hover:shadow-gold/25 flex items-center gap-2"
             >
               <FaSignOutAlt />
@@ -318,7 +327,7 @@ export default function AdminDashboard() {
             </div>
             {/* Desktop: Logout button inline */}
             <Button
-              onClick={() => router.push('/adm')}
+              onClick={handleLogout}
               className="hidden sm:flex bg-gradient-to-r from-graphite to-gray-800 hover:from-gray-800 hover:to-gray-900 text-gold border border-gold/30 shadow-lg transition-all duration-300 hover:shadow-gold/25 items-center gap-2"
             >
               <FaSignOutAlt />

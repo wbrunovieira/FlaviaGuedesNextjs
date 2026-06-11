@@ -28,9 +28,9 @@ There is no test suite configured.
 ### Routing and Internationalization
 
 - next-intl with locales `en` and `pt` (`src/i18n/routing.ts`, messages in `messages/{en,pt}.json`), `localePrefix: 'always'`.
-- **There is no middleware.ts.** Locale detection happens in `src/app/page.tsx`, which parses the `Accept-Language` header and redirects to `/{locale}`.
+- Locale detection happens in `src/app/page.tsx`, which parses the `Accept-Language` header and redirects to `/{locale}`. `src/middleware.ts` exists but only guards admin routes — it plays no part in i18n.
 - User-facing pages live under `src/app/[locale]/` (home, `success`, `cancel` for payment outcomes).
-- The admin area `src/app/adm/` sits **outside** the `[locale]` segment and is not internationalized. Login (`adm/page.tsx`) is client-side only: it compares against `NEXT_PUBLIC_ADMIN_EMAIL`/`NEXT_PUBLIC_ADMIN_PASSWORD` and sets `localStorage['admin-auth']` before routing to `adm/dashboard`.
+- The admin area `src/app/adm/` sits **outside** the `[locale]` segment and is not internationalized. Login posts to `api/adm-login`, which validates `ADMIN_EMAIL`/`ADMIN_PASSWORD` server-side and sets an HMAC-signed `httpOnly` cookie (helpers in `src/lib/admin-auth.ts`, 8h expiry). `src/middleware.ts` verifies that cookie for `/adm/dashboard` and the admin API routes (scoped matcher — it must not touch public/i18n routes).
 
 ### Payments (gift cards)
 
@@ -61,7 +61,7 @@ Other API routes: `api/get-giftcard`, `api/adm-get-giftcards` (admin dashboard),
 - `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_PROJECT_ID`, `FIREBASE_STORAGE_BUCKET`, `FIREBASE_MESSAGING_SENDER_ID`, `FIREBASE_APP_ID`, `FIREBASE_MEASUREMENT_ID`
 - `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
 - `SQUARE_ACCESS_TOKEN`, `SQUARE_LOCATION_ID`, `NEXT_PUBLIC_SQUARE_APPLICATION_ID`, `NEXT_PUBLIC_SQUARE_LOCATION_ID`; sandbox: `SQUARE_SANDBOX_ACCESS_TOKEN`, `NEXT_PUBLIC_SQUARE_SANDBOX_APPLICATION_ID`
-- `NEXT_PUBLIC_ADMIN_EMAIL`, `NEXT_PUBLIC_ADMIN_PASSWORD` — admin login
+- `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET` — admin login (server-side only)
 - `BASE_URL` — used for payment redirect URLs
 
 ### Reference Docs

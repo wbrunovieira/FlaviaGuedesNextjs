@@ -11,22 +11,29 @@ export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
-    const ADMIN_PASSWORD =
-      process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+    setError('');
+    setLoading(true);
+    try {
+      const response = await fetch('/api/adm-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (
-      email === ADMIN_EMAIL &&
-      password === ADMIN_PASSWORD
-    ) {
-      localStorage.setItem('admin-auth', 'true');
-      router.push('/adm/dashboard');
-    } else {
-      setError('Invalid email or password');
+      if (response.ok) {
+        router.push('/adm/dashboard');
+      } else {
+        setError('Invalid email or password');
+      }
+    } catch {
+      setError('Login failed. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,9 +71,10 @@ export default function AdminLogin() {
             )}
             <Button
               type="submit"
-              className="w-full bg-black hover:bg-gray-800"
+              disabled={loading}
+              className="w-full bg-black hover:bg-gray-800 disabled:opacity-60"
             >
-              Login
+              {loading ? 'Signing in...' : 'Login'}
             </Button>
           </form>
         </CardContent>
