@@ -147,7 +147,7 @@ const ServiceSection: React.FC<ServiceSectionProps> = ({
                   {category.name}
                 </span>
               </div>
-              <div className="ml-48 w-1/2 items-center justify-center -mt-4">
+              <div className="mx-auto w-full max-w-md -mt-4">
                 <SparklesHero />
               </div>
               <div className="flex flex-wrap justify-center items-stretch gap-5 mt-8">

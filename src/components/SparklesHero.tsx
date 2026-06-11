@@ -6,10 +6,10 @@ export function SparklesHero() {
   return (
     <div className="h-[3rem] w-full flex flex-col items-center justify-center overflow-hidden mt-2">
       <div className="w-[40rem] max-w-full h-40 relative">
-        <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-gold to-transparent h-[2px] w-3/4 blur-sm" />
-        <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-gold to-transparent h-px w-3/4" />
-        <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-gold to-transparent h-[5px] w-1/4 blur-sm" />
-        <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-gold to-transparent h-px w-1/4" />
+        <div className="absolute left-[12.5%] top-0 bg-gradient-to-r from-transparent via-gold to-transparent h-[2px] w-3/4 blur-sm" />
+        <div className="absolute left-[12.5%] top-0 bg-gradient-to-r from-transparent via-gold to-transparent h-px w-3/4" />
+        <div className="absolute left-[37.5%] top-0 bg-gradient-to-r from-transparent via-gold to-transparent h-[5px] w-1/4 blur-sm" />
+        <div className="absolute left-[37.5%] top-0 bg-gradient-to-r from-transparent via-gold to-transparent h-px w-1/4" />
 
         {/* Partículas com fade nas bordas via máscara — sem fundo sólido,
             fica transparente sobre qualquer cor de fundo */}
