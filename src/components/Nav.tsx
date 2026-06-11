@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRef, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
@@ -18,6 +19,8 @@ export default function Nav() {
   const t = useTranslations('Nav');
   const locale = useLocale();
   const alternateLocale = locale === 'pt' ? 'en' : 'pt';
+  const pathname = usePathname();
+  const isStoryPage = pathname?.endsWith('/about') ?? false;
 
   const navContainer = useRef<HTMLElement>(null);
   const menuItemsRef = useRef<HTMLLIElement[]>([]);
@@ -32,9 +35,10 @@ export default function Nav() {
     const onScroll = () => {
       setScrolled(window.scrollY > 24);
       // The "top" anchor lives on the fixed nav itself, so the
-      // IntersectionObserver never sees it — detect it by scroll position
+      // IntersectionObserver never sees it — detect it by scroll position.
+      // On the story page, "Sobre" stays highlighted instead.
       if (window.scrollY < 300) {
-        setActiveSection('top');
+        setActiveSection(isStoryPage ? 'about' : 'top');
       }
     };
     onScroll();
@@ -43,7 +47,7 @@ export default function Nav() {
     });
     return () =>
       window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [isStoryPage]);
 
   useEffect(() => {
     const ids = [
@@ -170,7 +174,7 @@ export default function Nav() {
       />
       <div className="container mx-auto flex justify-between items-center w-full">
         <Link
-          href="#top"
+          href={`/${locale}#top`}
           className="hover:scale-105 transition duration-200"
           aria-label={t('logoAria')}
         >
@@ -198,7 +202,7 @@ export default function Nav() {
               className="hover:text-gold transition duration-200 text-sm"
             >
               <Link
-                href={item.href}
+                href={`/${locale}${item.href}`}
                 className={`cursor-pointer nav-link ${
                   activeSection === item.href.slice(1)
                     ? 'text-gold nav-link-active'
@@ -266,7 +270,7 @@ export default function Nav() {
                 className="hover:text-gold transition duration-200 text-right"
               >
                 <Link
-                  href={item.href}
+                  href={`/${locale}${item.href}`}
                   onClick={handleMobileMenuClose}
                   className="cursor-pointer block"
                 >

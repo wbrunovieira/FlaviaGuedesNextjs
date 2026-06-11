@@ -1,12 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
-import { useTranslations, useLocale } from 'next-intl';
-import {
-  FaRegCalendarCheck,
-  FaArrowLeft,
-} from 'react-icons/fa';
+import { useTranslations } from 'next-intl';
+import { FaRegCalendarCheck } from 'react-icons/fa';
+import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import SectionReveal from '@/components/ui/SectionReveal';
 
@@ -15,7 +12,6 @@ const BOOKING_URL =
 
 export default function AboutStoryPage() {
   const t = useTranslations('AboutPage');
-  const locale = useLocale();
 
   const storyBeforeQuote = [t('p1'), t('p2')];
   const storyAfterQuote = [
@@ -34,37 +30,9 @@ export default function AboutStoryPage() {
       <div className="grain-overlay" aria-hidden />
 
       <main className="relative z-10">
-        {/* Barra superior */}
-        <header className="container mx-auto flex items-center justify-between px-6 py-5">
-          <Link
-            href={`/${locale}#about`}
-            className="inline-flex items-center gap-2 text-sm text-grayMedium transition-colors duration-300 hover:text-gold"
-          >
-            <FaArrowLeft className="text-xs" />
-            {t('back')}
-          </Link>
-          <Link href={`/${locale}`} aria-label="Flavia Guedes">
-            <Image
-              src="/images/flavia-logo.svg"
-              alt="Flavia Guedes — Hair Studio"
-              width={174}
-              height={60}
-              priority
-              className="h-12 w-auto"
-            />
-          </Link>
-          <a
-            href={BOOKING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2 text-sm font-semibold text-background shadow-lg shadow-gold/20 transition-all duration-300 hover:bg-opacity-90"
-          >
-            <FaRegCalendarCheck className="text-sm" />
-            {t('guestsCta')}
-          </a>
-        </header>
+        <Nav />
 
-        <article className="mx-auto max-w-2xl px-6 pb-20 pt-10">
+        <article className="mx-auto max-w-2xl px-6 pb-20 pt-28 md:pt-32">
           {/* Hero */}
           <SectionReveal>
             <header className="text-center">
