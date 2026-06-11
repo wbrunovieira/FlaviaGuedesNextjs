@@ -26,7 +26,7 @@ import {
   FaSortAmountDown,
   FaSortAmountUp
 } from 'react-icons/fa';
-import { MdCreditCard, MdPayment } from 'react-icons/md';
+import { MdPayment } from 'react-icons/md';
 import { HiSparkles, HiChevronDown, HiChevronUp } from 'react-icons/hi';
 import { BsCreditCard2Back } from 'react-icons/bs';
 import { RiVipCrownFill } from 'react-icons/ri';
@@ -61,7 +61,6 @@ export default function AdminDashboard() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [statusFilter, setStatusFilter] = useState<'all' | 'paid' | 'pending'>('all');
   const [dateRange, setDateRange] = useState<'all' | 'today' | 'week' | 'month'>('all');
-  const [paymentTypeFilter, setPaymentTypeFilter] = useState<'all' | 'card' | 'other'>('all');
 
   // Delete states
   const [confirmTarget, setConfirmTarget] = useState<GiftCard | null>(null);
@@ -169,13 +168,6 @@ export default function AdminDashboard() {
       filtered = filtered.filter(card => new Date(card.createdAt) >= monthAgo);
     }
 
-    // Payment type filter
-    if (paymentTypeFilter === 'card') {
-      filtered = filtered.filter(card => card.paymentMethod === 'CARD');
-    } else if (paymentTypeFilter === 'other') {
-      filtered = filtered.filter(card => card.paymentMethod && card.paymentMethod !== 'CARD');
-    }
-
     // Sort
     filtered.sort((a, b) => {
       const dateA = new Date(a.createdAt).getTime();
@@ -184,7 +176,7 @@ export default function AdminDashboard() {
     });
 
     setFilteredCards(filtered);
-  }, [giftCards, searchTerm, sortOrder, statusFilter, dateRange, paymentTypeFilter]);
+  }, [giftCards, searchTerm, sortOrder, statusFilter, dateRange]);
 
   const toggleCardExpansion = (id: string) => {
     const newExpanded = new Set(expandedCards);
@@ -381,34 +373,49 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
 
-          {/* Card 3 - Pagos */}
+          {/* Card 3 - Vendas este mês */}
           <Card className="bg-gradient-to-br from-gold/80 to-yellow-700 border-0 shadow-xl hover:shadow-2xl hover:shadow-gold/30 transition-all duration-300 hover:scale-105">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-yellow-100 text-sm font-medium">Pagos</p>
+                  <p className="text-yellow-100 text-sm font-medium">Vendas este Mês</p>
                   <p className="text-3xl font-bold text-white mt-2">
-                    {giftCards.filter(card => card.paid).length}
+                    {(() => {
+                      const now = new Date();
+                      const monthTotal = giftCards
+                        .filter(card => {
+                          const d = new Date(card.createdAt);
+                          return (
+                            d.getMonth() === now.getMonth() &&
+                            d.getFullYear() === now.getFullYear()
+                          );
+                        })
+                        .reduce((sum, card) => sum + card.amount / 100, 0);
+                      return `$${monthTotal.toFixed(2)}`;
+                    })()}
                   </p>
-                  <p className="text-yellow-200/70 text-xs mt-1">Confirmados</p>
+                  <p className="text-yellow-200/70 text-xs mt-1">Em gift cards</p>
                 </div>
                 <FaCheckCircle className="text-4xl text-yellow-200 opacity-70" />
               </div>
             </CardContent>
           </Card>
 
-          {/* Card 4 - Taxa de Conversão */}
+          {/* Card 4 - Ticket Médio */}
           <Card className="bg-gradient-to-br from-graphite to-gray-800 border border-gold/30 shadow-xl hover:shadow-2xl hover:shadow-gold/20 transition-all duration-300 hover:scale-105">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gold text-sm font-medium">Taxa de Conversão</p>
+                  <p className="text-gold text-sm font-medium">Ticket Médio</p>
                   <p className="text-3xl font-bold text-white mt-2">
                     {giftCards.length > 0
-                      ? Math.round((giftCards.filter(card => card.paid).length / giftCards.length) * 100)
-                      : 0}%
+                      ? `$${(
+                          giftCards.reduce((sum, card) => sum + card.amount / 100, 0) /
+                          giftCards.length
+                        ).toFixed(2)}`
+                      : '$0.00'}
                   </p>
-                  <p className="text-grayMedium text-xs mt-1">Sucesso</p>
+                  <p className="text-grayMedium text-xs mt-1">Por gift card</p>
                 </div>
                 <FaTrophy className="text-4xl text-gold opacity-50" />
               </div>
@@ -435,101 +442,126 @@ export default function AdminDashboard() {
         ) : (
           <div>
             {/* Search and Filters Section */}
-            <div className="mb-8 space-y-4">
-              {/* Search Bar */}
-              <div className="relative max-w-md">
-                <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gold/50" />
-                <input
-                  type="text"
-                  placeholder="Buscar por nome..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-graphite/80 backdrop-blur-md border border-gold/30 rounded-xl text-white placeholder-grayMedium focus:outline-none focus:border-gold/50 transition-all duration-300"
-                />
-              </div>
+            <div className="mb-8 rounded-xl border border-gold/15 bg-graphite/40 backdrop-blur-md p-4 sm:p-5 space-y-4">
+              <p className="flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-gold/60">
+                <FaFilter className="text-xs" />
+                Filtros
+              </p>
 
-              {/* Filters Row */}
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                {/* Sort Order */}
-                <div className="relative">
-                  <select
-                    value={sortOrder}
-                    onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
-                    className="w-full px-4 py-2 bg-graphite/80 backdrop-blur-md border border-gold/30 rounded-lg text-white appearance-none cursor-pointer focus:outline-none focus:border-gold/50 transition-all duration-300"
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 items-end">
+                {/* Busca */}
+                <div className="sm:col-span-2">
+                  <label
+                    htmlFor="filter-search"
+                    className="block mb-1.5 text-xs font-medium text-grayMedium"
                   >
-                    <option value="desc">Mais recente</option>
-                    <option value="asc">Mais antigo</option>
-                  </select>
-                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    {sortOrder === 'desc' ? (
-                      <FaSortAmountDown className="text-gold/50" />
-                    ) : (
-                      <FaSortAmountUp className="text-gold/50" />
-                    )}
+                    Buscar por nome
+                  </label>
+                  <div className="relative">
+                    <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gold/50" />
+                    <input
+                      id="filter-search"
+                      type="text"
+                      placeholder="Nome do comprador ou presenteado..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full pl-12 pr-4 py-2 bg-graphite/80 border border-gold/30 rounded-lg text-white placeholder-grayMedium focus:outline-none focus:border-gold/50 transition-all duration-300"
+                    />
                   </div>
                 </div>
 
-                {/* Status Filter */}
-                <div className="relative">
-                  <select
-                    value={statusFilter}
-                    onChange={(e) => setStatusFilter(e.target.value as 'all' | 'paid' | 'pending')}
-                    className="w-full px-4 py-2 bg-graphite/80 backdrop-blur-md border border-gold/30 rounded-lg text-white appearance-none cursor-pointer focus:outline-none focus:border-gold/50 transition-all duration-300"
+                {/* Ordenação */}
+                <div>
+                  <label
+                    htmlFor="filter-sort"
+                    className="block mb-1.5 text-xs font-medium text-grayMedium"
                   >
-                    <option value="all">Todos Status</option>
-                    <option value="paid">Pagos</option>
-                    <option value="pending">Pendentes</option>
-                  </select>
-                  <FaFilter className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-gold/50" />
+                    Ordenar por
+                  </label>
+                  <div className="relative">
+                    <select
+                      id="filter-sort"
+                      value={sortOrder}
+                      onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
+                      className="w-full px-4 py-2 bg-graphite/80 border border-gold/30 rounded-lg text-white appearance-none cursor-pointer focus:outline-none focus:border-gold/50 transition-all duration-300"
+                    >
+                      <option value="desc">Mais recente</option>
+                      <option value="asc">Mais antigo</option>
+                    </select>
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                      {sortOrder === 'desc' ? (
+                        <FaSortAmountDown className="text-gold/50" />
+                      ) : (
+                        <FaSortAmountUp className="text-gold/50" />
+                      )}
+                    </div>
+                  </div>
                 </div>
 
-                {/* Date Range Filter */}
-                <div className="relative">
-                  <select
-                    value={dateRange}
-                    onChange={(e) => setDateRange(e.target.value as 'all' | 'today' | 'week' | 'month')}
-                    className="w-full px-4 py-2 bg-graphite/80 backdrop-blur-md border border-gold/30 rounded-lg text-white appearance-none cursor-pointer focus:outline-none focus:border-gold/50 transition-all duration-300"
+                {/* Status */}
+                <div>
+                  <label
+                    htmlFor="filter-status"
+                    className="block mb-1.5 text-xs font-medium text-grayMedium"
                   >
-                    <option value="all">Todo Período</option>
-                    <option value="today">Hoje</option>
-                    <option value="week">Última Semana</option>
-                    <option value="month">Último Mês</option>
-                  </select>
-                  <FaCalendarAlt className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-gold/50" />
+                    Status
+                  </label>
+                  <div className="relative">
+                    <select
+                      id="filter-status"
+                      value={statusFilter}
+                      onChange={(e) => setStatusFilter(e.target.value as 'all' | 'paid' | 'pending')}
+                      className="w-full px-4 py-2 bg-graphite/80 border border-gold/30 rounded-lg text-white appearance-none cursor-pointer focus:outline-none focus:border-gold/50 transition-all duration-300"
+                    >
+                      <option value="all">Todos</option>
+                      <option value="paid">Pagos</option>
+                      <option value="pending">Pendentes</option>
+                    </select>
+                    <FaFilter className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-gold/50" />
+                  </div>
                 </div>
 
-                {/* Payment Type Filter */}
-                <div className="relative">
-                  <select
-                    value={paymentTypeFilter}
-                    onChange={(e) => setPaymentTypeFilter(e.target.value as 'all' | 'card' | 'other')}
-                    className="w-full px-4 py-2 bg-graphite/80 backdrop-blur-md border border-gold/30 rounded-lg text-white appearance-none cursor-pointer focus:outline-none focus:border-gold/50 transition-all duration-300"
+                {/* Período */}
+                <div>
+                  <label
+                    htmlFor="filter-period"
+                    className="block mb-1.5 text-xs font-medium text-grayMedium"
                   >
-                    <option value="all">Todos Pagamentos</option>
-                    <option value="card">Cartão</option>
-                    <option value="other">Outros</option>
-                  </select>
-                  <MdCreditCard className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-gold/50" />
+                    Período
+                  </label>
+                  <div className="relative">
+                    <select
+                      id="filter-period"
+                      value={dateRange}
+                      onChange={(e) => setDateRange(e.target.value as 'all' | 'today' | 'week' | 'month')}
+                      className="w-full px-4 py-2 bg-graphite/80 border border-gold/30 rounded-lg text-white appearance-none cursor-pointer focus:outline-none focus:border-gold/50 transition-all duration-300"
+                    >
+                      <option value="all">Todo Período</option>
+                      <option value="today">Hoje</option>
+                      <option value="week">Última Semana</option>
+                      <option value="month">Último Mês</option>
+                    </select>
+                    <FaCalendarAlt className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-gold/50" />
+                  </div>
                 </div>
 
-                {/* Clear Filters Button */}
+                {/* Limpar Filtros */}
                 <button
                   onClick={() => {
                     setSearchTerm('');
                     setSortOrder('desc');
                     setStatusFilter('all');
                     setDateRange('all');
-                    setPaymentTypeFilter('all');
                   }}
-                  className="px-4 py-2 bg-gold/20 hover:bg-gold/30 border border-gold/50 rounded-lg text-gold font-medium transition-all duration-300 flex items-center justify-center gap-2"
+                  className="px-4 py-2 bg-gold/20 hover:bg-gold/30 border border-gold/50 rounded-lg text-gold font-medium transition-all duration-300 flex items-center justify-center gap-2 whitespace-nowrap"
                 >
                   <FaTimesCircle />
-                  Limpar
+                  Limpar Filtros
                 </button>
               </div>
 
               {/* Active Filters Indicators */}
-              {(searchTerm || statusFilter !== 'all' || dateRange !== 'all' || paymentTypeFilter !== 'all') && (
+              {(searchTerm || statusFilter !== 'all' || dateRange !== 'all') && (
                 <div className="flex items-center gap-2 text-sm">
                   <span className="text-grayMedium">Filtros ativos:</span>
                   <div className="flex flex-wrap gap-2">
@@ -550,11 +582,6 @@ export default function AdminDashboard() {
                           dateRange === 'week' ? 'Última Semana' :
                           'Último Mês'
                         }
-                      </span>
-                    )}
-                    {paymentTypeFilter !== 'all' && (
-                      <span className="px-2 py-1 bg-gold/20 border border-gold/30 rounded-lg text-gold text-xs">
-                        Pagamento: {paymentTypeFilter === 'card' ? 'Cartão' : 'Outros'}
                       </span>
                     )}
                   </div>
