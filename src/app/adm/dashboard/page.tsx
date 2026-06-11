@@ -810,8 +810,17 @@ export default function AdminDashboard() {
             {paginatedCards.map(giftCard => (
               <Card
                 key={giftCard.id}
-                className="bg-graphite/80 backdrop-blur-md border border-gold/30 shadow-xl hover:shadow-2xl hover:border-gold/50 transition-all duration-300"
+                className={`relative overflow-hidden backdrop-blur-md shadow-xl transition-all duration-300 ${
+                  giftCard.redeemed
+                    ? 'bg-gold/[0.08] border-2 border-gold/70 shadow-gold/10 hover:shadow-gold/25'
+                    : 'bg-graphite/80 border border-gold/30 hover:shadow-2xl hover:border-gold/50'
+                }`}
               >
+                {giftCard.redeemed && (
+                  <div className="pointer-events-none absolute -left-12 top-6 -rotate-45 bg-gold px-12 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-background shadow-lg">
+                    Utilizado
+                  </div>
+                )}
                 <CardContent className="p-6">
                   {/* Header */}
                   <div className="flex items-start justify-between mb-4">
