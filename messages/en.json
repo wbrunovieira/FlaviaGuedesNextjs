@@ -197,6 +197,24 @@
           }
         }
       },
+      "keratin_treatment": {
+        "name": "Straightening & Smoothing Treatments",
+        "groups": {
+          "smoothing": {
+            "name": "Smoothing Treatments",
+            "items": {
+              "item_1": {
+                "name": "Keratin Treatment",
+                "price": "$325"
+              },
+              "item_2": {
+                "name": "Brazilian Blowout",
+                "price": "$195"
+              }
+            }
+          }
+        }
+      },
       "design_styling": {
         "name": "Design / Styling",
         "groups": {
@@ -216,8 +234,8 @@
                 "price": "$65"
               },
               "item_4": {
-                "name": "Braid",
-                "price": "$15"
+                "name": "Flat Iron or Curling Iron",
+                "price": "$30"
               }
             }
           }

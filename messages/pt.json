@@ -197,6 +197,24 @@
           }
         }
       },
+      "keratin_treatment": {
+        "name": "Alisamento & Redução de Volume",
+        "groups": {
+          "alisamentos": {
+            "name": "Tratamentos Alisantes",
+            "items": {
+              "item_1": {
+                "name": "Queratina (Keratin Treatment)",
+                "price": "$325"
+              },
+              "item_2": {
+                "name": "Brazilian Blowout",
+                "price": "$195"
+              }
+            }
+          }
+        }
+      },
       "design_styling": {
         "name": "Design / Estilização",
         "groups": {
@@ -216,8 +234,8 @@
                 "price": "$65"
               },
               "item_4": {
-                "name": "Trança",
-                "price": "$15"
+                "name": "Chapinha ou Babyliss",
+                "price": "$30"
               }
             }
           }
