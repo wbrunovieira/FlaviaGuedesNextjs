@@ -10,10 +10,10 @@ export type BeautyBankTier = {
 };
 
 export const BEAUTY_BANK_TIERS: BeautyBankTier[] = [
-  { id: '500', deposit: 50000, credit: 53000 },
-  { id: '1000', deposit: 100000, credit: 110000 },
-  { id: '1500', deposit: 150000, credit: 170000 },
-  { id: '2000', deposit: 200000, credit: 245000 },
+  { id: '500', deposit: 50000, credit: 52000 },
+  { id: '1000', deposit: 100000, credit: 108000 },
+  { id: '1500', deposit: 150000, credit: 166500 },
+  { id: '2000', deposit: 200000, credit: 240500 },
 ];
 
 export function getTier(
