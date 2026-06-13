@@ -53,8 +53,11 @@ export const config = {
   matcher: [
     '/',
     '/adm/dashboard/:path*',
+    '/adm/beauty-bank/:path*',
     '/api/adm-get-giftcards',
     '/api/adm-delete-giftcard',
     '/api/adm-redeem-giftcard',
+    '/api/adm-get-beautybank',
+    '/api/adm-use-beautybank',
   ],
 };

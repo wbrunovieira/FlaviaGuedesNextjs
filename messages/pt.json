@@ -12,7 +12,8 @@
     "navigationLabel": "Navegação principal",
     "logoAria": "Página inicial",
     "promotions": "Promoções",
-    "bookNow": "Agendar"
+    "bookNow": "Agendar",
+    "beautyBank": "Beauty Bank"
   },
   "Hero": {
     "title1": "Cabelos Perfeitos,",
@@ -326,7 +327,7 @@
     "referralForFriend": "Para sua amiga",
     "referralFirstVisit": "na primeira visita",
     "referralForYou": "Para você",
-    "referralCreditLabel": "de crédito no salão"
+    "referralCreditLabel": "de crédito"
   },
   "Gallery": {
     "title": "Nossa Galeria de Fotos",
@@ -491,5 +492,41 @@
         ]
       }
     ]
+  },
+  "BeautyBank": {
+    "title": "VIP Beauty Bank",
+    "tagline": "Invista no seu cabelo e economize.",
+    "description": "Deposite e receba crédito bônus para usar nos meus serviços e produtos quando você quiser, sem prazo de validade.",
+    "deposit": "Você deposita",
+    "youReceive": "Crédito para usar",
+    "bonus": "bônus",
+    "select": "Selecionar",
+    "changePackage": "Escolher outro pacote",
+    "selectedPackage": "Pacote selecionado",
+    "namePlaceholder": "Seu nome",
+    "phonePlaceholder": "Seu telefone",
+    "emailPlaceholder": "Seu e-mail (opcional)",
+    "payButton": "Confirmar Depósito",
+    "processing": "Processando...",
+    "loadingForm": "Carregando formulário de pagamento...",
+    "invalidName": "Por favor, informe seu nome.",
+    "purchaseFailure": "Pagamento falhou. Tente novamente.",
+    "termsTitle": "Termos",
+    "terms": [
+      "Não-reembolsável",
+      "Intransferível",
+      "Sem prazo de validade",
+      "Não cumulativo com outras promoções",
+      "Pode ser usado em serviços e produtos"
+    ],
+    "policyNote": "Ao comprar, você concorda com as nossas",
+    "policyLink": "Políticas do Salão",
+    "successTitle": "Bem-vinda ao VIP Beauty Bank!",
+    "successText": "Seu crédito está pronto. Até breve! 💛",
+    "downloadCertificate": "Baixar Certificado",
+    "certCreditLabel": "Seu Crédito",
+    "certDeposited": "Depósito",
+    "certHolder": "Titular",
+    "certNoExpiration": "Sem prazo de validade"
   }
 }

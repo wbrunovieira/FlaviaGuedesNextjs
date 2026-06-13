@@ -160,10 +160,13 @@ export default function SuccessPage() {
 
               <div className="relative">
                 {/* Marca */}
-                <p className="font-display text-3xl text-gold tracking-wide">
-                  Flavia Guedes
-                </p>
-                <p className="mt-2 text-[11px] uppercase tracking-[0.4em] text-gold/70">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/flavia-logo-gold.png"
+                  alt="Flavia Guedes"
+                  className="mx-auto h-14 w-auto"
+                />
+                <p className="mt-3 text-[11px] uppercase tracking-[0.4em] text-gold/70">
                   {t('giftCardHeading')}
                 </p>
 

@@ -10,6 +10,7 @@ import Services from '@/components/Service';
 import Footer from '@/components/Footer';
 import Gallery from '@/components/Gallery';
 import GiftCardPurchaseSimple from '@/components/GiftCardPurchaseSimple';
+import BeautyBankPurchase from '@/components/BeautyBankPurchase';
 import Promotions from '@/components/Promotions';
 import SectionReveal from '@/components/ui/SectionReveal';
 import SectionDivider from '@/components/ui/SectionDivider';
@@ -43,6 +44,10 @@ export default function Index() {
         </SectionReveal>
         <SectionReveal>
           <GiftCardPurchaseSimple />
+        </SectionReveal>
+        <SectionDivider />
+        <SectionReveal>
+          <BeautyBankPurchase />
         </SectionReveal>
         <SectionDivider />
         <SectionReveal>

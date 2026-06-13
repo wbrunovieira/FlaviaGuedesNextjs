@@ -12,7 +12,8 @@
     "navigationLabel": "Main navigation",
     "logoAria": "Home page",
     "promotions": "Promotions",
-    "bookNow": "Book Now"
+    "bookNow": "Book Now",
+    "beautyBank": "Beauty Bank"
   },
   "Hero": {
     "title1": "Perfect Hair,",
@@ -326,7 +327,7 @@
     "referralForFriend": "For your friend",
     "referralFirstVisit": "on their first visit",
     "referralForYou": "For you",
-    "referralCreditLabel": "salon credit"
+    "referralCreditLabel": "in credit"
   },
   "Gallery": {
     "title": "Our Photo Gallery",
@@ -491,5 +492,41 @@
         ]
       }
     ]
+  },
+  "BeautyBank": {
+    "title": "VIP Beauty Bank",
+    "tagline": "Invest in your hair and save.",
+    "description": "Deposit and receive bonus credit to use on my services and products whenever you like, with no expiration date.",
+    "deposit": "You deposit",
+    "youReceive": "Credit to spend",
+    "bonus": "bonus",
+    "select": "Select",
+    "changePackage": "Choose another package",
+    "selectedPackage": "Selected package",
+    "namePlaceholder": "Your name",
+    "phonePlaceholder": "Your phone",
+    "emailPlaceholder": "Your email (optional)",
+    "payButton": "Confirm Deposit",
+    "processing": "Processing...",
+    "loadingForm": "Loading payment form...",
+    "invalidName": "Please enter your name.",
+    "purchaseFailure": "Payment failed. Please try again.",
+    "termsTitle": "Terms",
+    "terms": [
+      "Non-refundable",
+      "Non-transferable",
+      "No expiration date",
+      "Cannot be combined with other promotions",
+      "May be used toward services and retail products"
+    ],
+    "policyNote": "By purchasing, you agree to our",
+    "policyLink": "Salon Policies",
+    "successTitle": "Welcome to the VIP Beauty Bank!",
+    "successText": "Your credit is ready. See you soon! 💛",
+    "downloadCertificate": "Download Certificate",
+    "certCreditLabel": "Your Credit",
+    "certDeposited": "Deposited",
+    "certHolder": "Account holder",
+    "certNoExpiration": "No expiration date"
   }
 }

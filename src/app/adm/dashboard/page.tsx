@@ -13,6 +13,7 @@ import {
   FaTimesCircle,
   FaClock,
   FaSignOutAlt,
+  FaCrown,
   FaExclamationTriangle,
   FaSpinner,
   FaCalendarAlt,
@@ -464,8 +465,15 @@ export default function AdminDashboard() {
       <div className="relative z-10 p-8">
         {/* Header */}
         <div className="mb-8">
-          {/* Mobile: Logout button at top */}
-          <div className="sm:hidden flex justify-end mb-4">
+          {/* Mobile: action buttons at top */}
+          <div className="sm:hidden flex justify-end gap-2 mb-4">
+            <Button
+              onClick={() => router.push('/adm/beauty-bank')}
+              className="bg-gradient-to-r from-gold to-yellow-600 text-white border-0 shadow-lg transition-all duration-300 flex items-center gap-2"
+            >
+              <FaCrown />
+              Beauty Bank
+            </Button>
             <Button
               onClick={handleLogout}
               className="bg-gradient-to-r from-graphite to-gray-800 hover:from-gray-800 hover:to-gray-900 text-gold border border-gold/30 shadow-lg transition-all duration-300 hover:shadow-gold/25 flex items-center gap-2"
@@ -488,14 +496,23 @@ export default function AdminDashboard() {
                 <p className="text-grayMedium mt-1">Gerenciar Gift Cards</p>
               </div>
             </div>
-            {/* Desktop: Logout button inline */}
-            <Button
-              onClick={handleLogout}
-              className="hidden sm:flex bg-gradient-to-r from-graphite to-gray-800 hover:from-gray-800 hover:to-gray-900 text-gold border border-gold/30 shadow-lg transition-all duration-300 hover:shadow-gold/25 items-center gap-2"
-            >
-              <FaSignOutAlt />
-              Logout
-            </Button>
+            {/* Desktop: action buttons inline */}
+            <div className="hidden sm:flex items-center gap-2">
+              <Button
+                onClick={() => router.push('/adm/beauty-bank')}
+                className="bg-gradient-to-r from-gold to-yellow-600 text-white border-0 shadow-lg transition-all duration-300 hover:shadow-gold/25 flex items-center gap-2"
+              >
+                <FaCrown />
+                Beauty Bank
+              </Button>
+              <Button
+                onClick={handleLogout}
+                className="bg-gradient-to-r from-graphite to-gray-800 hover:from-gray-800 hover:to-gray-900 text-gold border border-gold/30 shadow-lg transition-all duration-300 hover:shadow-gold/25 flex items-center gap-2"
+              >
+                <FaSignOutAlt />
+                Logout
+              </Button>
+            </div>
           </div>
         </div>
 

@@ -58,6 +58,7 @@ export default function Nav() {
       'about',
       'gallery',
       'giftcard',
+      'beauty-bank',
       'promotions',
     ];
     const observer = new IntersectionObserver(
@@ -88,6 +89,7 @@ export default function Nav() {
     { name: 'about', href: '#about' },
     { name: 'gallery', href: '#gallery' },
     { name: 'giftcard', href: '#giftcard' },
+    { name: 'beautyBank', href: '#beauty-bank' },
     { name: 'promotions', href: '#promotions' },
   ];
 
