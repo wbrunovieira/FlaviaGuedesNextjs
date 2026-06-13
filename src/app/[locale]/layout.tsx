@@ -1,5 +1,6 @@
 // src/app/[locale]/layout.tsx
 import { NextIntlClientProvider } from 'next-intl';
+import type { AbstractIntlMessages } from 'next-intl';
 import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 import {
@@ -172,7 +173,7 @@ export default async function RootLocaleLayout(props: {
         />
         <NextIntlClientProvider
           locale={locale}
-          messages={messages}
+          messages={messages as unknown as AbstractIntlMessages}
         >
           {props.children}
         </NextIntlClientProvider>

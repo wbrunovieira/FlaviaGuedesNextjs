@@ -3,6 +3,7 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { FaGift, FaArrowRight } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
+import Link from 'next/link';
 import Script from 'next/script';
 import type { SquarePaymentsInstance, SquareCard } from '@/types/square';
 
@@ -244,6 +245,17 @@ export default function GiftCardPurchaseSimple({
                   </>
                 )}
               </button>
+
+              <p className="text-xs text-grayMedium text-center">
+                {t('policyNote') ||
+                  'By purchasing, you agree to our Gift Card Policy.'}{' '}
+                <Link
+                  href={`/${locale}/policies#giftcards`}
+                  className="text-gold/80 underline transition-colors hover:text-gold"
+                >
+                  {t('policyLink') || 'Gift Card Policy'}
+                </Link>
+              </p>
             </>
           )}
 

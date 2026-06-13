@@ -260,7 +260,8 @@
     "by": "by",
     "appointmentsTitle": "Appointments Required",
     "appointmentsNote": "All services are provided by appointment only. Please call, text, or message us.",
-    "myStory": "My Story"
+    "myStory": "My Story",
+    "policies": "Salon Policies"
   },
   "GiftCard": {
     "title": "Purchase Gift Card",
@@ -277,7 +278,9 @@
     "purchaseSuccess": "Gift card purchase completed successfully!",
     "purchaseFailure": "Failed to create checkout session. Please try again.",
     "minAmount": "The minimum amount is $25.",
-    "processing": "Processing payment..."
+    "processing": "Processing payment...",
+    "policyNote": "By purchasing, you agree to our",
+    "policyLink": "Gift Card Policy"
   },
   "GiftCardSuccess": {
     "successTitle": "Payment Successful!",
@@ -354,5 +357,139 @@
     "motto": "“Talent opens doors, but humility, kindness, and continuous learning create lasting success.”",
     "signature": "— Flavia Guedes",
     "back": "Back to home"
+  },
+  "Policies": {
+    "pageTitle": "Salon Policies",
+    "pageSubtitle": "Everything you need to know before your visit",
+    "indexLabel": "Jump to",
+    "intro": "Thank you for taking a moment to read my salon policies. They help me give every guest the time, care, and experience they deserve. 💛",
+    "sections": [
+      {
+        "id": "appointments",
+        "title": "Appointments",
+        "paragraphs": [
+          "I recommend that clients take the time to reschedule their next appointment(s) before leaving the salon, to reserve the date and time that best fits your schedule.",
+          "If appointments aren't available during your desired date and time, we'll add your name to a cancellation list and contact you by phone, email, or text in the event of a cancellation."
+        ]
+      },
+      {
+        "id": "cancellations",
+        "title": "Confirmations, Late Arrivals & Cancellations",
+        "paragraphs": [
+          "To help ensure a smooth experience, appointment confirmations and reminders are sent by email and/or text prior to your scheduled visit.",
+          "Out of respect for my time and for other clients waiting, I kindly ask for at least 48 hours' notice for any cancellation or rescheduling.",
+          "Cancellations or rescheduling with less than 48 hours' notice will be responsible for 50% of the scheduled service price. Same-day cancellations, last-minute cancellations, and no-shows will be responsible for 100% of the scheduled service price.",
+          "I completely understand that delays happen. However, if you arrive more than 15 minutes late, I may not have enough time to complete your scheduled service. In that case, your appointment may need to be adjusted, shortened, or rescheduled, and a cancellation fee may apply.",
+          "For new clients, a deposit may be required for services that need more than a 2-hour appointment block. This deposit is applied toward your service total at checkout.",
+          "All deposits are non-refundable if the appointment is cancelled within the 48-hour policy window or missed.",
+          "All cancellation or rescheduling requests must be made by phone or by replying directly to your appointment text message.",
+          "Thank you so much for understanding and respecting my time, my schedule, and the experience of every client in my chair."
+        ]
+      },
+      {
+        "id": "deposits",
+        "title": "Deposits",
+        "paragraphs": [
+          "Any guest who cancels the same day more than twice will be required to place a minimum 50% non-refundable deposit for every future appointment."
+        ]
+      },
+      {
+        "id": "pricing",
+        "title": "Pricing & Service Information",
+        "paragraphs": [
+          "Every hair appointment is customized specifically for you and your hair goals. Pricing is based on several factors, including hair length, density, the time required, and the services performed.",
+          "All prices listed on this website are starting prices and may be adjusted based on the time, product, and work needed to achieve your desired look.",
+          "A thorough consultation is included with every appointment, and pricing is discussed before any service begins. Because every client's hair is unique, I'm unable to provide exact quotes over the phone, by text, or through social media without first seeing your hair.",
+          "For major color changes, corrective color, extensions, or first-time visits, I highly recommend scheduling a consultation beforehand. This lets me assess your hair, discuss your goals, and reserve enough time for the best results.",
+          "My priority is providing beautiful, healthy hair while creating a personalized experience tailored to you."
+        ],
+        "note": "No surprises, no rushed services — just honest recommendations and a customized plan for your hair goals."
+      },
+      {
+        "id": "services",
+        "title": "Services Policy",
+        "paragraphs": [
+          "If you're not entirely satisfied with your color and cutting service, please call and schedule a complimentary redo within three days."
+        ]
+      },
+      {
+        "id": "health",
+        "title": "Health & Allergy Disclosure",
+        "paragraphs": [
+          "Clients must disclose any allergies, scalp conditions, or past chemical treatments before starting their service (especially for hair color)."
+        ]
+      },
+      {
+        "id": "property",
+        "title": "Personal Property",
+        "paragraphs": [
+          "While we do our best to work as neatly as possible, there are times color may get on clothing, or water may touch clothes or shoes. Although this doesn't happen often, we urge you to change out of your clothing, hang it up, and put on a smock provided in our restroom. We cannot be held responsible for damage to clothing during a service."
+        ]
+      },
+      {
+        "id": "packages",
+        "title": "Service Package Policy",
+        "bullets": [
+          "Prepaid service packages are designed exclusively for the client who purchased or gifted them and are non-transferable.",
+          "Packages are non-refundable and may not be exchanged for cash, products, or other services not included in the original purchase.",
+          "Package services must be used by the original purchaser and may not be shared, transferred, or divided among multiple individuals.",
+          "Promotions, referral rewards, gift cards, and other discounts may not be combined with package pricing unless specifically stated.",
+          "I reserve the right to modify or discontinue package offerings at any time; however, purchased packages will be honored according to the terms in effect at the time of purchase."
+        ],
+        "quote": "Package pricing is offered as a discounted commitment to ongoing hair maintenance and is therefore not eligible for refunds if any portion of the package has been used."
+      },
+      {
+        "id": "giftcards",
+        "title": "Gift Card Policy",
+        "paragraphs": [
+          "Gift cards are non-refundable and cannot be exchanged for cash. They are intended for the original recipient only and are non-transferable. Selling, exchanging, or transferring gift cards to others is not permitted.",
+          "Gift cards cannot be combined with certain promotional offers, referral rewards, or discounts unless we specify otherwise.",
+          "If a gift card is lost, stolen, or used without permission, we cannot replace it. Please remember to present your gift card when you visit us for your service."
+        ]
+      },
+      {
+        "id": "refuse",
+        "title": "Right to Refuse Service",
+        "paragraphs": [
+          "My goal is to create a welcoming, relaxing, and positive experience for every guest. I believe kindness, respect, and open communication are essential to beautiful results and an enjoyable salon experience.",
+          "While I truly appreciate every client who trusts me with their hair, I reserve the right to refuse service to anyone who displays rude, disrespectful, aggressive, or inappropriate behavior toward me or other guests. Maintaining a positive, professional environment is one of my highest priorities.",
+          "I also understand that every stylist has different strengths and specialties. My passion is natural-looking blondes, balayage, dimensional color, gray coverage, and healthy, beautiful hair. While I always strive to help my clients reach their goals, I may not be the right fit for every desired look — and that's perfectly okay. If I feel another stylist would better suit your needs, I'll gladly provide recommendations.",
+          "Thank you for respecting my time, my craft, and the positive atmosphere I work hard to create. We reserve the right to refuse service to anyone for any reason."
+        ]
+      },
+      {
+        "id": "products",
+        "title": "Product Purchase Policy",
+        "paragraphs": [
+          "I carefully select and recommend products I truly believe will help you achieve and maintain healthy, beautiful hair at home.",
+          "Due to the nature of professional haircare products, all product sales are final and not eligible for refunds.",
+          "If you're not completely satisfied with a product, I'll gladly offer an exchange within 7 days of purchase for a product of equal value. Products must be returned with original packaging and a reasonable amount remaining.",
+          "To help you find the perfect fit, product samples may be available for certain items. If you have sensitivities to specific ingredients or fragrances, I encourage you to request a sample before purchasing whenever possible.",
+          "The following items are final sale and not eligible for exchange, return, or refund:"
+        ],
+        "bullets": [
+          "Brushes and styling tools",
+          "Discounted or clearance items",
+          "Gift cards",
+          "Special order products"
+        ],
+        "note": "Thank you for understanding and supporting a small business."
+      },
+      {
+        "id": "payment",
+        "title": "Payment Methods",
+        "paragraphs": [
+          "We accept: Apple Pay, Cash, Visa, Mastercard, American Express, and Discover.",
+          "A surcharge applies to all credit card payments."
+        ]
+      },
+      {
+        "id": "gratuity",
+        "title": "Gratuity",
+        "paragraphs": [
+          "Gratuity is not included in any service, package, or gift card. As always, gratuities are discretionary and always appreciated. If you prefer to leave cash, we provide change and envelopes. While we don't offer cash back on credit cards, you may add gratuity to your card."
+        ]
+      }
+    ]
   }
 }

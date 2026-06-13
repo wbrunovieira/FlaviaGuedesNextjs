@@ -10,13 +10,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const entries: MetadataRoute.Sitemap = [];
 
-  for (const path of ['', '/about']) {
+  for (const path of ['', '/about', '/policies']) {
     for (const locale of ['en', 'pt']) {
       entries.push({
         url: `${SITE_URL}/${locale}${path}`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
-        priority: path === '' ? 1 : 0.8,
+        priority: path === '' ? 1 : 0.7,
         alternates: { languages: localized(path) },
       });
     }

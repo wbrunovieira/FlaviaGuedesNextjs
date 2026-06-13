@@ -39,12 +39,20 @@ const Footer: React.FC = () => {
           <p className="mt-4 text-gray-400 text-sm leading-relaxed">
             {t('description2')}
           </p>
-          <Link
-            href={`/${locale}/about`}
-            className="mt-4 inline-flex items-center gap-1.5 text-sm text-gold/80 transition-colors duration-300 hover:text-gold"
-          >
-            {t('myStory')} →
-          </Link>
+          <div className="mt-4 flex flex-col gap-2">
+            <Link
+              href={`/${locale}/about`}
+              className="inline-flex items-center gap-1.5 text-sm text-gold/80 transition-colors duration-300 hover:text-gold"
+            >
+              {t('myStory')} →
+            </Link>
+            <Link
+              href={`/${locale}/policies`}
+              className="inline-flex items-center gap-1.5 text-sm text-gold/80 transition-colors duration-300 hover:text-gold"
+            >
+              {t('policies')} →
+            </Link>
+          </div>
         </div>
 
         <div>

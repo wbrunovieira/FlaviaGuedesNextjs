@@ -260,7 +260,8 @@
     "by": "por",
     "appointmentsTitle": "Atendimento com Hora Marcada",
     "appointmentsNote": "Todos os serviços são realizados somente com horário agendado. Ligue, envie um SMS ou mande uma mensagem.",
-    "myStory": "Minha História"
+    "myStory": "Minha História",
+    "policies": "Políticas do Salão"
   },
   "GiftCard": {
     "title": "Compra de Gift Card",
@@ -277,7 +278,9 @@
     "purchaseSuccess": "Compra de gift card efetuada com sucesso!",
     "purchaseFailure": "Falha ao criar a sessão de pagamento. Por favor, tente novamente.",
     "minAmount": "O valor mínimo é de $25.",
-    "processing": "Processando pagamento..."
+    "processing": "Processando pagamento...",
+    "policyNote": "Ao comprar, você concorda com a nossa",
+    "policyLink": "Política de Gift Card"
   },
   "GiftCardSuccess": {
     "successTitle": "Pagamento Realizado com Sucesso!",
@@ -354,5 +357,139 @@
     "motto": "“O talento abre portas, mas a humildade, a gentileza e o aprendizado contínuo criam o sucesso duradouro.”",
     "signature": "— Flavia Guedes",
     "back": "Voltar ao início"
+  },
+  "Policies": {
+    "pageTitle": "Políticas do Salão",
+    "pageSubtitle": "Tudo o que você precisa saber antes da sua visita",
+    "indexLabel": "Ir para",
+    "intro": "Obrigada por reservar um momento para ler as políticas do meu salão. Elas me ajudam a oferecer a cada cliente o tempo, o cuidado e a experiência que ela merece. 💛",
+    "sections": [
+      {
+        "id": "appointments",
+        "title": "Agendamentos",
+        "paragraphs": [
+          "Recomendo que as clientes já reagendem o(s) próximo(s) horário(s) antes de sair do salão, para garantir a data e o horário que melhor se encaixam na sua agenda.",
+          "Se não houver horário disponível na data e no horário desejados, adicionamos seu nome a uma lista de espera e, em caso de cancelamento, entramos em contato por telefone, e-mail ou mensagem."
+        ]
+      },
+      {
+        "id": "cancellations",
+        "title": "Confirmações, Atrasos & Cancelamentos",
+        "paragraphs": [
+          "Para garantir uma experiência tranquila, enviamos confirmações e lembretes por e-mail e/ou mensagem antes do seu horário.",
+          "Por respeito ao meu tempo e às outras clientes que aguardam, peço gentilmente um aviso de pelo menos 48 horas para qualquer cancelamento ou reagendamento.",
+          "Cancelamentos ou reagendamentos com menos de 48 horas de antecedência ficam responsáveis por 50% do valor do serviço agendado. Cancelamentos no mesmo dia, de última hora e faltas (no-show) ficam responsáveis por 100% do valor do serviço agendado.",
+          "Eu entendo perfeitamente que imprevistos acontecem. Porém, se você chegar com mais de 15 minutos de atraso, posso não ter tempo suficiente para concluir o serviço agendado. Nesse caso, o horário pode precisar ser ajustado, encurtado ou reagendado, e uma taxa de cancelamento pode ser aplicada.",
+          "Para novas clientes, pode ser solicitado um depósito em serviços que exijam mais de 2 horas de duração. Esse depósito é abatido do valor total do serviço no pagamento.",
+          "Todos os depósitos são não-reembolsáveis caso o horário seja cancelado dentro da janela de 48 horas ou caso a cliente falte.",
+          "Todo pedido de cancelamento ou reagendamento deve ser feito por telefone ou respondendo diretamente à mensagem de confirmação do seu horário.",
+          "Muito obrigada por entender e respeitar o meu tempo, a minha agenda e a experiência de cada cliente na minha cadeira."
+        ]
+      },
+      {
+        "id": "deposits",
+        "title": "Depósitos",
+        "paragraphs": [
+          "Qualquer cliente que cancele no mesmo dia mais de duas vezes passará a precisar deixar um depósito não-reembolsável de no mínimo 50% para todos os agendamentos futuros."
+        ]
+      },
+      {
+        "id": "pricing",
+        "title": "Preços & Informações sobre Serviços",
+        "paragraphs": [
+          "Cada atendimento é personalizado especialmente para você e para os seus objetivos. O preço depende de vários fatores, como comprimento e densidade do cabelo, o tempo necessário e os serviços realizados.",
+          "Todos os preços listados neste site são valores iniciais e podem ser ajustados conforme o tempo, o produto e o trabalho necessários para alcançar o resultado desejado.",
+          "Uma consulta detalhada está incluída em todos os atendimentos, e o preço é conversado antes de qualquer serviço começar. Como o cabelo de cada cliente é único, não consigo passar orçamentos exatos por telefone, mensagem ou redes sociais sem antes ver o seu cabelo.",
+          "Para mudanças grandes de cor, correção de cor, extensões ou primeira visita, recomendo fortemente agendar uma consulta antes. Assim posso avaliar o seu cabelo, conversar sobre seus objetivos e reservar tempo suficiente para o melhor resultado.",
+          "Minha prioridade é entregar um cabelo bonito e saudável, criando uma experiência personalizada para você."
+        ],
+        "note": "Sem surpresas, sem serviços apressados — apenas recomendações honestas e um plano personalizado para os seus objetivos."
+      },
+      {
+        "id": "services",
+        "title": "Política de Serviços",
+        "paragraphs": [
+          "Se você não ficar totalmente satisfeita com seu serviço de cor e corte, por favor ligue e agende uma refação gratuita em até três dias."
+        ]
+      },
+      {
+        "id": "health",
+        "title": "Declaração de Saúde & Alergias",
+        "paragraphs": [
+          "As clientes devem informar quaisquer alergias, condições do couro cabeludo ou tratamentos químicos anteriores antes de iniciar o serviço (especialmente para coloração)."
+        ]
+      },
+      {
+        "id": "property",
+        "title": "Pertences Pessoais",
+        "paragraphs": [
+          "Embora façamos o nosso melhor para trabalhar com o máximo de cuidado, às vezes a tinta pode atingir a roupa, ou a água pode tocar suas roupas ou sapatos. Apesar de isso não acontecer com frequência, recomendamos que você troque de roupa, pendure-a e use a capa que oferecemos no nosso banheiro. Não nos responsabilizamos por danos às roupas durante o serviço."
+        ]
+      },
+      {
+        "id": "packages",
+        "title": "Política de Pacotes de Serviço",
+        "bullets": [
+          "Pacotes de serviço pré-pagos são exclusivos da cliente que os comprou ou recebeu de presente e são intransferíveis.",
+          "Pacotes são não-reembolsáveis e não podem ser trocados por dinheiro, produtos ou outros serviços não incluídos na compra original.",
+          "Os serviços do pacote devem ser usados pela compradora original e não podem ser compartilhados, transferidos ou divididos entre várias pessoas.",
+          "Promoções, recompensas de indicação, gift cards e outros descontos não podem ser combinados com o preço do pacote, salvo indicação específica.",
+          "Reservo-me o direito de modificar ou encerrar a oferta de pacotes a qualquer momento; porém, os pacotes já comprados serão honrados conforme os termos vigentes no momento da compra."
+        ],
+        "quote": "O preço do pacote é oferecido como um compromisso com desconto para a manutenção contínua do cabelo e, por isso, não é elegível a reembolso caso qualquer parte do pacote já tenha sido utilizada."
+      },
+      {
+        "id": "giftcards",
+        "title": "Política de Gift Cards",
+        "paragraphs": [
+          "Os gift cards são não-reembolsáveis e não podem ser trocados por dinheiro. São destinados apenas à pessoa presenteada e são intransferíveis. Vender, trocar ou transferir gift cards para terceiros não é permitido.",
+          "Gift cards não podem ser combinados com certas ofertas promocionais, recompensas de indicação ou descontos, salvo indicação em contrário.",
+          "Se um gift card for perdido, roubado ou usado sem autorização, não podemos substituí-lo. Lembre-se de apresentar o seu gift card quando vier para o seu atendimento."
+        ]
+      },
+      {
+        "id": "refuse",
+        "title": "Direito de Recusar Atendimento",
+        "paragraphs": [
+          "Meu objetivo é criar uma experiência acolhedora, relaxante e positiva para cada cliente. Acredito que gentileza, respeito e comunicação aberta são essenciais para resultados bonitos e uma experiência agradável no salão.",
+          "Embora eu valorize de verdade cada cliente que confia o cabelo a mim, reservo-me o direito de recusar atendimento a quem demonstre comportamento rude, desrespeitoso, agressivo ou inadequado comigo ou com outras clientes. Manter um ambiente positivo e profissional é uma das minhas maiores prioridades.",
+          "Também entendo que cada profissional tem forças e especialidades diferentes. Minha paixão são loiros naturais, balayage, cor dimensional, cobertura de grisalhos e cabelos saudáveis e bonitos. Embora eu sempre me esforce para ajudar minhas clientes a alcançarem seus objetivos, posso não ser a profissional ideal para todo tipo de visual — e tudo bem. Se eu sentir que outra profissional atenderia melhor, terei o maior prazer em indicar.",
+          "Obrigada por respeitar o meu tempo, o meu trabalho e o ambiente positivo que me esforço tanto para criar. Reservamo-nos o direito de recusar atendimento a qualquer pessoa, por qualquer motivo."
+        ]
+      },
+      {
+        "id": "products",
+        "title": "Política de Compra de Produtos",
+        "paragraphs": [
+          "Eu seleciono e recomendo com cuidado produtos que realmente acredito que vão ajudar você a conquistar e manter um cabelo saudável e bonito em casa.",
+          "Devido à natureza dos produtos profissionais de cabelo, todas as vendas de produtos são finais e não elegíveis a reembolso.",
+          "Se você não ficar completamente satisfeita com um produto, terei prazer em oferecer uma troca em até 7 dias da compra por um produto de valor equivalente. Os produtos devem ser devolvidos com a embalagem original e uma quantidade razoável de produto restante.",
+          "Para ajudar você a encontrar o produto ideal, podem estar disponíveis amostras de alguns itens. Se você tem sensibilidade a ingredientes ou fragrâncias específicas, recomendo pedir uma amostra antes de comprar sempre que possível.",
+          "Os itens a seguir são de venda final e não elegíveis a troca, devolução ou reembolso:"
+        ],
+        "bullets": [
+          "Escovas e ferramentas de finalização",
+          "Itens com desconto ou em liquidação",
+          "Gift cards",
+          "Produtos de encomenda especial"
+        ],
+        "note": "Obrigada por entender e apoiar um pequeno negócio."
+      },
+      {
+        "id": "payment",
+        "title": "Formas de Pagamento",
+        "paragraphs": [
+          "Aceitamos: Apple Pay, dinheiro, Visa, Mastercard, American Express e Discover.",
+          "Uma taxa adicional é aplicada a todos os pagamentos com cartão de crédito."
+        ]
+      },
+      {
+        "id": "gratuity",
+        "title": "Gorjeta",
+        "paragraphs": [
+          "A gorjeta não está incluída em nenhum serviço, pacote ou gift card. Como sempre, as gorjetas são opcionais e sempre apreciadas. Se você preferir deixar em dinheiro, fornecemos troco e envelopes. Embora não ofereçamos saque em cartão de crédito, você tem a opção de adicionar a gorjeta ao cartão."
+        ]
+      }
+    ]
   }
 }
