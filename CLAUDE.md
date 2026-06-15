@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Next.js 15 (App Router) site for Flávia Guedes' hair salon: a multi-language marketing site with gift card purchasing. TypeScript, Tailwind CSS, Stripe and Square payments, dual persistence (PostgreSQL via Prisma + Firebase Firestore).
+Next.js 15 (App Router) site for Flávia Guedes' hair salon: a multi-language marketing site with gift card and prepaid-credit (VIP Beauty Bank) purchasing. TypeScript, Tailwind CSS, Square payments, Firebase Firestore for persistence.
 
 ## Development Commands
 
@@ -13,15 +13,15 @@ The project uses **pnpm** (`pnpm-lock.yaml` is committed — do not use npm/yarn
 ```bash
 pnpm install              # Install dependencies
 pnpm dev                  # Run development server
-pnpm build                # Production build (runs `prisma generate` first)
+pnpm build                # Production build
 pnpm lint                 # ESLint via next lint
-npx prisma generate       # Regenerate Prisma client
-npx prisma migrate dev    # Run migrations
-npx prisma studio         # Inspect the database
+pnpm test                 # Run unit tests (Vitest)
 ANALYZE=true pnpm build   # Bundle analysis (@next/bundle-analyzer)
 ```
 
-There is no test suite configured.
+Unit tests (Vitest) cover the money/stats pure logic in `src/lib/` —
+`beauty-bank.ts` (balance/deduction/undo) and `giftcard-stats.ts`
+(filters/stats). Keep that logic in pure, tested functions, not in components.
 
 ## Architecture
 
@@ -32,22 +32,21 @@ There is no test suite configured.
 - User-facing pages live under `src/app/[locale]/` (home, `success`, `cancel` for payment outcomes).
 - The admin area `src/app/adm/` sits **outside** the `[locale]` segment and is not internationalized. Login posts to `api/adm-login`, which validates `ADMIN_EMAIL`/`ADMIN_PASSWORD` server-side and sets an HMAC-signed `httpOnly` cookie (helpers in `src/lib/admin-auth.ts`, 8h expiry). `src/middleware.ts` verifies that cookie for `/adm/dashboard` and the admin API routes (scoped matcher — it must not touch public/i18n routes).
 
-### Payments (gift cards)
+### Payments
 
-Two gateways coexist; Square is the one currently in use (see `docs/sqaure.md`):
+Square Web Payments SDK (card-not-present) charges the card via the API routes; the amount is validated **server-side**:
 
-- **Stripe**: `api/create-checkout-session` (Checkout redirect flow), client uses `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`.
-- **Square**: `api/create-square-payment`, `api/create-square-payment-direct`, `api/get-square-payment`, `api/test-square`. Sandbox vs production credentials are switched at runtime (sandbox vars are the `*_SANDBOX_*` ones). Square sandbox test cards are listed in `docs/sqaure.md`.
-- Three purchase component variants in `src/components/`: `GiftCardPurchaseSimple`, `GiftCardPurchaseMultiPayment`, `GiftCardPurchaseSquare`.
+- **Gift cards**: `GiftCardPurchaseSimple` → `api/create-square-payment-direct` (charges the amount the buyer enters). Result shown on `[locale]/success`.
+- **VIP Beauty Bank** (prepaid credit with bonus): `BeautyBankPurchase` → `api/create-beauty-bank`. Tiers are the single source of truth in `src/lib/beauty-bank-tiers.ts` and validated server-side so credit can't be forged.
+- Sandbox vs production credentials switch at runtime (sandbox vars are the `*_SANDBOX_*` ones). Test cards in `docs/sqaure.md`.
 
-### Dual Database
+### Data (Firestore only)
 
-Gift card purchases are written to **both** stores; changes to gift card persistence must keep them in sync:
+All persistence is Firebase Firestore — helpers exported from `firebase-config.ts` at the **repo root** (not in `src/`). Collections: `giftCards`, `beautyBank`.
 
-- PostgreSQL via Prisma — single `GiftCard` model in `prisma/schema.prisma` (keyed by `stripeSessionId`).
-- Firebase Firestore — helpers exported from `firebase-config.ts` at the **repo root** (not in `src/`).
-
-Other API routes: `api/get-giftcard`, `api/adm-get-giftcards` (admin dashboard), `api/save-payment`.
+- The money/ledger logic lives in tested pure functions in `src/lib/` (`beauty-bank.ts`, `giftcard-stats.ts`); the API routes are thin wrappers. `api/adm-use-beautybank` uses a Firestore `runTransaction` (atomic) for balance updates.
+- Beauty Bank balance is always derived from `credit − sum(transactions)` so it can't drift.
+- Admin read/write routes: `api/adm-get-giftcards`, `api/adm-redeem-giftcard`, `api/adm-delete-giftcard`, `api/adm-get-beautybank`, `api/adm-use-beautybank` — all protected by the auth middleware.
 
 ### Conventions
 
@@ -57,7 +56,6 @@ Other API routes: `api/get-giftcard`, `api/adm-get-giftcards` (admin dashboard),
 
 ### Environment Variables
 
-- `POSTGRES_URL` — Prisma/PostgreSQL connection
 - `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_PROJECT_ID`, `FIREBASE_STORAGE_BUCKET`, `FIREBASE_MESSAGING_SENDER_ID`, `FIREBASE_APP_ID`, `FIREBASE_MEASUREMENT_ID`
 - `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
 - `SQUARE_ACCESS_TOKEN`, `SQUARE_LOCATION_ID`, `NEXT_PUBLIC_SQUARE_APPLICATION_ID`, `NEXT_PUBLIC_SQUARE_LOCATION_ID`; sandbox: `SQUARE_SANDBOX_ACCESS_TOKEN`, `NEXT_PUBLIC_SQUARE_SANDBOX_APPLICATION_ID`
