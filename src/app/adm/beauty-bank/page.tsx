@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { beautyBankStats } from '@/lib/beauty-bank';
 import {
   FaCrown,
   FaSignOutAlt,
@@ -196,15 +197,8 @@ export default function BeautyBankAdmin() {
     }
   };
 
-  const totalSold = accounts.reduce(
-    (s, a) => s + a.credit,
-    0
-  );
-  const totalOutstanding = accounts.reduce(
-    (s, a) => s + a.balance,
-    0
-  );
-  const totalRedeemed = totalSold - totalOutstanding;
+  const { totalSold, totalOutstanding, totalRedeemed } =
+    beautyBankStats(accounts);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-graphite to-background">

@@ -5,6 +5,7 @@ import {
   computeBalance,
   applyDeduction,
   applyUndo,
+  beautyBankStats,
   type Transaction,
 } from './beauty-bank';
 
@@ -190,6 +191,38 @@ describe('applyUndo', () => {
     const original = [tx('a', 10000)];
     applyUndo(53000, original, 'a');
     expect(original).toHaveLength(1);
+  });
+});
+
+describe('beautyBankStats', () => {
+  it('empty list is all zero', () => {
+    expect(beautyBankStats([])).toEqual({
+      totalSold: 0,
+      totalOutstanding: 0,
+      totalRedeemed: 0,
+    });
+  });
+
+  it('aggregates credit, outstanding and redeemed from transactions', () => {
+    const accounts = [
+      { credit: 110000, transactions: [tx('a', 25000)] }, // 85000 left
+      { credit: 53000, transactions: [] }, // 53000 left
+      { credit: 240500, transactions: [tx('b', 60000)] }, // 180500 left
+    ];
+    const s = beautyBankStats(accounts);
+    expect(s.totalSold).toBe(403500);
+    expect(s.totalOutstanding).toBe(318500);
+    expect(s.totalRedeemed).toBe(85000);
+  });
+
+  it('ignores a drifted stored balance — recomputes from transactions', () => {
+    // Even if a 'balance' field were wrong, stats use the transactions
+    const accounts = [
+      { credit: 53000, transactions: [tx('a', 53000)] },
+    ];
+    const s = beautyBankStats(accounts);
+    expect(s.totalOutstanding).toBe(0);
+    expect(s.totalRedeemed).toBe(53000);
   });
 });
 

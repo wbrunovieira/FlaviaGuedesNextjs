@@ -118,6 +118,38 @@ export type UndoResult =
   | { ok: true; transactions: Transaction[]; balance: number }
   | { ok: false; error: string };
 
+export type BeautyBankStats = {
+  totalSold: number; // total credit issued, cents
+  totalOutstanding: number; // credit still to be used, cents
+  totalRedeemed: number; // credit already used, cents
+};
+
+/**
+ * Aggregate stats for the admin. Outstanding is recomputed from each
+ * account's transactions (not the stored balance) so the totals can't drift.
+ */
+export function beautyBankStats(
+  accounts: Array<{
+    credit: number;
+    transactions?: Transaction[];
+  }>
+): BeautyBankStats {
+  const totalSold = accounts.reduce(
+    (s, a) => s + a.credit,
+    0
+  );
+  const totalOutstanding = accounts.reduce(
+    (s, a) =>
+      s + computeBalance(a.credit, a.transactions ?? []),
+    0
+  );
+  return {
+    totalSold,
+    totalOutstanding,
+    totalRedeemed: totalSold - totalOutstanding,
+  };
+}
+
 /** Remove a previously-registered usage, restoring the balance. */
 export function applyUndo(
   credit: number,

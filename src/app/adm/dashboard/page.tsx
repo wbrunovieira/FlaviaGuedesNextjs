@@ -1,6 +1,11 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import {
+  filterGiftCards,
+  sortGiftCards,
+  giftCardStats,
+} from '@/lib/giftcard-stats';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -209,55 +214,21 @@ export default function AdminDashboard() {
     fetchGiftCards();
   }, [router]);
 
-  // Filter logic
+  // Filter logic (pure helpers — unit tested in giftcard-stats.ts)
   useEffect(() => {
-    let filtered = [...giftCards];
-
-    // Search filter
-    if (searchTerm) {
-      filtered = filtered.filter(
-        card =>
-          card.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          card.giftName?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    // Status filter
-    if (statusFilter === 'paid') {
-      filtered = filtered.filter(card => card.paid === true);
-    } else if (statusFilter === 'pending') {
-      filtered = filtered.filter(card => card.paid !== true);
-    } else if (statusFilter === 'redeemed') {
-      filtered = filtered.filter(card => card.redeemed === true);
-    } else if (statusFilter === 'unredeemed') {
-      filtered = filtered.filter(card => !card.redeemed && !card.cancelled);
-    }
-
-    // Date range filter
-    const now = new Date();
-    if (dateRange === 'today') {
-      filtered = filtered.filter(card => {
-        const cardDate = new Date(card.createdAt);
-        return cardDate.toDateString() === now.toDateString();
-      });
-    } else if (dateRange === 'week') {
-      const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-      filtered = filtered.filter(card => new Date(card.createdAt) >= weekAgo);
-    } else if (dateRange === 'month') {
-      const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-      filtered = filtered.filter(card => new Date(card.createdAt) >= monthAgo);
-    }
-
-    // Sort
-    filtered.sort((a, b) => {
-      const dateA = new Date(a.createdAt).getTime();
-      const dateB = new Date(b.createdAt).getTime();
-      return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
-    });
-
+    const filtered = sortGiftCards(
+      filterGiftCards(giftCards, {
+        search: searchTerm,
+        status: statusFilter,
+        dateRange,
+      }),
+      sortOrder
+    );
     setFilteredCards(filtered);
     setCurrentPage(1);
   }, [giftCards, searchTerm, sortOrder, statusFilter, dateRange]);
+
+  const stats = giftCardStats(giftCards);
 
   const totalPages = Math.max(
     1,
@@ -524,20 +495,10 @@ export default function AdminDashboard() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-yellow-100 text-sm font-medium">Total Gift Cards</p>
-                  <p className="text-3xl font-bold text-white mt-2">{giftCards.length}</p>
+                  <p className="text-3xl font-bold text-white mt-2">{stats.total}</p>
                   <p className="text-yellow-200/70 text-xs mt-1 flex items-center gap-1">
                     <FaArrowUp className="text-xs" />
-                    {(() => {
-                      const now = new Date();
-                      const thisMonth = giftCards.filter(card => {
-                        const d = new Date(card.createdAt);
-                        return (
-                          d.getMonth() === now.getMonth() &&
-                          d.getFullYear() === now.getFullYear()
-                        );
-                      }).length;
-                      return `+${thisMonth} este mês`;
-                    })()}
+                    +{stats.thisMonthCount} este mês
                   </p>
                 </div>
                 <FaGift className="text-4xl text-yellow-200 opacity-70" />
@@ -552,7 +513,7 @@ export default function AdminDashboard() {
                 <div>
                   <p className="text-gold text-sm font-medium">Total Vendido</p>
                   <p className="text-3xl font-bold text-white mt-2">
-                    ${giftCards.reduce((sum, card) => sum + (card.amount / 100), 0).toFixed(2)}
+                    ${(stats.totalSold / 100).toFixed(2)}
                   </p>
                   <p className="text-grayMedium text-xs mt-1">Em gift cards</p>
                 </div>
@@ -568,19 +529,7 @@ export default function AdminDashboard() {
                 <div>
                   <p className="text-yellow-100 text-sm font-medium">Vendas este Mês</p>
                   <p className="text-3xl font-bold text-white mt-2">
-                    {(() => {
-                      const now = new Date();
-                      const monthTotal = giftCards
-                        .filter(card => {
-                          const d = new Date(card.createdAt);
-                          return (
-                            d.getMonth() === now.getMonth() &&
-                            d.getFullYear() === now.getFullYear()
-                          );
-                        })
-                        .reduce((sum, card) => sum + card.amount / 100, 0);
-                      return `$${monthTotal.toFixed(2)}`;
-                    })()}
+                    ${(stats.thisMonthSales / 100).toFixed(2)}
                   </p>
                   <p className="text-yellow-200/70 text-xs mt-1">Em gift cards</p>
                 </div>
@@ -596,12 +545,7 @@ export default function AdminDashboard() {
                 <div>
                   <p className="text-gold text-sm font-medium">Ticket Médio</p>
                   <p className="text-3xl font-bold text-white mt-2">
-                    {giftCards.length > 0
-                      ? `$${(
-                          giftCards.reduce((sum, card) => sum + card.amount / 100, 0) /
-                          giftCards.length
-                        ).toFixed(2)}`
-                      : '$0.00'}
+                    ${(stats.averageTicket / 100).toFixed(2)}
                   </p>
                   <p className="text-grayMedium text-xs mt-1">Por gift card</p>
                 </div>
@@ -617,7 +561,7 @@ export default function AdminDashboard() {
                 <div>
                   <p className="text-yellow-100 text-sm font-medium">Utilizados</p>
                   <p className="text-3xl font-bold text-white mt-2">
-                    {giftCards.filter(card => card.redeemed).length}
+                    {stats.redeemedCount}
                   </p>
                   <p className="text-yellow-200/70 text-xs mt-1">Serviço já realizado</p>
                 </div>
@@ -633,7 +577,7 @@ export default function AdminDashboard() {
                 <div>
                   <p className="text-gold text-sm font-medium">A Utilizar</p>
                   <p className="text-3xl font-bold text-white mt-2">
-                    {giftCards.filter(card => !card.redeemed && !card.cancelled).length}
+                    {stats.unredeemedCount}
                   </p>
                   <p className="text-grayMedium text-xs mt-1">Aguardando o cliente</p>
                 </div>
