@@ -82,9 +82,8 @@ export default function GiftCardPurchaseSimple({
       return;
     }
 
-    // TODO: TEMPORÁRIO — voltar para 25 após o teste
-    if (numericAmount < 1) {
-      fail('amount', t('minAmount') || 'Minimum amount is $1.');
+    if (numericAmount < 25) {
+      fail('amount', t('minAmount') || 'Minimum amount is $25.');
       return;
     }
 
@@ -187,7 +186,7 @@ export default function GiftCardPurchaseSimple({
                     value={amount}
                     onChange={handleInputChange}
                     className={`w-full rounded ${fieldBorder('amount')} p-2 pl-7 pr-14 text-background`}
-                    min="1"
+                    min="25"
                     step="0.01"
                     disabled={isProcessing}
                   />
