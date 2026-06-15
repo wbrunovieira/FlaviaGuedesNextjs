@@ -63,8 +63,9 @@ export default function GiftCardPurchaseSimple({
       return;
     }
 
-    if (numericAmount < 25) {
-      setError(t('minAmount') || 'Minimum amount is $25.');
+    // TODO: TEMPORÁRIO — voltar para 25 após o teste
+    if (numericAmount < 1) {
+      setError(t('minAmount') || 'Minimum amount is $1.');
       return;
     }
 
@@ -155,7 +156,7 @@ export default function GiftCardPurchaseSimple({
                 value={amount}
                 onChange={handleInputChange}
                 className="p-2 border rounded text-background"
-                min="25"
+                min="1"
                 disabled={isProcessing}
               />
               <input

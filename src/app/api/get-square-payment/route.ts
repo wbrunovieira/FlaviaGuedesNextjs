@@ -41,6 +41,7 @@ export async function GET(req: Request) {
       giftName: giftCard.giftName,
       phone: giftCard.phone,
       message: giftCard.message,
+      email: giftCard.email,
       amount: giftCard.amount,
       receiptUrl: giftCard.squareReceiptUrl,
       status: giftCard.paymentStatus,

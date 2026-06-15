@@ -26,6 +26,7 @@ interface GiftCardData {
   phone?: string;
   message?: string;
   amount: number; // em centavos
+  email?: string | null;
   stripePaymentId?: string | null;
 }
 
@@ -247,6 +248,15 @@ function SuccessContent() {
               </div>
             </div>
           </div>
+
+          {giftCard.email && (
+            <p className="mt-5 text-sm text-gold/90 text-center max-w-md">
+              ✉️ {t('emailSent')}{' '}
+              <strong className="text-white">
+                {giftCard.email}
+              </strong>
+            </p>
+          )}
 
           <div className="mt-6 flex flex-col sm:flex-row gap-4">
             <button

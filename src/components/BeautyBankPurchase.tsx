@@ -214,6 +214,13 @@ export default function BeautyBankPurchase({
             </div>
           </div>
 
+          {email && (
+            <p className="mx-auto mt-5 max-w-md text-sm text-gold/90">
+              ✉️ {t('emailSent')}{' '}
+              <strong className="text-white">{email}</strong>
+            </p>
+          )}
+
           <button
             onClick={handleDownloadCert}
             className="mx-auto mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 font-semibold text-background shadow-lg shadow-gold/20 transition-all duration-300 hover:bg-opacity-90"
