@@ -1,63 +1,37 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   filterGiftCards,
   sortGiftCards,
   giftCardStats,
 } from '@/lib/giftcard-stats';
+import type { GiftCard } from '@/types/giftcard';
+import StatsCards from '@/components/admin/StatsCards';
+import GiftCardItem from '@/components/admin/GiftCardItem';
+import RedeemModal from '@/components/admin/RedeemModal';
+import Pagination from '@/components/admin/Pagination';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
   FaGift,
-  FaPhone,
-  FaDollarSign,
-  FaCreditCard,
   FaCheckCircle,
   FaTimesCircle,
-  FaClock,
   FaSignOutAlt,
   FaCrown,
   FaExclamationTriangle,
   FaSpinner,
   FaCalendarAlt,
-  FaHashtag,
-  FaComment,
-  FaTrophy,
-  FaArrowUp,
   FaSearch,
   FaFilter,
   FaTrash,
   FaSortAmountDown,
-  FaSortAmountUp
+  FaSortAmountUp,
 } from 'react-icons/fa';
-import { MdPayment } from 'react-icons/md';
-import { HiSparkles, HiChevronDown, HiChevronUp } from 'react-icons/hi';
-import { BsCreditCard2Back } from 'react-icons/bs';
+import { HiSparkles } from 'react-icons/hi';
 import { RiVipCrownFill } from 'react-icons/ri';
 
 export default function AdminDashboard() {
-  interface GiftCard {
-    id: string;
-    name: string;
-    giftName: string;
-    phone?: string;
-    message?: string;
-    amount: number;
-    stripePaymentId?: string;
-    squarePaymentId?: string;
-    paid?: boolean;
-    cancelled?: boolean;
-    redeemed?: boolean;
-    redeemedAt?: string | null;
-    createdAt: string;
-    paymentMethod?: string;
-    cardBrand?: string;
-    cardLast4?: string;
-    cardType?: string;
-  }
-
   const [giftCards, setGiftCards] = useState<GiftCard[]>([]);
   const [filteredCards, setFilteredCards] = useState<GiftCard[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -249,41 +223,6 @@ export default function AdminDashboard() {
     setExpandedCards(newExpanded);
   };
 
-  const getPaymentIcon = (method?: string, brand?: string) => {
-    if (brand === 'VISA') return <BsCreditCard2Back className="text-blue-400" />;
-    if (brand === 'MASTERCARD') return <BsCreditCard2Back className="text-red-400" />;
-    if (brand === 'AMEX') return <BsCreditCard2Back className="text-blue-600" />;
-    return <FaCreditCard className="text-gold/70" />;
-  };
-
-  const getStatusBadge = (paid?: boolean, cancelled?: boolean, redeemed?: boolean) => {
-    if (cancelled) {
-      return (
-        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-red-900/30 text-red-400 border border-red-500/30">
-          <FaTimesCircle /> Cancelado
-        </span>
-      );
-    }
-    if (redeemed) {
-      return (
-        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-gold/20 text-gold border border-gold/50">
-          <FaCheckCircle /> Utilizado
-        </span>
-      );
-    }
-    if (paid) {
-      return (
-        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-green-900/30 text-green-400 border border-green-500/30">
-          <FaCheckCircle /> Pago
-        </span>
-      );
-    }
-    return (
-      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-yellow-900/30 text-gold border border-gold/50">
-        <FaClock /> Pendente
-      </span>
-    );
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-graphite to-background">
@@ -352,79 +291,14 @@ export default function AdminDashboard() {
       </div>
 
       {/* Modal: marcar gift card como utilizado */}
-      <AnimatePresence>
-        {redeemTarget && (
-          <motion.div
-            key="redeem-modal"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
-            onClick={() => !redeemSaving && setRedeemTarget(null)}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 24, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 24, scale: 0.96 }}
-              transition={{ duration: 0.25 }}
-              className="w-full max-w-sm rounded-xl border border-gold/40 bg-graphite p-6 shadow-2xl shadow-gold/10"
-              onClick={e => e.stopPropagation()}
-            >
-              <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-gold/15 p-2.5">
-                  <FaCheckCircle className="text-gold" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-white">Marcar como utilizado</h3>
-                  <p className="text-xs text-grayMedium">
-                    {redeemTarget.name} — ${(redeemTarget.amount / 100).toFixed(2)}
-                  </p>
-                </div>
-              </div>
-
-              <label
-                htmlFor="redeem-date"
-                className="mt-5 block text-xs font-medium text-grayMedium"
-              >
-                Data em que o serviço foi realizado
-              </label>
-              <input
-                id="redeem-date"
-                type="date"
-                value={redeemDate}
-                max={new Date().toISOString().slice(0, 10)}
-                onChange={e => setRedeemDate(e.target.value)}
-                className="mt-1.5 w-full rounded-lg border border-gold/30 bg-background px-4 py-2.5 text-white focus:border-gold/60 focus:outline-none [color-scheme:dark]"
-              />
-              <p className="mt-2 text-[11px] text-gray-500">
-                Se marcar errado, dá para desfazer depois no próprio card.
-              </p>
-
-              <div className="mt-6 flex gap-3">
-                <button
-                  onClick={handleConfirmRedeem}
-                  disabled={redeemSaving || !redeemDate}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-gold px-4 py-2.5 font-semibold text-background transition-all duration-300 hover:bg-opacity-90 disabled:opacity-50"
-                >
-                  {redeemSaving ? (
-                    <FaSpinner className="animate-spin" />
-                  ) : (
-                    <FaCheckCircle className="text-sm" />
-                  )}
-                  Salvar
-                </button>
-                <button
-                  onClick={() => setRedeemTarget(null)}
-                  disabled={redeemSaving}
-                  className="flex-1 rounded-lg border border-gold/30 px-4 py-2.5 font-medium text-gold transition-all duration-300 hover:bg-gold/10 disabled:opacity-50"
-                >
-                  Cancelar
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <RedeemModal
+        target={redeemTarget}
+        date={redeemDate}
+        saving={redeemSaving}
+        onDateChange={setRedeemDate}
+        onConfirm={handleConfirmRedeem}
+        onClose={() => setRedeemTarget(null)}
+      />
 
       {/* Animated background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
@@ -487,105 +361,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {/* Card 1 - Total Gift Cards */}
-          <Card className="bg-gradient-to-br from-gold to-yellow-600 border-0 shadow-xl hover:shadow-2xl hover:shadow-gold/30 transition-all duration-300 hover:scale-105">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-yellow-100 text-sm font-medium">Total Gift Cards</p>
-                  <p className="text-3xl font-bold text-white mt-2">{stats.total}</p>
-                  <p className="text-yellow-200/70 text-xs mt-1 flex items-center gap-1">
-                    <FaArrowUp className="text-xs" />
-                    +{stats.thisMonthCount} este mês
-                  </p>
-                </div>
-                <FaGift className="text-4xl text-yellow-200 opacity-70" />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Card 2 - Total Vendido */}
-          <Card className="bg-gradient-to-br from-graphite to-gray-800 border border-gold/30 shadow-xl hover:shadow-2xl hover:shadow-gold/20 transition-all duration-300 hover:scale-105">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gold text-sm font-medium">Total Vendido</p>
-                  <p className="text-3xl font-bold text-white mt-2">
-                    ${(stats.totalSold / 100).toFixed(2)}
-                  </p>
-                  <p className="text-grayMedium text-xs mt-1">Em gift cards</p>
-                </div>
-                <FaDollarSign className="text-4xl text-gold opacity-50" />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Card 3 - Vendas este mês */}
-          <Card className="bg-gradient-to-br from-gold/80 to-yellow-700 border-0 shadow-xl hover:shadow-2xl hover:shadow-gold/30 transition-all duration-300 hover:scale-105">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-yellow-100 text-sm font-medium">Vendas este Mês</p>
-                  <p className="text-3xl font-bold text-white mt-2">
-                    ${(stats.thisMonthSales / 100).toFixed(2)}
-                  </p>
-                  <p className="text-yellow-200/70 text-xs mt-1">Em gift cards</p>
-                </div>
-                <FaCheckCircle className="text-4xl text-yellow-200 opacity-70" />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Card 4 - Ticket Médio */}
-          <Card className="bg-gradient-to-br from-graphite to-gray-800 border border-gold/30 shadow-xl hover:shadow-2xl hover:shadow-gold/20 transition-all duration-300 hover:scale-105">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gold text-sm font-medium">Ticket Médio</p>
-                  <p className="text-3xl font-bold text-white mt-2">
-                    ${(stats.averageTicket / 100).toFixed(2)}
-                  </p>
-                  <p className="text-grayMedium text-xs mt-1">Por gift card</p>
-                </div>
-                <FaTrophy className="text-4xl text-gold opacity-50" />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Card 5 - Utilizados */}
-          <Card className="bg-gradient-to-br from-gold/80 to-yellow-700 border-0 shadow-xl hover:shadow-2xl hover:shadow-gold/30 transition-all duration-300 hover:scale-105">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-yellow-100 text-sm font-medium">Utilizados</p>
-                  <p className="text-3xl font-bold text-white mt-2">
-                    {stats.redeemedCount}
-                  </p>
-                  <p className="text-yellow-200/70 text-xs mt-1">Serviço já realizado</p>
-                </div>
-                <FaCheckCircle className="text-4xl text-yellow-200 opacity-70" />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Card 6 - A Utilizar */}
-          <Card className="bg-gradient-to-br from-graphite to-gray-800 border border-gold/30 shadow-xl hover:shadow-2xl hover:shadow-gold/20 transition-all duration-300 hover:scale-105">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gold text-sm font-medium">A Utilizar</p>
-                  <p className="text-3xl font-bold text-white mt-2">
-                    {stats.unredeemedCount}
-                  </p>
-                  <p className="text-grayMedium text-xs mt-1">Aguardando o cliente</p>
-                </div>
-                <FaClock className="text-4xl text-gold opacity-50" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <StatsCards stats={stats} />
 
         {/* Content */}
         {loading ? (
@@ -769,214 +545,27 @@ export default function AdminDashboard() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {paginatedCards.map(giftCard => (
-              <Card
+              <GiftCardItem
                 key={giftCard.id}
-                className={`relative overflow-hidden backdrop-blur-md shadow-xl transition-all duration-300 ${
-                  giftCard.redeemed
-                    ? 'bg-gold/[0.08] border-2 border-gold/70 shadow-gold/10 hover:shadow-gold/25'
-                    : 'bg-graphite/80 border border-gold/30 hover:shadow-2xl hover:border-gold/50'
-                }`}
-              >
-                {giftCard.redeemed && (
-                  <div className="pointer-events-none absolute -left-12 top-6 -rotate-45 bg-gold px-12 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-background shadow-lg">
-                    Utilizado
-                  </div>
-                )}
-                <CardContent className="p-6">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-start gap-4">
-                      <div className="p-2 bg-gradient-to-r from-gold/30 to-yellow-600/30 rounded-lg">
-                        <FaGift className="text-2xl text-gold" />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="text-lg font-semibold text-white">{giftCard.name}</h3>
-                          {getStatusBadge(giftCard.paid, giftCard.cancelled, giftCard.redeemed)}
-                        </div>
-                        <p className="text-sm text-grayMedium">Para: {giftCard.giftName || 'Não especificado'}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <button
-                        onClick={() => setConfirmTarget(giftCard)}
-                        disabled={deletingId === giftCard.id}
-                        title="Excluir transação"
-                        className="p-2 hover:bg-red-500/20 rounded-lg transition-colors group disabled:opacity-50"
-                      >
-                        {deletingId === giftCard.id ? (
-                          <FaSpinner className="text-lg text-red-400 animate-spin" />
-                        ) : (
-                          <FaTrash className="text-lg text-red-400/60 group-hover:text-red-400 transition-colors" />
-                        )}
-                      </button>
-                      <button
-                        onClick={() => toggleCardExpansion(giftCard.id)}
-                        className="p-2 hover:bg-gold/20 rounded-lg transition-colors"
-                      >
-                        {expandedCards.has(giftCard.id) ? (
-                          <HiChevronUp className="text-xl text-gold" />
-                        ) : (
-                          <HiChevronDown className="text-xl text-gold" />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Main Info */}
-                  <div className="grid grid-cols-1 gap-3">
-                    <div className="flex items-center gap-3">
-                      <FaDollarSign className="text-gold" />
-                      <div>
-                        <p className="text-xs text-gray-500">Valor</p>
-                        <p className="text-lg font-semibold text-white">
-                          ${(giftCard.amount / 100).toFixed(2)}
-                        </p>
-                      </div>
-                    </div>
-
-                    {giftCard.cardBrand && (
-                      <div className="flex items-center gap-3">
-                        {getPaymentIcon(giftCard.paymentMethod, giftCard.cardBrand)}
-                        <div>
-                          <p className="text-xs text-gray-500">Pagamento</p>
-                          <p className="text-sm font-medium text-white">
-                            {giftCard.cardBrand} ****{giftCard.cardLast4}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="flex items-center gap-3">
-                      <FaCalendarAlt className="text-gold/70" />
-                      <div>
-                        <p className="text-xs text-gray-500">Data</p>
-                        <p className="text-sm font-medium text-white">
-                          {new Date(giftCard.createdAt).toLocaleDateString('pt-BR')}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Uso do gift card */}
-                  {!giftCard.cancelled && (
-                    giftCard.redeemed ? (
-                      <div className="mt-4 flex items-center justify-between rounded-lg border border-gold/30 bg-gold/10 px-3 py-2">
-                        <span className="text-xs text-gold">
-                          Utilizado em{' '}
-                          {giftCard.redeemedAt
-                            ? new Date(giftCard.redeemedAt).toLocaleDateString('pt-BR')
-                            : '—'}
-                        </span>
-                        <button
-                          onClick={() => handleUndoRedeem(giftCard)}
-                          className="text-xs text-grayMedium underline transition-colors hover:text-gold"
-                          title="Desfazer marcação de uso"
-                        >
-                          Desfazer
-                        </button>
-                      </div>
-                    ) : (
-                      <button
-                        onClick={() => openRedeemModal(giftCard)}
-                        className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-gold/40 px-3 py-2 text-sm font-medium text-gold transition-all duration-300 hover:border-gold hover:bg-gold/10"
-                      >
-                        <FaCheckCircle className="text-xs" />
-                        Marcar como utilizado
-                      </button>
-                    )
-                  )}
-
-                  {/* Expanded Details */}
-                  {expandedCards.has(giftCard.id) && (
-                    <div className="pt-4 border-t border-gold/20 space-y-3 animate-fadeIn">
-                      {giftCard.phone && (
-                        <div className="flex items-center gap-3">
-                          <FaPhone className="text-sm text-gold/50" />
-                          <span className="text-sm text-grayMedium">{giftCard.phone}</span>
-                        </div>
-                      )}
-
-                      {giftCard.message && (
-                        <div className="flex items-start gap-3">
-                          <FaComment className="text-sm text-gold/50 mt-1" />
-                          <p className="text-sm text-grayMedium">{giftCard.message}</p>
-                        </div>
-                      )}
-
-                      <div className="flex items-center gap-3">
-                        <FaHashtag className="text-sm text-gold/50" />
-                        <span className="text-xs text-gray-600 font-mono">
-                          {giftCard.squarePaymentId || giftCard.stripePaymentId || giftCard.id}
-                        </span>
-                      </div>
-
-                      {giftCard.paymentMethod && (
-                        <div className="flex items-center gap-3">
-                          <MdPayment className="text-sm text-gold/50" />
-                          <span className="text-sm text-grayMedium">
-                            Método: {giftCard.paymentMethod} {giftCard.cardType && `(${giftCard.cardType})`}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+                card={giftCard}
+                expanded={expandedCards.has(giftCard.id)}
+                deleting={deletingId === giftCard.id}
+                onToggleExpand={toggleCardExpansion}
+                onDelete={setConfirmTarget}
+                onRedeem={openRedeemModal}
+                onUndoRedeem={handleUndoRedeem}
+              />
             ))}
             </div>
 
             {/* Paginação */}
-            {totalPages > 1 && (
-              <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p className="text-sm text-grayMedium">
-                  Mostrando{' '}
-                  {(currentPage - 1) * ITEMS_PER_PAGE + 1}–
-                  {Math.min(currentPage * ITEMS_PER_PAGE, filteredCards.length)}{' '}
-                  de {filteredCards.length} transações
-                </p>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                    disabled={currentPage === 1}
-                    className="px-4 py-2 rounded-lg border border-gold/30 text-gold text-sm font-medium transition-all duration-300 hover:bg-gold/10 disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    Anterior
-                  </button>
-                  {Array.from({ length: totalPages }, (_, i) => i + 1)
-                    .filter(
-                      page =>
-                        page === 1 ||
-                        page === totalPages ||
-                        Math.abs(page - currentPage) <= 1
-                    )
-                    .map((page, idx, pages) => (
-                      <React.Fragment key={page}>
-                        {idx > 0 && pages[idx - 1] !== page - 1 && (
-                          <span className="text-grayMedium px-1">…</span>
-                        )}
-                        <button
-                          onClick={() => setCurrentPage(page)}
-                          className={`h-9 w-9 rounded-lg text-sm font-medium transition-all duration-300 ${
-                            currentPage === page
-                              ? 'bg-gold text-background'
-                              : 'border border-gold/30 text-gold hover:bg-gold/10'
-                          }`}
-                        >
-                          {page}
-                        </button>
-                      </React.Fragment>
-                    ))}
-                  <button
-                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                    disabled={currentPage === totalPages}
-                    className="px-4 py-2 rounded-lg border border-gold/30 text-gold text-sm font-medium transition-all duration-300 hover:bg-gold/10 disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    Próxima
-                  </button>
-                </div>
-              </div>
-            )}
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              itemsPerPage={ITEMS_PER_PAGE}
+              totalItems={filteredCards.length}
+              onPageChange={setCurrentPage}
+            />
           </div>
         )}
       </div>
