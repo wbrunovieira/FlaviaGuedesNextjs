@@ -6,6 +6,12 @@ import {
   doc,
 } from './../../../../firebase-config';
 import { getTier } from '@/lib/beauty-bank-tiers';
+import {
+  buildBeautyBankBuyerEmail,
+  buildOwnerBeautyBankNotification,
+} from '@/lib/email';
+import { sendEmail } from '@/lib/send-email';
+import { renderBeautyBankImage } from '@/lib/certificate-image';
 
 const isProduction =
   process.env.NODE_ENV === 'production' ||
@@ -14,7 +20,8 @@ const isProduction =
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { tier, name, phone, email, sourceId } = body;
+    const { tier, name, phone, email, locale, sourceId } =
+      body;
 
     const selectedTier = getTier(String(tier));
     if (!selectedTier) {
@@ -122,6 +129,40 @@ export async function POST(req: Request) {
       doc(db, 'beautyBank', payment.id),
       accountData
     );
+
+    // Emails (never block the purchase if they fail)
+    try {
+      const buyer = buildBeautyBankBuyerEmail({
+        buyerEmail: email,
+        name,
+        depositCents: selectedTier.deposit,
+        creditCents: selectedTier.credit,
+        locale,
+      });
+      if (buyer) {
+        const png = await renderBeautyBankImage({
+          creditCents: selectedTier.credit,
+          depositCents: selectedTier.deposit,
+          name,
+        });
+        await sendEmail(buyer, [
+          { filename: 'beauty-bank.png', content: png },
+        ]);
+      }
+      await sendEmail(
+        buildOwnerBeautyBankNotification({
+          name,
+          depositCents: selectedTier.deposit,
+          creditCents: selectedTier.credit,
+          buyerEmail: email,
+        })
+      );
+    } catch (mailErr) {
+      console.error(
+        '[email] beauty bank emails failed:',
+        mailErr
+      );
+    }
 
     return NextResponse.json(
       {

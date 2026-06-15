@@ -5,6 +5,12 @@ import {
   setDoc,
   doc,
 } from './../../../../firebase-config';
+import {
+  buildGiftCardBuyerEmail,
+  buildOwnerGiftCardNotification,
+} from '@/lib/email';
+import { sendEmail } from '@/lib/send-email';
+import { renderGiftCardImage } from '@/lib/certificate-image';
 
 // Determine if we're in production
 const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
@@ -19,6 +25,8 @@ export async function POST(req: Request) {
       giftName,
       phone,
       message,
+      email,
+      locale,
       sourceId,
     } = body;
 
@@ -113,6 +121,7 @@ export async function POST(req: Request) {
       paymentStatus: payment.status,
       paid: payment.status === 'COMPLETED', // Add paid boolean field
       cancelled: false,
+      email: email || null,
       // Payment method details
       paymentMethod: payment.source_type || 'UNKNOWN',
       cardBrand: payment.card_details?.card?.card_brand || null,
@@ -126,6 +135,42 @@ export async function POST(req: Request) {
       doc(db, 'giftCards', payment.id),
       giftCardData
     );
+
+    // Emails (never block the purchase if they fail)
+    try {
+      const buyer = buildGiftCardBuyerEmail({
+        buyerEmail: email,
+        name,
+        giftName,
+        amountCents: amount,
+        message,
+        locale,
+      });
+      if (buyer) {
+        const png = await renderGiftCardImage({
+          amountCents: amount,
+          name,
+          giftName,
+          message,
+        });
+        await sendEmail(buyer, [
+          { filename: 'gift-card.png', content: png },
+        ]);
+      }
+      await sendEmail(
+        buildOwnerGiftCardNotification({
+          name,
+          giftName,
+          amountCents: amount,
+          buyerEmail: email,
+        })
+      );
+    } catch (mailErr) {
+      console.error(
+        '[email] gift card emails failed:',
+        mailErr
+      );
+    }
 
     return NextResponse.json({
       success: true,

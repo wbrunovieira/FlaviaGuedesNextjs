@@ -281,7 +281,8 @@
     "minAmount": "The minimum amount is $25.",
     "processing": "Processing payment...",
     "policyNote": "By purchasing, you agree to our",
-    "policyLink": "Gift Card Policy"
+    "policyLink": "Gift Card Policy",
+    "emailPlaceholder": "Your email (to receive the card)"
   },
   "GiftCardSuccess": {
     "successTitle": "Payment Successful!",

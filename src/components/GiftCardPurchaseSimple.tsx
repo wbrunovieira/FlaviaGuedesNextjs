@@ -23,6 +23,7 @@ export default function GiftCardPurchaseSimple({
   const [name, setName] = useState<string>('');
   const [giftName, setGiftName] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [message, setMessage] = useState<string>('');
   const [showInput, setShowInput] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -88,6 +89,7 @@ export default function GiftCardPurchaseSimple({
             name,
             giftName,
             phone,
+            email,
             message,
             sourceId: result.token,
           }),
@@ -167,6 +169,14 @@ export default function GiftCardPurchaseSimple({
                 placeholder={t('phonePlaceholder') || 'Your phone (optional)'}
                 value={phone}
                 onChange={e => setPhone(e.target.value)}
+                className="p-2 border rounded text-background"
+                disabled={isProcessing}
+              />
+              <input
+                type="email"
+                placeholder={t('emailPlaceholder') || 'Your email (to receive the card)'}
+                value={email}
+                onChange={e => setEmail(e.target.value)}
                 className="p-2 border rounded text-background"
                 disabled={isProcessing}
               />

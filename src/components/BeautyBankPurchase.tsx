@@ -72,6 +72,7 @@ export default function BeautyBankPurchase({
           name,
           phone,
           email,
+          locale,
           sourceId: result.token,
         }),
       });

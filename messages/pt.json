@@ -281,7 +281,8 @@
     "minAmount": "O valor mínimo é de $25.",
     "processing": "Processando pagamento...",
     "policyNote": "Ao comprar, você concorda com a nossa",
-    "policyLink": "Política de Gift Card"
+    "policyLink": "Política de Gift Card",
+    "emailPlaceholder": "Seu e-mail (para receber o cartão)"
   },
   "GiftCardSuccess": {
     "successTitle": "Pagamento Realizado com Sucesso!",
