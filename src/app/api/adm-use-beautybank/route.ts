@@ -3,17 +3,23 @@ import { NextResponse } from 'next/server';
 import {
   db,
   doc,
-  getDoc,
-  updateDoc,
+  runTransaction,
 } from './../../../../firebase-config';
+import {
+  applyDeduction,
+  applyUndo,
+  type Transaction,
+} from '@/lib/beauty-bank';
 
-type Transaction = {
-  txId: string;
-  amount: number; // cents deducted
-  note: string | null;
-  date: string;
-  createdAt: string;
-};
+// Carries an HTTP status out of the Firestore transaction callback
+class HttpError extends Error {
+  constructor(
+    public status: number,
+    message: string
+  ) {
+    super(message);
+  }
+}
 
 export async function POST(req: Request) {
   try {
@@ -31,81 +37,67 @@ export async function POST(req: Request) {
     }
 
     const ref = doc(db, 'beautyBank', id);
-    const snap = await getDoc(ref);
-    if (!snap.exists()) {
-      return NextResponse.json(
-        { error: 'Account not found' },
-        { status: 404 }
-      );
-    }
 
-    const data = snap.data();
-    const balance: number = data.balance ?? 0;
-    const transactions: Transaction[] =
-      data.transactions ?? [];
+    // Atomic read-modify-write: prevents lost updates on concurrent edits
+    const newBalance = await runTransaction(
+      db,
+      async tx => {
+        const snap = await tx.get(ref);
+        if (!snap.exists()) {
+          throw new HttpError(404, 'Account not found');
+        }
+        const data = snap.data();
+        const credit: number = data.credit ?? 0;
+        const transactions: Transaction[] =
+          data.transactions ?? [];
 
-    if (action === 'remove') {
-      const { txId } = body as { txId?: string };
-      const tx = transactions.find(t => t.txId === txId);
-      if (!tx) {
-        return NextResponse.json(
-          { error: 'Transaction not found' },
-          { status: 404 }
-        );
+        if (action === 'remove') {
+          const result = applyUndo(
+            credit,
+            transactions,
+            String(body.txId)
+          );
+          if (!result.ok) {
+            throw new HttpError(404, result.error);
+          }
+          tx.update(ref, {
+            transactions: result.transactions,
+            balance: result.balance,
+            updatedAt: new Date(),
+          });
+          return result.balance;
+        }
+
+        const result = applyDeduction({
+          credit,
+          transactions,
+          amountDollars: Number(body.amount),
+          note: body.note,
+          date: body.date,
+        });
+        if (!result.ok) {
+          throw new HttpError(400, result.error);
+        }
+        tx.update(ref, {
+          transactions: result.transactions,
+          balance: result.balance,
+          updatedAt: new Date(),
+        });
+        return result.balance;
       }
-      const newTransactions = transactions.filter(
-        t => t.txId !== txId
-      );
-      const newBalance = balance + tx.amount;
-      await updateDoc(ref, {
-        transactions: newTransactions,
-        balance: newBalance,
-        updatedAt: new Date(),
-      });
-      return NextResponse.json(
-        { success: true, balance: newBalance },
-        { status: 200 }
-      );
-    }
+    );
 
-    // action === 'add'
-    const amountDollars = Number(body.amount);
-    if (!amountDollars || amountDollars <= 0) {
-      return NextResponse.json(
-        { error: 'Invalid amount' },
-        { status: 400 }
-      );
-    }
-    const amount = Math.round(amountDollars * 100);
-    if (amount > balance) {
-      return NextResponse.json(
-        { error: 'Amount exceeds remaining balance' },
-        { status: 400 }
-      );
-    }
-
-    const tx: Transaction = {
-      txId: `${Date.now()}-${Math.random()
-        .toString(36)
-        .substring(7)}`,
-      amount,
-      note: body.note || null,
-      date: body.date
-        ? new Date(`${body.date}T12:00:00`).toISOString()
-        : new Date().toISOString(),
-      createdAt: new Date().toISOString(),
-    };
-    const newBalance = balance - amount;
-    await updateDoc(ref, {
-      transactions: [...transactions, tx],
-      balance: newBalance,
-      updatedAt: new Date(),
-    });
     return NextResponse.json(
-      { success: true, balance: newBalance, tx },
+      { success: true, balance: newBalance },
       { status: 200 }
     );
   } catch (error: unknown) {
+    if (error instanceof HttpError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.status }
+      );
+    }
     const msg =
       error instanceof Error ? error.message : 'Unknown error';
     console.error(

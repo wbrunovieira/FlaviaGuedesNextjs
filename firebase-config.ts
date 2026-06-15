@@ -12,6 +12,7 @@ import {
   query,
   where,
   orderBy,
+  runTransaction,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -41,4 +42,5 @@ export {
   query,
   where,
   orderBy,
+  runTransaction,
 };
