@@ -37,7 +37,25 @@ export default function BeautyBankPurchase({
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+  const [errorField, setErrorField] = useState<
+    'name' | 'email' | ''
+  >('');
   const [isProcessing, setIsProcessing] = useState(false);
+
+  const fail = (field: 'name' | 'email' | '', message: string) => {
+    setErrorField(field);
+    setError(message);
+  };
+
+  const fieldBorder = (field: 'name' | 'email') =>
+    errorField === field
+      ? 'border-2 border-red-500 focus:border-red-500'
+      : 'border';
+
+  const clearError = () => {
+    if (error) setError('');
+    if (errorField) setErrorField('');
+  };
   const [done, setDone] = useState(false);
   const [purchasedCredit, setPurchasedCredit] =
     useState<number | null>(null);
@@ -53,25 +71,27 @@ export default function BeautyBankPurchase({
   const handlePay = async () => {
     if (!selectedTier) return;
     if (!name.trim()) {
-      setError(t('invalidName'));
+      fail('name', t('invalidName'));
       return;
     }
     if (!email.trim()) {
-      setError(t('emailRequired'));
+      fail('email', t('emailRequired'));
       return;
     }
     if (!isValidEmail(email)) {
-      setError(t('emailInvalid'));
+      fail('email', t('emailInvalid'));
       return;
     }
     if (!card) {
-      setError(
+      fail(
+        '',
         squareError ||
           'Payment form is still loading, please wait a moment.'
       );
       return;
     }
     setError('');
+    setErrorField('');
     setIsProcessing(true);
     try {
       const result = await card.tokenize();
@@ -344,8 +364,11 @@ export default function BeautyBankPurchase({
               type="text"
               placeholder={t('namePlaceholder')}
               value={name}
-              onChange={e => setName(e.target.value)}
-              className="rounded border bg-background p-2 text-white placeholder-grayMedium"
+              onChange={e => {
+                setName(e.target.value);
+                clearError();
+              }}
+              className={`rounded ${fieldBorder('name')} bg-background p-2 text-white placeholder-grayMedium`}
               disabled={isProcessing}
             />
             <input
@@ -360,8 +383,11 @@ export default function BeautyBankPurchase({
               type="email"
               placeholder={t('emailPlaceholder')}
               value={email}
-              onChange={e => setEmail(e.target.value)}
-              className="rounded border bg-background p-2 text-white placeholder-grayMedium"
+              onChange={e => {
+                setEmail(e.target.value);
+                clearError();
+              }}
+              className={`rounded ${fieldBorder('email')} bg-background p-2 text-white placeholder-grayMedium`}
               disabled={isProcessing}
             />
 

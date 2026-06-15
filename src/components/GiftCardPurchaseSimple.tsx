@@ -30,7 +30,29 @@ export default function GiftCardPurchaseSimple({
   const [message, setMessage] = useState<string>('');
   const [showInput, setShowInput] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
+  const [errorField, setErrorField] = useState<
+    'amount' | 'name' | 'email' | ''
+  >('');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
+
+  const fail = (
+    field: 'amount' | 'name' | 'email' | '',
+    message: string
+  ) => {
+    setErrorField(field);
+    setError(message);
+  };
+
+  // Red border + ring when this field failed validation
+  const fieldBorder = (field: 'amount' | 'name' | 'email') =>
+    errorField === field
+      ? 'border-2 border-red-500 focus:border-red-500'
+      : 'border';
+
+  const clearError = () => {
+    if (error) setError('');
+    if (errorField) setErrorField('');
+  };
 
   const { card, error: squareError } = useSquareCard(
     showInput,
@@ -56,36 +78,37 @@ export default function GiftCardPurchaseSimple({
   const handlePayment = async () => {
     const numericAmount = Number(amount);
     if (isNaN(numericAmount) || numericAmount <= 0) {
-      setError(t('invalidAmount') || 'Please enter a valid amount greater than zero.');
+      fail('amount', t('invalidAmount') || 'Please enter a valid amount greater than zero.');
       return;
     }
 
     // TODO: TEMPORÁRIO — voltar para 25 após o teste
     if (numericAmount < 1) {
-      setError(t('minAmount') || 'Minimum amount is $1.');
+      fail('amount', t('minAmount') || 'Minimum amount is $1.');
       return;
     }
 
     if (!name.trim()) {
-      setError(t('invalidName') || 'Please enter your name.');
+      fail('name', t('invalidName') || 'Please enter your name.');
       return;
     }
 
     if (!email.trim()) {
-      setError(t('emailRequired') || 'Please enter your email to receive the card.');
+      fail('email', t('emailRequired') || 'Please enter your email to receive the card.');
       return;
     }
     if (!isValidEmail(email)) {
-      setError(t('emailInvalid') || "That email doesn't look right.");
+      fail('email', t('emailInvalid') || "That email doesn't look right.");
       return;
     }
 
     if (!card) {
-      setError(squareError || 'Payment form is still loading, please wait a moment.');
+      fail('', squareError || 'Payment form is still loading, please wait a moment.');
       return;
     }
 
     setError('');
+    setErrorField('');
     setIsProcessing(true);
 
     try {
@@ -128,7 +151,7 @@ export default function GiftCardPurchaseSimple({
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setAmount(e.target.value);
-    if (error) setError('');
+    clearError();
   };
 
   return (
@@ -163,7 +186,7 @@ export default function GiftCardPurchaseSimple({
                     placeholder={t('inputPlaceholder') || '0.00'}
                     value={amount}
                     onChange={handleInputChange}
-                    className="w-full rounded border p-2 pl-7 pr-14 text-background"
+                    className={`w-full rounded ${fieldBorder('amount')} p-2 pl-7 pr-14 text-background`}
                     min="1"
                     step="0.01"
                     disabled={isProcessing}
@@ -180,8 +203,11 @@ export default function GiftCardPurchaseSimple({
                 type="text"
                 placeholder={t('namePlaceholder') || 'Your name'}
                 value={name}
-                onChange={e => setName(e.target.value)}
-                className="p-2 border rounded text-background"
+                onChange={e => {
+                  setName(e.target.value);
+                  clearError();
+                }}
+                className={`p-2 ${fieldBorder('name')} rounded text-background`}
                 disabled={isProcessing}
               />
               <input
@@ -204,8 +230,11 @@ export default function GiftCardPurchaseSimple({
                 type="email"
                 placeholder={t('emailPlaceholder') || 'Your email (to receive the card)'}
                 value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="p-2 border rounded text-background"
+                onChange={e => {
+                  setEmail(e.target.value);
+                  clearError();
+                }}
+                className={`p-2 ${fieldBorder('email')} rounded text-background`}
                 disabled={isProcessing}
               />
               <div className="flex flex-col gap-1">
