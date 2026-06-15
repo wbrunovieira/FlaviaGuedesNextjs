@@ -9,7 +9,7 @@ import {
   buildGiftCardBuyerEmail,
   buildOwnerGiftCardNotification,
 } from '@/lib/email';
-import { sendEmail } from '@/lib/send-email';
+import { sendPurchaseEmails } from '@/lib/send-purchase-emails';
 import { renderGiftCardImage } from '@/lib/certificate-image';
 
 // Determine if we're in production
@@ -136,39 +136,47 @@ export async function POST(req: Request) {
       giftCardData
     );
 
-    // Emails (never block the purchase if they fail)
-    try {
-      const buyer = buildGiftCardBuyerEmail({
+    // Emails (never block the purchase if they fail). The status is persisted
+    // below so failures are visible in the DB, not just in ephemeral logs.
+    const emailStatus = await sendPurchaseEmails({
+      label: 'gift card',
+      buyer: buildGiftCardBuyerEmail({
         buyerEmail: email,
         name,
         giftName,
         amountCents: amount,
         message,
         locale,
-      });
-      if (buyer) {
-        const png = await renderGiftCardImage({
-          amountCents: amount,
-          name,
-          giftName,
-          message,
-        });
-        await sendEmail(buyer, [
-          { filename: 'gift-card.png', content: png },
-        ]);
-      }
-      await sendEmail(
-        buildOwnerGiftCardNotification({
-          name,
-          giftName,
-          amountCents: amount,
-          buyerEmail: email,
-        })
+      }),
+      owner: buildOwnerGiftCardNotification({
+        name,
+        giftName,
+        amountCents: amount,
+        buyerEmail: email,
+      }),
+      attachment: {
+        filename: 'gift-card.png',
+        render: () =>
+          renderGiftCardImage({
+            amountCents: amount,
+            name,
+            giftName,
+            message,
+          }),
+      },
+    });
+
+    // Best-effort: record the email outcome on the gift card document
+    try {
+      await setDoc(
+        doc(db, 'giftCards', payment.id),
+        { emailStatus },
+        { merge: true }
       );
-    } catch (mailErr) {
+    } catch (persistErr) {
       console.error(
-        '[email] gift card emails failed:',
-        mailErr
+        '[email] failed to persist gift card email status:',
+        persistErr
       );
     }
 

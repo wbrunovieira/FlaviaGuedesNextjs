@@ -90,7 +90,7 @@ export async function renderGiftCardImage(d: {
               marginTop: 18,
             }}
           >
-            “{d.message}”
+            {`“${d.message}”`}
           </div>
         ) : null}
         <div
@@ -100,8 +100,9 @@ export async function renderGiftCardImage(d: {
             marginTop: 22,
           }}
         >
-          {d.name}
-          {d.giftName ? `  →  ${d.giftName}` : ''}
+          {d.giftName
+            ? `${d.name}  →  ${d.giftName}`
+            : d.name}
         </div>
       </div>
     )

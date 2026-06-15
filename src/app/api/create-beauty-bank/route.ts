@@ -10,7 +10,7 @@ import {
   buildBeautyBankBuyerEmail,
   buildOwnerBeautyBankNotification,
 } from '@/lib/email';
-import { sendEmail } from '@/lib/send-email';
+import { sendPurchaseEmails } from '@/lib/send-purchase-emails';
 import { renderBeautyBankImage } from '@/lib/certificate-image';
 
 const isProduction =
@@ -130,37 +130,45 @@ export async function POST(req: Request) {
       accountData
     );
 
-    // Emails (never block the purchase if they fail)
-    try {
-      const buyer = buildBeautyBankBuyerEmail({
+    // Emails (never block the purchase if they fail). The status is persisted
+    // below so failures are visible in the DB, not just in ephemeral logs.
+    const emailStatus = await sendPurchaseEmails({
+      label: 'beauty bank',
+      buyer: buildBeautyBankBuyerEmail({
         buyerEmail: email,
         name,
         depositCents: selectedTier.deposit,
         creditCents: selectedTier.credit,
         locale,
-      });
-      if (buyer) {
-        const png = await renderBeautyBankImage({
-          creditCents: selectedTier.credit,
-          depositCents: selectedTier.deposit,
-          name,
-        });
-        await sendEmail(buyer, [
-          { filename: 'beauty-bank.png', content: png },
-        ]);
-      }
-      await sendEmail(
-        buildOwnerBeautyBankNotification({
-          name,
-          depositCents: selectedTier.deposit,
-          creditCents: selectedTier.credit,
-          buyerEmail: email,
-        })
+      }),
+      owner: buildOwnerBeautyBankNotification({
+        name,
+        depositCents: selectedTier.deposit,
+        creditCents: selectedTier.credit,
+        buyerEmail: email,
+      }),
+      attachment: {
+        filename: 'beauty-bank.png',
+        render: () =>
+          renderBeautyBankImage({
+            creditCents: selectedTier.credit,
+            depositCents: selectedTier.deposit,
+            name,
+          }),
+      },
+    });
+
+    // Best-effort: record the email outcome on the account document
+    try {
+      await setDoc(
+        doc(db, 'beautyBank', payment.id),
+        { emailStatus },
+        { merge: true }
       );
-    } catch (mailErr) {
+    } catch (persistErr) {
       console.error(
-        '[email] beauty bank emails failed:',
-        mailErr
+        '[email] failed to persist beauty bank email status:',
+        persistErr
       );
     }
 
