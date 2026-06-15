@@ -51,7 +51,7 @@ export default function BeautyBankPurchase({
   const terms = t.raw('terms') as string[];
 
   const handlePay = async () => {
-    if (!card || !selectedTier) return;
+    if (!selectedTier) return;
     if (!name.trim()) {
       setError(t('invalidName'));
       return;
@@ -62,6 +62,13 @@ export default function BeautyBankPurchase({
     }
     if (!isValidEmail(email)) {
       setError(t('emailInvalid'));
+      return;
+    }
+    if (!card) {
+      setError(
+        squareError ||
+          'Payment form is still loading, please wait a moment.'
+      );
       return;
     }
     setError('');

@@ -15,6 +15,8 @@ type GiftCardPurchaseProps = {
   id?: string;
 };
 
+const MAX_MESSAGE = 200;
+
 export default function GiftCardPurchaseSimple({
   id = 'giftcard',
 }: GiftCardPurchaseProps) {
@@ -52,11 +54,6 @@ export default function GiftCardPurchaseSimple({
   }, []);
 
   const handlePayment = async () => {
-    if (!card) {
-      setError('Payment method not ready');
-      return;
-    }
-
     const numericAmount = Number(amount);
     if (isNaN(numericAmount) || numericAmount <= 0) {
       setError(t('invalidAmount') || 'Please enter a valid amount greater than zero.');
@@ -80,6 +77,11 @@ export default function GiftCardPurchaseSimple({
     }
     if (!isValidEmail(email)) {
       setError(t('emailInvalid') || "That email doesn't look right.");
+      return;
+    }
+
+    if (!card) {
+      setError(squareError || 'Payment form is still loading, please wait a moment.');
       return;
     }
 
@@ -150,15 +152,30 @@ export default function GiftCardPurchaseSimple({
         <div className="flex flex-col gap-4">
           {showInput && (
             <>
-              <input
-                type="number"
-                placeholder={t('inputPlaceholder') || 'Enter amount in USD'}
-                value={amount}
-                onChange={handleInputChange}
-                className="p-2 border rounded text-background"
-                min="1"
-                disabled={isProcessing}
-              />
+              <div className="flex flex-col gap-1">
+                <div className="relative">
+                  <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-semibold text-background/70">
+                    $
+                  </span>
+                  <input
+                    type="number"
+                    inputMode="decimal"
+                    placeholder={t('inputPlaceholder') || '0.00'}
+                    value={amount}
+                    onChange={handleInputChange}
+                    className="w-full rounded border p-2 pl-7 pr-14 text-background"
+                    min="1"
+                    step="0.01"
+                    disabled={isProcessing}
+                  />
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-background/60">
+                    USD
+                  </span>
+                </div>
+                <span className="pl-1 text-xs text-grayMedium">
+                  {t('amountHint') || 'Amount in US dollars'}
+                </span>
+              </div>
               <input
                 type="text"
                 placeholder={t('namePlaceholder') || 'Your name'}
@@ -191,14 +208,29 @@ export default function GiftCardPurchaseSimple({
                 className="p-2 border rounded text-background"
                 disabled={isProcessing}
               />
-              <input
-                type="text"
-                placeholder={t('messagePlaceholder') || 'Custom message (optional)'}
-                value={message}
-                onChange={e => setMessage(e.target.value)}
-                className="p-2 border rounded text-background"
-                disabled={isProcessing}
-              />
+              <div className="flex flex-col gap-1">
+                <textarea
+                  placeholder={t('messagePlaceholder') || 'Custom message (optional)'}
+                  value={message}
+                  onChange={e =>
+                    setMessage(e.target.value.slice(0, MAX_MESSAGE))
+                  }
+                  rows={4}
+                  maxLength={MAX_MESSAGE}
+                  className="w-full resize-none rounded border p-2 text-background"
+                  disabled={isProcessing}
+                />
+                <span
+                  className={`self-end pr-1 text-xs ${
+                    message.length >= MAX_MESSAGE
+                      ? 'text-red-500'
+                      : 'text-grayMedium'
+                  }`}
+                >
+                  {MAX_MESSAGE - message.length}{' '}
+                  {t('charsRemaining') || 'characters remaining'}
+                </span>
+              </div>
 
               {/* Square Card Container */}
               <div id="card-container" className="min-h-[90px] border border-gray-300 rounded p-2">
