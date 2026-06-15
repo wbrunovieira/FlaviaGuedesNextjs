@@ -1,6 +1,11 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  Suspense,
+} from 'react';
 import {
   useSearchParams,
   useRouter,
@@ -25,6 +30,14 @@ interface GiftCardData {
 }
 
 export default function SuccessPage() {
+  return (
+    <Suspense>
+      <SuccessContent />
+    </Suspense>
+  );
+}
+
+function SuccessContent() {
   const t = useTranslations('GiftCardSuccess');
   const searchParams = useSearchParams();
   const router = useRouter();

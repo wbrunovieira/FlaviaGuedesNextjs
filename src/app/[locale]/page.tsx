@@ -1,5 +1,6 @@
 // src/app/[locale]/page.tsx
 
+import { setRequestLocale } from 'next-intl/server';
 import Hero from '@/components/Hero';
 import Nav from '@/components/Nav';
 import ProductsShowcase from '@/components/Products';
@@ -16,7 +17,14 @@ import SectionReveal from '@/components/ui/SectionReveal';
 import SectionDivider from '@/components/ui/SectionDivider';
 import HashScrollFix from '@/components/ui/HashScrollFix';
 
-export default function Index() {
+export default async function Index({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <div className="bg-black w-full min-h-screen relative">
       <HashScrollFix />

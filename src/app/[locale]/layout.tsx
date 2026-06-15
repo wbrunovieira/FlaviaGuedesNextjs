@@ -1,5 +1,6 @@
 // src/app/[locale]/layout.tsx
 import { NextIntlClientProvider } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
 import type { AbstractIntlMessages } from 'next-intl';
 import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
@@ -58,7 +59,11 @@ export async function generateMetadata(props: {
     description: t.description,
     alternates: {
       canonical: `/${locale}`,
-      languages: { en: '/en', pt: '/pt' },
+      languages: {
+        en: '/en',
+        pt: '/pt',
+        'x-default': '/en',
+      },
     },
     openGraph: {
       type: 'website',
@@ -156,6 +161,10 @@ export default async function RootLocaleLayout(props: {
 }) {
   const resolvedParams = await props.params;
   const locale = resolvedParams.locale;
+
+  // Enables static rendering with next-intl (keeps metadata in <head>)
+  setRequestLocale(locale);
+
   const messages = (
     await (locale === 'pt'
       ? import('../../../messages/pt.json')
