@@ -1,10 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import type {
-  SquarePaymentsInstance,
-  SquareCard,
-} from '@/types/square';
+import type { SquareCard } from '@/types/square';
 
 const isProduction =
   process.env.NODE_ENV === 'production';
@@ -23,18 +20,20 @@ const APPLICATION_ID = isProduction
  * the element with id `containerId`. Returns the card instance (for
  * tokenizing) and any initialization error. Shared by the gift card and
  * Beauty Bank purchase forms.
+ *
+ * Deps are intentionally only [active, containerId]: internal state updates
+ * must NOT re-run the effect, or the cleanup would cancel the in-flight init
+ * before the card attaches.
  */
 export function useSquareCard(
   active: boolean,
   containerId: string
 ) {
   const [card, setCard] = useState<SquareCard | null>(null);
-  const [payments, setPayments] =
-    useState<SquarePaymentsInstance | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!active || payments || card) return;
+    if (!active) return;
     let cancelled = false;
 
     const init = async () => {
@@ -51,28 +50,30 @@ export function useSquareCard(
         return;
       }
       try {
-        const instance = window.Square.payments(
+        const payments = window.Square.payments(
           APPLICATION_ID!
         );
-        if (cancelled) return;
-        setPayments(instance);
-        const cardInstance = await instance.card();
+        const cardInstance = await payments.card();
         if (cancelled) return;
         await cardInstance.attach(`#${containerId}`);
+        if (cancelled) return;
         setCard(cardInstance);
       } catch (e) {
-        setError(
-          'Payment system initialization failed: ' +
-            (e as Error).message
-        );
+        if (!cancelled) {
+          setError(
+            'Payment system initialization failed: ' +
+              (e as Error).message
+          );
+        }
       }
     };
 
     init();
     return () => {
       cancelled = true;
+      setCard(null);
     };
-  }, [active, containerId, card, payments]);
+  }, [active, containerId]);
 
   return { card, error };
 }
