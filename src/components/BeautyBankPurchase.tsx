@@ -17,6 +17,7 @@ import {
   useSquareCard,
   SQUARE_SDK_SRC,
 } from '@/hooks/useSquareCard';
+import { isValidEmail } from '@/lib/email';
 import { BEAUTY_BANK_TIERS } from '@/lib/beauty-bank-tiers';
 
 type BeautyBankPurchaseProps = {
@@ -53,6 +54,14 @@ export default function BeautyBankPurchase({
     if (!card || !selectedTier) return;
     if (!name.trim()) {
       setError(t('invalidName'));
+      return;
+    }
+    if (!email.trim()) {
+      setError(t('emailRequired'));
+      return;
+    }
+    if (!isValidEmail(email)) {
+      setError(t('emailInvalid'));
       return;
     }
     setError('');

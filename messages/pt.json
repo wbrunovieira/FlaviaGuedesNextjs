@@ -282,7 +282,9 @@
     "processing": "Processando pagamento...",
     "policyNote": "Ao comprar, você concorda com a nossa",
     "policyLink": "Política de Gift Card",
-    "emailPlaceholder": "Seu e-mail (para receber o cartão)"
+    "emailPlaceholder": "Seu e-mail (para receber o cartão)",
+    "emailRequired": "Por favor, informe seu e-mail para receber o cartão.",
+    "emailInvalid": "Esse e-mail não parece válido. Pode conferir?"
   },
   "GiftCardSuccess": {
     "successTitle": "Pagamento Realizado com Sucesso!",
@@ -506,7 +508,7 @@
     "selectedPackage": "Pacote selecionado",
     "namePlaceholder": "Seu nome",
     "phonePlaceholder": "Seu telefone",
-    "emailPlaceholder": "Seu e-mail (opcional)",
+    "emailPlaceholder": "Seu e-mail",
     "payButton": "Confirmar Depósito",
     "processing": "Processando...",
     "loadingForm": "Carregando formulário de pagamento...",
@@ -528,6 +530,8 @@
     "certCreditLabel": "Seu Crédito",
     "certDeposited": "Depósito",
     "certHolder": "Titular",
-    "certNoExpiration": "Sem prazo de validade"
+    "certNoExpiration": "Sem prazo de validade",
+    "emailRequired": "Por favor, informe seu e-mail para receber o certificado.",
+    "emailInvalid": "Esse e-mail não parece válido. Pode conferir?"
   }
 }

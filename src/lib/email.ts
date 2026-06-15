@@ -12,6 +12,12 @@ export type EmailContent = {
   replyTo?: string;
 };
 
+/** Lightweight email format check for the purchase forms. */
+export function isValidEmail(email: string): boolean {
+  const v = email.trim();
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+}
+
 export function usd(cents: number): string {
   return `$${(cents / 100).toLocaleString('en-US', {
     minimumFractionDigits: 2,

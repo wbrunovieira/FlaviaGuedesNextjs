@@ -1,11 +1,36 @@
 import { describe, it, expect } from 'vitest';
 import {
   OWNER_EMAIL,
+  isValidEmail,
   buildGiftCardBuyerEmail,
   buildBeautyBankBuyerEmail,
   buildOwnerGiftCardNotification,
   buildOwnerBeautyBankNotification,
 } from './email';
+
+describe('isValidEmail', () => {
+  it('accepts well-formed addresses', () => {
+    expect(isValidEmail('a@b.com')).toBe(true);
+    expect(isValidEmail('maria.silva@email.co')).toBe(true);
+    expect(isValidEmail('flavia+gift@flaviaguedes.com')).toBe(
+      true
+    );
+  });
+
+  it('trims surrounding whitespace', () => {
+    expect(isValidEmail('  a@b.com  ')).toBe(true);
+  });
+
+  it('rejects malformed or empty addresses', () => {
+    expect(isValidEmail('')).toBe(false);
+    expect(isValidEmail('   ')).toBe(false);
+    expect(isValidEmail('no-at-sign')).toBe(false);
+    expect(isValidEmail('a@b')).toBe(false); // no TLD
+    expect(isValidEmail('a @b.com')).toBe(false);
+    expect(isValidEmail('a@b .com')).toBe(false);
+    expect(isValidEmail('a@@b.com')).toBe(false);
+  });
+});
 
 describe('buildGiftCardBuyerEmail', () => {
   const base = {

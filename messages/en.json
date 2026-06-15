@@ -282,7 +282,9 @@
     "processing": "Processing payment...",
     "policyNote": "By purchasing, you agree to our",
     "policyLink": "Gift Card Policy",
-    "emailPlaceholder": "Your email (to receive the card)"
+    "emailPlaceholder": "Your email (to receive the card)",
+    "emailRequired": "Please enter your email to receive the card.",
+    "emailInvalid": "That email doesn't look right. Mind checking it?"
   },
   "GiftCardSuccess": {
     "successTitle": "Payment Successful!",
@@ -506,7 +508,7 @@
     "selectedPackage": "Selected package",
     "namePlaceholder": "Your name",
     "phonePlaceholder": "Your phone",
-    "emailPlaceholder": "Your email (optional)",
+    "emailPlaceholder": "Your email",
     "payButton": "Confirm Deposit",
     "processing": "Processing...",
     "loadingForm": "Loading payment form...",
@@ -528,6 +530,8 @@
     "certCreditLabel": "Your Credit",
     "certDeposited": "Deposited",
     "certHolder": "Account holder",
-    "certNoExpiration": "No expiration date"
+    "certNoExpiration": "No expiration date",
+    "emailRequired": "Please enter your email to receive the certificate.",
+    "emailInvalid": "That email doesn't look right. Mind checking it?"
   }
 }

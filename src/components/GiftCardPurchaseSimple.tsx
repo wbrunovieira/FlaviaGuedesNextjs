@@ -9,6 +9,7 @@ import {
   useSquareCard,
   SQUARE_SDK_SRC,
 } from '@/hooks/useSquareCard';
+import { isValidEmail } from '@/lib/email';
 
 type GiftCardPurchaseProps = {
   id?: string;
@@ -69,6 +70,15 @@ export default function GiftCardPurchaseSimple({
 
     if (!name.trim()) {
       setError(t('invalidName') || 'Please enter your name.');
+      return;
+    }
+
+    if (!email.trim()) {
+      setError(t('emailRequired') || 'Please enter your email to receive the card.');
+      return;
+    }
+    if (!isValidEmail(email)) {
+      setError(t('emailInvalid') || "That email doesn't look right.");
       return;
     }
 
