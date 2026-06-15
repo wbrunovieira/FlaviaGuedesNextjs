@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
@@ -13,10 +13,10 @@ import {
 } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
 import html2canvas from 'html2canvas';
-import type {
-  SquarePaymentsInstance,
-  SquareCard,
-} from '@/types/square';
+import {
+  useSquareCard,
+  SQUARE_SDK_SRC,
+} from '@/hooks/useSquareCard';
 import { BEAUTY_BANK_TIERS } from '@/lib/beauty-bank-tiers';
 
 type BeautyBankPurchaseProps = {
@@ -41,45 +41,13 @@ export default function BeautyBankPurchase({
   const [purchasedCredit, setPurchasedCredit] =
     useState<number | null>(null);
   const certRef = useRef<HTMLDivElement>(null);
-  const [card, setCard] = useState<SquareCard | null>(null);
-  const [payments, setPayments] =
-    useState<SquarePaymentsInstance | null>(null);
 
-  const isProduction =
-    process.env.NODE_ENV === 'production';
-  const applicationId = isProduction
-    ? process.env.NEXT_PUBLIC_SQUARE_APPLICATION_ID
-    : process.env.NEXT_PUBLIC_SQUARE_SANDBOX_APPLICATION_ID;
+  const { card, error: squareError } = useSquareCard(
+    !!selectedTier,
+    'beauty-bank-card'
+  );
 
   const terms = t.raw('terms') as string[];
-
-  useEffect(() => {
-    if (!selectedTier || payments || card) return;
-
-    const init = async () => {
-      let attempts = 0;
-      while (!window.Square && attempts < 20) {
-        await new Promise(r => setTimeout(r, 500));
-        attempts++;
-      }
-      if (!window.Square) {
-        setError('Payment system failed to load. Please refresh.');
-        return;
-      }
-      try {
-        const instance = window.Square.payments(applicationId!);
-        setPayments(instance);
-        const cardInstance = await instance.card();
-        await cardInstance.attach('#beauty-bank-card');
-        setCard(cardInstance);
-      } catch (e) {
-        setError(
-          'Payment init failed: ' + (e as Error).message
-        );
-      }
-    };
-    init();
-  }, [selectedTier, applicationId, card, payments]);
 
   const handlePay = async () => {
     if (!card || !selectedTier) return;
@@ -145,14 +113,7 @@ export default function BeautyBankPurchase({
       id={id}
       className="relative mx-auto max-w-5xl px-6 py-16"
     >
-      <Script
-        src={
-          isProduction
-            ? 'https://web.squarecdn.com/v1/square.js'
-            : 'https://sandbox.web.squarecdn.com/v1/square.js'
-        }
-        strategy="lazyOnload"
-      />
+      <Script src={SQUARE_SDK_SRC} strategy="lazyOnload" />
 
       {/* Header */}
       <div className="text-center">
@@ -345,11 +306,7 @@ export default function BeautyBankPurchase({
                   +{bonus}% {t('bonus')}
                 </p>
                 <button
-                  onClick={() => {
-                    setSelectedTier(null);
-                    setCard(null);
-                    setPayments(null);
-                  }}
+                  onClick={() => setSelectedTier(null)}
                   className="mt-2 text-xs text-gold/70 underline transition-colors hover:text-gold"
                 >
                   {t('changePackage')}
@@ -420,9 +377,9 @@ export default function BeautyBankPurchase({
               </Link>
             </p>
 
-            {error && (
+            {(error || squareError) && (
               <p className="text-center text-sm text-red-500">
-                {error}
+                {error || squareError}
               </p>
             )}
           </div>

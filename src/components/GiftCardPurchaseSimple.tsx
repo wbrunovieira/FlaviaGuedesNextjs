@@ -5,7 +5,10 @@ import { FaGift, FaArrowRight } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import Script from 'next/script';
-import type { SquarePaymentsInstance, SquareCard } from '@/types/square';
+import {
+  useSquareCard,
+  SQUARE_SDK_SRC,
+} from '@/hooks/useSquareCard';
 
 type GiftCardPurchaseProps = {
   id?: string;
@@ -24,50 +27,11 @@ export default function GiftCardPurchaseSimple({
   const [showInput, setShowInput] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
-  const [card, setCard] = useState<SquareCard | null>(null);
-  const [payments, setPayments] = useState<SquarePaymentsInstance | null>(null);
 
-  // Determine environment
-  const isProduction = process.env.NODE_ENV === 'production';
-  const applicationId = isProduction
-    ? process.env.NEXT_PUBLIC_SQUARE_APPLICATION_ID
-    : process.env.NEXT_PUBLIC_SQUARE_SANDBOX_APPLICATION_ID;
-
-  useEffect(() => {
-    if (!showInput) return;
-    if (payments || card) return; // Already initialized
-
-    const initializeSquare = async () => {
-      // Wait for Square to load
-      let attempts = 0;
-      while (!window.Square && attempts < 20) {
-        await new Promise(resolve => setTimeout(resolve, 500));
-        attempts++;
-      }
-
-      if (!window.Square) {
-        console.error('[ERROR] Square SDK failed to load');
-        setError('Payment system failed to load. Please refresh the page.');
-        return;
-      }
-
-      try {
-        const paymentsInstance = window.Square.payments(applicationId!);
-        setPayments(paymentsInstance);
-
-        const cardInstance = await paymentsInstance.card();
-
-        await cardInstance.attach('#card-container');
-        setCard(cardInstance);
-
-      } catch (e) {
-        console.error('[ERROR] Square initialization error:', e);
-        setError('Payment system initialization failed: ' + (e as Error).message);
-      }
-    };
-
-    initializeSquare();
-  }, [showInput, applicationId, card, payments]);
+  const { card, error: squareError } = useSquareCard(
+    showInput,
+    'card-container'
+  );
 
   // Allows other sections (e.g. the welcome promo) to open the form pre-filled
   useEffect(() => {
@@ -154,14 +118,7 @@ export default function GiftCardPurchaseSimple({
 
   return (
     <>
-      <Script
-        src={
-          isProduction
-            ? 'https://web.squarecdn.com/v1/square.js'
-            : 'https://sandbox.web.squarecdn.com/v1/square.js'
-        }
-        strategy="lazyOnload"
-      />
+      <Script src={SQUARE_SDK_SRC} strategy="lazyOnload" />
 
       <div
         id={id}
@@ -259,9 +216,9 @@ export default function GiftCardPurchaseSimple({
             </>
           )}
 
-          {error && (
+          {(error || squareError) && (
             <p className="text-red-500 text-sm text-center">
-              {error}
+              {error || squareError}
             </p>
           )}
 
